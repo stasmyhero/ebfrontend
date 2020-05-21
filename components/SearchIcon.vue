@@ -2,7 +2,7 @@
   <div class="search">
     <a class="search-open icon-search" href="#search-open">
       <svg class="icon-search-svg">
-        <use xlink:href="/sprite.svg#icon-search" />
+        <use xlink:href="/images/sprite.svg#icon-search" />
       </svg>
     </a>
   </div>

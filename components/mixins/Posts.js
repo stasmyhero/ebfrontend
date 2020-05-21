@@ -4,7 +4,7 @@ import urls from '@/assets/js/url'
 export default {
   data () {
     return {
-      posts: Array,
+      posts: [],
       paged: 1
     }
   },

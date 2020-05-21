@@ -21,13 +21,13 @@
       </div>
       <div class="ad-item-wrapper mainpage-ad-grid-1">
         <div class="ad-item">
-          <a class="ad-item-link" href="#"><img class="ad-item-img" src="ad-banner-350x500-1.png"></a>
+          <a class="ad-item-link" href="#"><img class="ad-item-img" src="/images/ad-banner-350x500-1.png"></a>
           <a class="link-to-ad-prices link-underline" href="#">Разместить рекламу</a>
         </div>
       </div>
       <div class="ad-item-wrapper mainpage-ad-grid-2">
         <div class="ad-item">
-          <a class="ad-item-link" href="#"><img class="ad-item-img" src="ad-banner-350x500-2.png"></a>
+          <a class="ad-item-link" href="#"><img class="ad-item-img" src="/images/ad-banner-350x500-2.png"></a>
           <a class="link-to-ad-prices link-underline" href="#">Разместить рекламу</a>
         </div>
       </div>
@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import postsMixin from '@/components/mixins/Posts'
+import postsMixin from '@/components/mixins/Posts.js'
 import LoadMore from '@/components/LoadMore.vue'
 import Post from '@/components/Post.vue'
 import AttachedPosts from '@/components/AttachedPosts.vue'
@@ -60,7 +60,7 @@ export default {
     return {
       posts: [],
       paged: 1,
-      perPage: 20,
+      perPage: 10,
       scrolled: 0,
       loadBorder: 99999,
       isLoading: false,
@@ -75,9 +75,12 @@ export default {
     window.addEventListener('scroll', () => {
       this.scrolled = window.scrollY
       localStorage.setItem('mainPageScrolled', this.scrolled)
-      if (this.scrolled > this.loadBorder) {
+      // if (this.scrolled > this.loadBorder) {
+      //   this.load()
+      // }
+      this.$root.$on('loadPosts', () => {
         this.load()
-      }
+      })
     })
   }
 }

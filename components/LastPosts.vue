@@ -10,8 +10,8 @@
 
 <script>
 import axios from 'axios'
-import urls from '../assets/js/url.js'
-import Post from './components/Post.vue'
+import urls from '@/assets/js/url.js'
+import Post from '@/components/Post.vue'
 
 export default {
   name: 'Posts',

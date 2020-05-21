@@ -9,22 +9,22 @@
     </div>
     <div class="footer-social-cont">
       <span class="footer-social-cont-title">В соцсетях</span>
-      <a class="footer-social-link social-link social-link-telegram" href="#">
+      <a class="footer-social-link social-link social-link-telegram" :href="socialURL.telegram">
         <svg class="icon icon-social-telegram">
           <use xlink:href="/images/sprite.svg#icon-telegram" />
         </svg>
       </a>
-      <a class="footer-social-link social-link social-link-facebook" href="#">
+      <a class="footer-social-link social-link social-link-facebook" :href="socialURL.facebook">
         <svg class="icon icon-social-facebook">
-          <use xlink:href="/images/sprite.svgicon-facebook" />
+          <use xlink:href="/images/sprite.svg#icon-facebook" />
         </svg>
       </a>
-      <a class="footer-social-link social-link social-link-vk" href="#">
+      <a class="footer-social-link social-link social-link-vk" :href="socialURL.vk">
         <svg class="icon icon-social-vk">
           <use xlink:href="/images/sprite.svg#icon-vk" />
         </svg>
       </a>
-      <a class="footer-social-link social-link social-link-twitter" href="#">
+      <a class="footer-social-link social-link social-link-twitter" :href="socialURL.twitter">
         <svg class="icon icon-social-twitter">
           <use xlink:href="/images/sprite.svg#icon-twitter" />
         </svg>
@@ -71,6 +71,7 @@
 </template>
 
 <script>
+import urls from '@/assets/js/url'
 import Subscribe from '@/components/footer/Subscribe'
 import FooterNavBar from '@/components/footer/FooterNavBar'
 
@@ -82,7 +83,8 @@ export default {
   },
   data () {
     return {
-      menu: []
+      menu: [],
+      socialURL: urls.socials
     }
   }
 }

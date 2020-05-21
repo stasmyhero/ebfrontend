@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import urls from '@/assets/js/url.js'
 import postsMixin from '@/components/mixins/Posts'
 
 export default {
@@ -44,7 +45,8 @@ export default {
   data () {
     return {
       currentPost: Object,
-      attached: true
+      attached: true,
+      socialURL: urls.social
     }
   },
   async created () {
