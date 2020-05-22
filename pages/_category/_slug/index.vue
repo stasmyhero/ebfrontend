@@ -4,7 +4,7 @@
       <Single :slug="$route.params.slug" :post="post" />
     </template>
     <template v-else>
-      <SingleArticle :slug="$route.params.slug" />
+      <SingleArticle :slug="$route.params.slug" :post="post" />
     </template>
     <LastPosts />
     <LoadMore />

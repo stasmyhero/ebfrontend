@@ -49,36 +49,11 @@
 </template>
 
 <script>
-import axios from 'axios'
-import urls from '@/assets/js/url'
-
 export default {
   name: 'SingleArticle',
   props: {
-    slug: String
-  },
-  data () {
-    return {
-      post: Object
-    }
-  },
-  created () {
-    console.log(this.slug)
-    this.loadPost()
-  },
-  methods: {
-    async loadPost () {
-      const request = {
-        endpoint: `${urls.restURL}/single/${this.slug}`,
-        headers: urls.restHeaders
-      }
-      try {
-        const res = await axios.get(request.endpoint)
-        this.post = res.data
-      } catch (error) {
-        console.log(error)
-      }
-    }
+    slug: String,
+    post: Object
   }
 }
 </script>

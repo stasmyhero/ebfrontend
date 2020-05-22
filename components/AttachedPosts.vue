@@ -6,15 +6,16 @@
         :key="post.id"
         class="attached-news-list-item-link-cont"
         :class="{ 'active': currentPost.id === post.id }"
+        @mouseover.prevent="changeCurrentPost(index)"
       >
-        <a class="attached-news-list-item-link" :href="post.permalink" @mouseover="changeCurrentPost(index)">
+        <nuxt-link class="attached-news-list-item-link" :to="`/${post.category_link}/${post.slug}`">
           <span class="news-item-header">{{ post.title }}</span>
           <span class="news-item-subheader">{{ post.subtitle }}</span>
-        </a>
+        </nuxt-link>
       </li>
     </ul>
     <div :class="'attached-news-item-' + currentPost.category_id">
-      <nutx-link :to="'/'+ currentPost.permalink">
+      <nuxt-link :to="`/${currentPost.category_link}/${currentPost.slug}`">
         <div class="attached-news-item-info-wraper">
           <div class="rubric-title-wrapper">
             <span class="rubric-title">{{ currentPost.category }}</span>
@@ -33,7 +34,7 @@
           </div>
           <div class="attached-news-item-gradient-cont" />
         </div>
-      </a>
+      </nuxt-link>
     </div>
   </div>
 </template>
@@ -59,6 +60,7 @@ export default {
   methods: {
     changeCurrentPost (index) {
       this.currentPost = this.posts[index]
+      console.log('a')
     }
   }
 }
