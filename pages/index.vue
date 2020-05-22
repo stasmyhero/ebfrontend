@@ -79,11 +79,11 @@ export default {
     }
   },
   mounted () {
-    this.scrolled = localStorage.getItem('mainPageScrolled') || 1
-    window.addEventListener('scroll', () => {
-      this.scrolled = window.scrollY
-      localStorage.setItem('mainPageScrolled', this.scrolled)
-    })
+    // this.scrolled = localStorage.getItem('mainPageScrolled') || 1
+    // window.addEventListener('scroll', () => {
+    //   this.scrolled = window.scrollY
+    //   localStorage.setItem('mainPageScrolled', this.scrolled)
+    // })
   }
 }
 </script>
