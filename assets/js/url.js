@@ -1,5 +1,5 @@
 export default {
-  baseURL: 'http://a0430283.xsph.ru/',
+  baseURL: 'http://localhost:3000/',
   restURL: 'http://a0430283.xsph.ru/wp-json/elbruspress/v1',
   socials: {
     twitter: 'https://twitter.com',

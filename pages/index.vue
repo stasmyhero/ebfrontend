@@ -2,7 +2,7 @@
   <main>
     <div class="mainpage-grid">
       <div class="clear-item-cont on-desktop-and-tablet" />
-      <AttachedPosts />
+      <AttachedPosts :posts="attachedPosts"/>
       <div class="social-item-wrapper telegram-item-wrapper">
         <a class="social-item telegram-item" href="#">
           <div class="telegram-item-bg" />
@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import postsMixin from '@/components/mixins/Posts.js'
+import postsLoader from '@/components/mixins/PostsLoader.js'
 import LoadMore from '@/components/LoadMore.vue'
 import Post from '@/components/Post.vue'
 import AttachedPosts from '@/components/AttachedPosts.vue'
@@ -53,37 +53,37 @@ export default {
     Post,
     AttachedPosts
   },
-  mixins: [
-    postsMixin
-  ],
-  data () {
-    return {
-      posts: [],
+  async asyncData ({ $axios }) {
+    const res = await postsLoader.load({
       paged: 1,
       perPage: 10,
-      scrolled: 0,
-      loadBorder: 99999,
-      isLoading: false,
       attached: false
+    }, $axios)
+    const attached = await postsLoader.load({
+      paged: 1,
+      perPage: 10,
+      attached: true
+    }, $axios)
+    return {
+      posts: res.posts,
+      allCount: res.allCount,
+      loadedPosts: 10,
+      attachedPosts: attached.posts
     }
   },
-  created () {
-    this.load()
+  data () {
+    return {
+      scrolled: 0,
+      loadBorder: 99999,
+      isLoading: false
+    }
   },
   mounted () {
     this.scrolled = localStorage.getItem('mainPageScrolled') || 1
     window.addEventListener('scroll', () => {
       this.scrolled = window.scrollY
       localStorage.setItem('mainPageScrolled', this.scrolled)
-      // if (this.scrolled > this.loadBorder) {
-      //   this.load()
-      // }
-      this.$root.$on('loadPosts', () => {
-        this.load()
-      })
     })
   }
 }
 </script>
-
-<style></style>

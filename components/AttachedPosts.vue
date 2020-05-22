@@ -1,15 +1,20 @@
 <template>
   <div class="attached-news-cont">
     <ul class="attached-news-list">
-      <li v-for="(post, index) in posts" :key="post.id" class="attached-news-list-item-link-cont active" >
-        <a class="attached-news-list-item-link" :href="post.permalink" @click.prevent="changeCurrentPost(index)">
+      <li
+        v-for="(post, index) in posts"
+        :key="post.id"
+        class="attached-news-list-item-link-cont"
+        :class="{ 'active': currentPost.id === post.id }"
+      >
+        <a class="attached-news-list-item-link" :href="post.permalink" @mouseover="changeCurrentPost(index)">
           <span class="news-item-header">{{ post.title }}</span>
           <span class="news-item-subheader">{{ post.subtitle }}</span>
         </a>
       </li>
     </ul>
-    <div class="attached-news-item-1">
-      <a :href="currentPost.permalink">
+    <div :class="'attached-news-item-' + currentPost.category_id">
+      <nutx-link :to="'/'+ currentPost.permalink">
         <div class="attached-news-item-info-wraper">
           <div class="rubric-title-wrapper">
             <span class="rubric-title">{{ currentPost.category }}</span>
@@ -35,13 +40,12 @@
 
 <script>
 import urls from '@/assets/js/url.js'
-import postsMixin from '@/components/mixins/Posts'
 
 export default {
   name: 'AttachedPosts',
-  mixins: [
-    postsMixin
-  ],
+  props: {
+    posts: Array
+  },
   data () {
     return {
       currentPost: Object,
@@ -49,8 +53,7 @@ export default {
       socialURL: urls.social
     }
   },
-  async created () {
-    await this.load()
+  mounted () {
     this.currentPost = this.posts[0]
   },
   methods: {

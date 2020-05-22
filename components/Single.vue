@@ -2,7 +2,7 @@
   <div class="news-body-cont">
     <div class="news-item-page-header-cont">
       <h1 class="news-item-page-header">
-        {{ post.title }}
+        {{ post.post_title }}
       </h1>
     </div>
     <div class="news-item-page-meta-cont">
@@ -19,7 +19,7 @@
       <div class="news-item-rubrics-cont">
         <a class="news-item-rubric-link link-underline rubric-1" :href="post.category_url">{{ post.category }}</a>
       </div>
-      <template v-if="post.views !== 'просмотров'">
+      <template v-if="post.views">
         <div class="news-item-page-views-counter">
           {{ post.views }}
         </div>
@@ -55,35 +55,11 @@
 </template>
 
 <script>
-import axios from 'axios'
-import urls from '@/assets/js/url'
-
 export default {
+  name: 'Single',
   props: {
-    id: String
-  },
-  data () {
-    return {
-      post: Object
-    }
-  },
-  created () {
-    console.log(this.id)
-    this.loadPost()
-  },
-  methods: {
-    async loadPost () {
-      const request = {
-        endpoint: `${urls.restURL}/single/${this.id}`,
-        headers: urls.restHeaders
-      }
-      try {
-        const res = await axios.get(request.endpoint)
-        this.post = res.data
-      } catch (error) {
-        console.log(error)
-      }
-    }
+    slug: String,
+    post: Object
   }
 }
 </script>

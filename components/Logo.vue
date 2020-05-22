@@ -1,6 +1,6 @@
 <template>
   <div class="logo-cont">
-    <a class="logo-link" href="/">
+    <nuxt-link class="logo-link" :to="'/'">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 57.34 454.81"
@@ -90,6 +90,6 @@
           />
         </g>
       </svg>
-    </a>
+    </nuxt-link>
   </div>
 </template>
