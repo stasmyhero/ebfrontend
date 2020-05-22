@@ -2,7 +2,7 @@
   <main>
     <div class="mainpage-grid">
       <div class="clear-item-cont on-desktop-and-tablet" />
-      <AttachedPosts :posts="attachedPosts"/>
+      <AttachedPosts :posts="attachedPosts" />
       <div class="social-item-wrapper telegram-item-wrapper">
         <a class="social-item telegram-item" href="#">
           <div class="telegram-item-bg" />

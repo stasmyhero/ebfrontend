@@ -25,7 +25,7 @@
   </div>
   <div v-else class="article-item-wrapper" :class="'rubric-'+ post.category_id">
     <a class="article-item">
-      <nuxt-link :to="post.slug">
+      <nuxt-link :to="'/'+ post.category_link + '/' + post.slug">
         <template v-if="post.thumb">
           <div class="article-item-ill-cont">
             <div class="item-ill-gradient-wrapper">
