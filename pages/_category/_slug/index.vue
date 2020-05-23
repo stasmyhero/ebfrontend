@@ -6,8 +6,14 @@
     <template v-else>
       <SingleArticle :slug="$route.params.slug" :post="post" />
     </template>
-    <LastPosts />
-    <LoadMore />
+    <LastPosts :posts="lastposts" />
+    <template v-if="isNeedToUpload">
+      <LoadMore v-if="isLoadedOnce" />
+      <infinite-loading
+        spinner="spiral"
+        @infinite="infiniteHandler"
+      />
+    </template>
   </main>
 </template>
 
@@ -37,6 +43,30 @@ export default {
     } catch (error) {
       console.log(error)
       return { post: false }
+    }
+  },
+  data () {
+    return {
+      page: 1,
+      lastPosts: [],
+      isLoadedOnce: false,
+      isNeedToUpload: true
+    }
+  },
+  methods: {
+    async infiniteHandler ($state) {
+      const request = {
+        endpoint: `${urls.restURL}/single/${this.$params.slug}`,
+        headers: urls.restHeaders
+      }
+      const res = await this.$axios.get(request.endpoint, request.headers)
+      if (res.data.lenght > 0) {
+        this.page += 1
+        this.lastPosts.push(...res.data.posts)
+        $state.loaded()
+      } else {
+        $state.complete()
+      }
     }
   }
 }
