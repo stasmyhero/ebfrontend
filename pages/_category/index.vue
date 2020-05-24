@@ -73,7 +73,8 @@ export default {
     return {
       category: this.$route.params.category,
       isLoadedOnce: false,
-      page: 2
+      page: 2,
+      isLoading: false
     }
   },
   mounted () {
@@ -81,6 +82,8 @@ export default {
   },
   methods: {
     infiniteHandler ($state) {
+      if (this.isLoading === true) { return }
+      this.isLoading = true
       const request = {
         endpoint: `${urls.restURL}/category/${this.$route.params.category}/${this.page}`,
         headers: urls.restHeaders
@@ -94,6 +97,7 @@ export default {
           } else {
             $state.complete()
           }
+          this.isLoading = false
         })
         .catch((error) => { console.log(error) })
     }

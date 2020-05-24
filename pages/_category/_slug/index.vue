@@ -63,7 +63,8 @@ export default {
       page: 2,
       lastPosts: [],
       isLoadedOnce: false,
-      isNeedToUpload: true
+      isNeedToUpload: true,
+      isLoading: false
     }
   },
   mounted () {
@@ -71,21 +72,22 @@ export default {
   },
   methods: {
     infiniteHandler ($state) {
+      if (this.isLoading === true) { return }
+      this.isLoading = true
       const request = {
         endpoint: `${urls.restURL}/last/${this.page}`,
         headers: urls.restHeaders
       }
       this.$axios.get(request.endpoint)
         .then((res) => {
-          console.log(res.data.posts)
           if (res.data.posts.length > 0) {
-            console.log('a')
             this.page += 1
             this.lastPosts.push(...res.data.posts)
             $state.loaded()
           } else {
             $state.complete()
           }
+          this.isLoading = false
         })
         .catch((error) => { console.log(error) })
     }
