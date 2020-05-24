@@ -14,36 +14,19 @@
         </nuxt-link>
       </li>
     </ul>
-    <div :class="'attached-news-item-' + currentPost.category_id">
-      <nuxt-link :to="`/${currentPost.category_link}/${currentPost.slug}`">
-        <div class="attached-news-item-info-wraper">
-          <div class="rubric-title-wrapper">
-            <span class="rubric-title">{{ currentPost.category }}</span>
-          </div>
-          <div class="attached-news-item-header-and-date-wrapper">
-            <div class="news-item-header-cont">
-              <span class="news-item-header">{{ currentPost.title }}</span>
-              <span class="news-item-subheader">{{ currentPost.subtitle }}</span>
-            </div>
-            <div class="publication-date">{{ currentPost.date }}</div>
-          </div>
-        </div>
-        <div class="attached-news-item-bg-container">
-          <div v-if="currentPost.thumb" class="attached-news-item-img-cont">
-            <img :src="currentPost.thumb">
-          </div>
-          <div class="attached-news-item-gradient-cont" />
-        </div>
-      </nuxt-link>
-    </div>
+    <CurrentAttachedPost :currentPost="currentPost" />
   </div>
 </template>
 
 <script>
 import urls from '@/assets/js/url.js'
+import CurrentAttachedPost from '@/components/CurrentAttachedPost'
 
 export default {
   name: 'AttachedPosts',
+  components: {
+    CurrentAttachedPost
+  },
   props: {
     posts: Array
   },
