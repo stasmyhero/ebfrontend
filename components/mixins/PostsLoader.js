@@ -4,14 +4,8 @@ export default {
   async load (config, $axios) {
     // if (this.isLoading || this.nothingToLoad) { return }
     // this.isLoading = true
-    let method = 'posts'
-    if (config.category !== undefined) {
-      method = `category/${config.category}`
-    } else {
-      method = config.attached ? 'attached' : 'posts'
-    }
     const request = {
-      endpoint: `${urls.restURL}/${method}/${config.paged}`,
+      endpoint: `${urls.restURL}/${config.method}/${config.paged}`,
       headers: {
         ContentType: 'application/json',
         Accept: 'application/json'

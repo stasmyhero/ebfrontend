@@ -23,18 +23,17 @@ export default {
   mounted () {
     this.$root.$on('loadingOver', () => {
       this.hide()
-      console.log('asdqwe')
     })
-    this.scrolled = localStorage.getItem('mainPageScrolled') ? localStorage.getItem('mainPageScrolled') : 0
-    window.scrollY = this.scrolled
-    window.addEventListener('scroll', () => {
-      console.log('scroll')
-      this.scrolled = window.scrollY
-      localStorage.setItem('mainPageScrolled', this.scrolled)
-      if ((this.scrolled > this.loadBorder) && this.isShow === false) {
-        this.$root.$emit('loadPosts')
-      }
-    })
+    // this.scrolled = localStorage.getItem('mainPageScrolled') ? localStorage.getItem('mainPageScrolled') : 0
+    // window.scrollY = this.scrolled
+    // window.addEventListener('scroll', () => {
+    //   console.log('scroll')
+    //   this.scrolled = window.scrollY
+    //   localStorage.setItem('mainPageScrolled', this.scrolled)
+    //   if ((this.scrolled > this.loadBorder) && this.isShow === false) {
+    //     this.$root.$emit('loadPosts')
+    //   }
+    // })
   },
   methods: {
     loadPosts () {

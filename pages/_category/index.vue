@@ -1,8 +1,8 @@
 <template>
   <main>
-    <div class="category-grid rubric-1">
+    <div class="category-grid" :class="'rubric-'+ categoryID">
       <div class="superheader">
-        <template v-if="posts[0]">
+        <template v-if="posts">
           {{ posts[0].category }}
         </template>
       </div>
@@ -24,13 +24,29 @@
         :key="mypost.id"
         :post="mypost"
       />
+      <template v-if="isNeedToUpload">
+        <template v-if="isLoadedOnce">
+          <infinite-loading
+            spinner="spiral"
+            :distance="250"
+            @infinite="infiniteHandler"
+          >
+            <div slot="no-more" />
+          </infinite-loading>
+        </template>
+      </template>
     </div>
-    <LoadMore />
+    <template v-if="!isLoadedOnce && isNeedToUpload">
+      <transition name="fade">
+        <LoadMore />
+      </transition>
+    </template>
   </main>
 </template>
 
 <script>
 import postsLoader from '@/components/mixins/PostsLoader.js'
+import urls from '@/assets/js/url'
 import Post from '@/components/Post'
 import LoadMore from '@/components/LoadMore'
 
@@ -44,13 +60,42 @@ export default {
     const res = await postsLoader.load({
       paged: 1,
       perPage: 10,
-      category: params.category
+      category: params.category,
+      method: `category/${params.category}`
     }, $axios)
-    return res
+    return {
+      posts: res.posts,
+      categoryID: res.posts[0].category_id,
+      isNeedToUpload: res.allCount > res.posts.length
+    }
   },
   data () {
     return {
-      category: this.$route.params.category
+      category: this.$route.params.category,
+      isLoadedOnce: false,
+      page: 2
+    }
+  },
+  mounted () {
+    this.$root.$on('loadPosts', () => { this.isLoadedOnce = true })
+  },
+  methods: {
+    infiniteHandler ($state) {
+      const request = {
+        endpoint: `${urls.restURL}/category/${this.$route.params.category}/${this.page}`,
+        headers: urls.restHeaders
+      }
+      this.$axios.get(request.endpoint)
+        .then((res) => {
+          if (res.data.posts.length > 0) {
+            this.page += 1
+            this.posts.push(...res.data.posts)
+            $state.loaded()
+          } else {
+            $state.complete()
+          }
+        })
+        .catch((error) => { console.log(error) })
     }
   }
 }

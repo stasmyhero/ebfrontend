@@ -6,18 +6,28 @@
     <template v-else>
       <SingleArticle :slug="$route.params.slug" :post="post" />
     </template>
-    <LastPosts :posts="lastposts" />
+    <LastPosts :posts="lastPosts" />
     <template v-if="isNeedToUpload">
-      <LoadMore v-if="isLoadedOnce" />
-      <infinite-loading
-        spinner="spiral"
-        @infinite="infiniteHandler"
-      />
+      <transition name="fade">
+        <template v-if="isLoadedOnce">
+          <infinite-loading
+            spinner="spiral"
+            distance="500"
+            @infinite="infiniteHandler"
+          >
+            <div slot="no-more" />
+          </infinite-loading>
+        </template>
+        <template v-else>
+          <LoadMore />
+        </template>
+      </transition>
     </template>
   </main>
 </template>
 
 <script>
+import postsLoader from '@/components/mixins/PostsLoader'
 import urls from '@/assets/js/url'
 import Single from '@/components/Single'
 import SingleArticle from '@/components/SingleArticle'
@@ -37,36 +47,47 @@ export default {
       endpoint: `${urls.restURL}/single/${params.slug}`,
       headers: urls.restHeaders
     }
-    try {
-      const res = await $axios.get(request.endpoint)
-      return { post: res.data }
-    } catch (error) {
-      console.log(error)
-      return { post: false }
+    const res = await $axios.get(request.endpoint)
+    const last = await postsLoader.load({
+      paged: 1,
+      perPage: 10,
+      method: 'last'
+    }, $axios)
+    return {
+      post: res.data,
+      lastPosts: last.posts
     }
   },
   data () {
     return {
-      page: 1,
+      page: 2,
       lastPosts: [],
       isLoadedOnce: false,
       isNeedToUpload: true
     }
   },
+  mounted () {
+    this.$root.$on('loadPosts', () => { this.isLoadedOnce = true })
+  },
   methods: {
-    async infiniteHandler ($state) {
+    infiniteHandler ($state) {
       const request = {
-        endpoint: `${urls.restURL}/single/${this.$params.slug}`,
+        endpoint: `${urls.restURL}/last/${this.page}`,
         headers: urls.restHeaders
       }
-      const res = await this.$axios.get(request.endpoint, request.headers)
-      if (res.data.lenght > 0) {
-        this.page += 1
-        this.lastPosts.push(...res.data.posts)
-        $state.loaded()
-      } else {
-        $state.complete()
-      }
+      this.$axios.get(request.endpoint)
+        .then((res) => {
+          console.log(res.data.posts)
+          if (res.data.posts.length > 0) {
+            console.log('a')
+            this.page += 1
+            this.lastPosts.push(...res.data.posts)
+            $state.loaded()
+          } else {
+            $state.complete()
+          }
+        })
+        .catch((error) => { console.log(error) })
     }
   }
 }

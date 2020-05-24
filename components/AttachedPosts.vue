@@ -60,7 +60,6 @@ export default {
   methods: {
     changeCurrentPost (index) {
       this.currentPost = this.posts[index]
-      console.log('a')
     }
   }
 }

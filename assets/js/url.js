@@ -1,6 +1,6 @@
 export default {
   baseURL: 'http://localhost:3000/',
-  restURL: 'http://a0430283.xsph.ru/wp-json/elbruspress/v1',
+  restURL: 'https://api.elbrus.press/wp-json/elbruspress/v1',
   socials: {
     twitter: 'https://twitter.com',
     telegram: 'https://telegram.com',
