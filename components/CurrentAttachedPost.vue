@@ -17,7 +17,7 @@
       </div>
       <div class="attached-news-item-bg-container">
         <div ref="thumb" class="attached-news-item-img-cont">
-          <img v-if="currentPost.thumb" :src="initThumb">
+          <img v-if="currentPost.thumb" :src="currentPost.thumb">
         </div>
         <div ref="gradient" class="attached-news-item-gradient-cont" :css="false" />
       </div>
@@ -60,31 +60,17 @@ export default {
         duration: 0.6,
         ease: 'slow'
       })
-      this.timeline.resume()
     },
     thumb (oldThumb, newThumb) {
       if (this.currentPost.thumb === undefined) {
         return
       }
       if (newThumb !== false) {
-        gsap.to(this.$refs.thumb, {
-          opacity: 0,
-          duration: 0.4,
-          onComplete: () => {
-            this.initThumb = newThumb
-          }
-        })
-        gsap.to(this.$refs.thumb, { opacity: 1, duration: 0.4, delay: 0.4 })
+        gsap.fromTo(this.$refs.thumb, { opacity: 0, duration: 0.0 }, { opacity: 1, duration: 0.4 })
       } else {
         gsap.to(this.$refs.thumb, { opacity: 1, duration: 0.4, delay: 0.2 })
       }
     }
-  },
-  mounted () {
-    this.initThumb = this.currentPost.thumb
-  },
-  mounted () {
-    console.log(this.$refs.thumb)
   }
 }
 </script>
