@@ -7,3 +7,20 @@
     />
   </div>
 </template>
+
+<script>
+import Post from '@/components/Post.vue'
+
+export default {
+  name: 'SearchResults',
+  components: {
+    Post
+  },
+  props: {
+    posts: {
+      type: [Array],
+      default: () => { return [] }
+    }
+  }
+}
+</script>
