@@ -1,5 +1,5 @@
 <template>
-  <div class="attached-news-item" :class="className">
+  <div class="attached-news-item" :class="'rubric-'+ currentPost.category_id">
     <nuxt-link :to="`/${currentPost.category_link}/${currentPost.slug}`">
       <div class="attached-news-item-info-wraper">
         <div class="rubric-title-wrapper">
@@ -16,16 +16,10 @@
         </div>
       </div>
       <div class="attached-news-item-bg-container">
-        <transition name="fade">
-          <div
-            v-if="currentPost.thumb"
-            ref="thumb"
-            class="attached-news-item-img-cont"
-          >
-            <img :src="currentPost.thumb">
-          </div>
-          <div ref="gradient" class="attached-news-item-gradient-cont" />
-        </transition>
+        <div ref="thumb" class="attached-news-item-img-cont">
+          <img v-if="currentPost.thumb" :src="currentPost.thumb">
+        </div>
+        <div ref="gradient" class="attached-news-item-gradient-cont" :css="false" />
       </div>
     </nuxt-link>
   </div>
@@ -39,28 +33,43 @@ export default {
   name: 'CurrentAttachedPost',
   props: {
     currentPost: {
-      type: [Object, Boolean],
+      type: [Object, Boolean, Function],
       default: false,
       required: true
     }
   },
   data () {
     return {
-      timeline: gsap.timeline()
+      timeline: gsap.timeline(),
+      initThumb: this.currentPost.thumb
     }
   },
   computed: {
     className () {
-      return 'rubrics-' + this.currentPost.categoryID
+      return 'rubrics-' + this.currentPost.category_id
+    },
+    thumb () {
+      return this.currentPost.thumb
     }
   },
   watch: {
     className (oldClassName, newClassName) {
-      this.timeline.pause()
-      this.timeline.clear()
-      // const bgColor1 = background.gradients[oldClassName]
-      const bgGradient = background.gradients[newClassName]
-      this.timeline.to(this.$refs.gradient, { background: bgGradient, duration: 0.2 })
+      const bgGradient = background.gradients[this.currentPost.category_link]
+      gsap.to(this.$refs.gradient, {
+        background: bgGradient,
+        duration: 0.6,
+        ease: 'slow'
+      })
+    },
+    thumb (oldThumb, newThumb) {
+      if (this.currentPost.thumb === undefined) {
+        return
+      }
+      if (newThumb !== false) {
+        gsap.fromTo(this.$refs.thumb, { opacity: 0, duration: 0.0 }, { opacity: 1, duration: 0.4 })
+      } else {
+        gsap.to(this.$refs.thumb, { opacity: 1, duration: 0.4, delay: 0.2 })
+      }
     }
   }
 }
