@@ -12,11 +12,7 @@
 </template>
 
 <script>
-import axios from 'axios'
-import urls from '@/assets/js/url'
-
 export default {
-  name: 'FooterNavbar',
   data () {
     return {
       menu: [],
@@ -24,22 +20,7 @@ export default {
     }
   },
   created () {
-    const request = {
-      endpoint: urls.restURL + '/menu/',
-      headers: {
-        ContentType: 'application/json',
-        Accept: 'application/json'
-      }
-    }
-    axios.get(request.endpoint, request.headers)
-      .then((response) => {
-        if (response.data) {
-          this.menu = response.data
-        }
-      })
-      .catch((error) => {
-        console.log(error)
-      })
+    this.menu = this.$store.getters['menu/menu']
   }
 }
 </script>

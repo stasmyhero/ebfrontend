@@ -1,15 +1,30 @@
 <template>
   <div class="search">
-    <a class="search-open icon-search" href="#search-open">
-      <svg class="icon-search-svg">
+    <nuxt-link
+      class="search-open icon-search"
+      :to="'/search'"
+      @click.native="openSearchWindow"
+    >
+      <svg
+        ref="searchIcon"
+        class="icon-search-svg"
+      >
         <use xlink:href="/images/sprite.svg#icon-search" />
       </svg>
-    </a>
+    </nuxt-link>
   </div>
 </template>
 
 <script>
+import gsap from 'gsap'
+
 export default {
-  name: 'SearchIcon'
+  name: 'SearchIcon',
+  methods: {
+    openSearchWindow () {
+      this.$emit('openSearch')
+      gsap.to(this.$refs.searchIcon, { x: '-=200', duration: 1 })
+    }
+  }
 }
 </script>

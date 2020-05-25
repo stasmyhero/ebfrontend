@@ -1,5 +1,5 @@
 <template>
-  <header class="header-main-page">
+  <header :class="headerClass">
     <div style="display: none;" class="logo-cont">
       <a class="logo-link" href="/">
         <i>Эльбрус</i>
@@ -11,7 +11,11 @@
       <Navbar />
     </div>
     <SearchIcon />
-    <div class="header-social-cont">
+    <div
+      v-show="isShowMenu"
+      class="header-social-cont"
+      @openSearch="menuFadeOut"
+    >
       <div class="header-social-cont-title-wrapper">
         <span class="header-social-cont-title">В соцсетях</span>
       </div>
@@ -20,6 +24,9 @@
       <a class="header-social-link social-link social-link-vk" :href="socialURL.vk" />
       <a class="header-social-link social-link social-link-twitter" :href="socialURL.twitter" />
     </div>
+    <div class="search">
+      <SearchInput />
+    </div>
   </header>
 </template>
 
@@ -27,19 +34,41 @@
 import urls from '@/assets/js/url'
 import Logo from '@/components/Logo.vue'
 import Navbar from '@/components/NavBar.vue'
-import SearchIcon from '@/components/SearchIcon.vue'
+import SearchInput from '@/components/search/Input'
 
 export default {
   name: 'Header',
   components: {
     Navbar,
     Logo,
-    SearchIcon
+    SearchInput
   },
   data () {
     return {
-      socialURL: urls.socials
+      socialURL: urls.socials,
+      isShowMenu: true
+    }
+  },
+  computed: {
+    headerClass () {
+      if (this.$route.name === 'index') { return 'header-main-page' }
+      if (this.$route.name === 'search' || this.$route.name === 'search-s') { return 'header-search-page' }
+      return 'header-inner-page'
+    }
+  },
+  methods: {
+    menuFadeOut () {
+      this.isShowMenu = false
     }
   }
 }
 </script>
+<style scoped>
+ .header-search-page {
+    position: fixed;
+    top: 0px;
+ }
+ .header-search-page .search-icon {
+
+ }
+</style>

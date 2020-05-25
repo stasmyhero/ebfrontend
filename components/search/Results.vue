@@ -1,10 +1,20 @@
 <template>
   <div class="search-results-grid">
-    <Post
-      v-for="mypost in posts"
-      :key="mypost.id"
-      :post="mypost"
-    />
+    <div v-if=" count !='' " class="search-count">
+      Найдено {{ count }}
+    </div>
+    <template v-if="results">
+      <Post
+        v-for="mypost in results"
+        :key="mypost.id"
+        :post="mypost"
+      />
+    </template>
+    <template v-else>
+      <div class="search-no-results">
+        Ничего не найдено
+      </div>
+    </template>
   </div>
 </template>
 
@@ -17,9 +27,13 @@ export default {
     Post
   },
   props: {
-    posts: {
-      type: [Array],
+    results: {
+      type: [Array, Boolean],
       default: () => { return [] }
+    },
+    count: {
+      type: String,
+      default: () => { return '' }
     }
   }
 }

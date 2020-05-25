@@ -1,19 +1,16 @@
 <template>
-  <SearchResults :posts="results" />
+  <main>
+    <SearchResults />
+  </main>
 </template>
 
 <script>
 import SearchResults from '@/components/search/Results'
 
 export default {
-  name: 'SearchWindow',
+  layout: 'default',
   components: {
     SearchResults
-  },
-  data () {
-    return {
-      results: []
-    }
   }
 }
 </script>
