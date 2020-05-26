@@ -71,7 +71,9 @@ export default {
 }
 </script>
 <style scoped>
-
+  header {
+    z-index: 100;
+  }
  .header-search-page {
     position: fixed;
     top: 0px;

@@ -3,7 +3,6 @@ export default {
     s = s.replace(/\s+/g, ' ')
     s = s.replace(/#+/g, '#')
     s = s.replace(/@+/g, '@')
-
     s = s.replace('`', '')
     s = s.replace(/(<([^>]+)>)/ig, '')
     return s
@@ -11,26 +10,31 @@ export default {
   parseString (s) {
     if (s.trim() === '') { return false }
     const inputString = this.sanitizeString(s)
-    let w = inputString.split(' ')
-    w = Array.from(new Set(w))
+    const w = inputString.split(' ')
+    const restSearchString = this.blocksToRestString(w)
+    return {
+      restString: restSearchString,
+      blocks: w
+    }
+  },
+  blocksToRestString (w) {
     const fullString = []
     const tags = []
     const authors = []
-    for (let i = 0; i < w.length; i++) {
-      console.log(w[i])
-
-      if (w[i][0] === '#') {
-        tags.push(w[i].replace('#', ''))
+    w = Array.from(new Set(w))
+    for (const word of w) {
+      if (word[0] === '#') {
+        tags.push(word.replace('#', ''))
         continue
       }
-      if (w[i][0] === '@') {
-        authors.push(w[i].replace('@', ''))
+      if (word[0] === '@') {
+        authors.push(word.replace('@', ''))
         continue
       }
-      fullString.push(w[i])
+      fullString.push(word)
     }
     let restSearchString = '/s?'
-    console.log(tags)
+
     if (fullString.length > 0) {
       restSearchString += ('&w=' + fullString.join(','))
     }
@@ -44,11 +48,6 @@ export default {
     }
     if (restSearchString === 's?') { return false }
 
-    console.log(restSearchString)
-
-    return {
-      restString: restSearchString,
-      blocks: w
-    }
+    return restSearchString
   }
 }
