@@ -1,53 +1,27 @@
 <template>
   <main>
     <SearchResults :results="posts" :count="resultsCount" />
-    <div>KEKW</div>
   </main>
 </template>
 
 <script>
+import searchParser from '../../assets/js/searchParser'
 import urls from '@/assets/js/url'
 import SearchResults from '@/components/search/Results'
 
 export default {
-  layout: 'default',
+  transition: 'fade',
   components: {
     SearchResults
   },
-  async fetch () {
-    // const s = this.$route.fullPath
-    // if (s.trim() !== '') {
-    //   const request = {
-    //     endpoint: `${urls.restURL}${s}`,
-    //     headers: urls.restHeaders
-    //   }
-    //   try {
-    //     const res = await this.$axios.get(request.endpoint, request.headers)
-    //     console.log(request.endpoint)
-    //     if (res.data.posts.length > 0) {
-    //       this.posts = res.data.posts
-    //       this.needToLoad = res.data.allCount > res.data.posts
-    //       this.resultsCount = res.data.resultsCount
-    //     } else {
-    //       this.posts = false
-    //       this.needToLoad = false
-    //     }
-    //   } catch (error) {
-    //     console.log(error)
-    //   }
-    // }
-  },
   async asyncData ({ $axios, route }) {
-    console.log(route)
     const s = route.fullPath
     const request = {
       endpoint: `${urls.restURL}${s}`,
       headers: urls.restHeaders
     }
-    console.log(request.endpoint)
-
     try {
-      const res = await $axios.get(request.endpoint, request.headers)
+      const res = await $axios.get(request.endpoint)
       if (res.data.posts.length > 0) {
         return {
           posts: res.data.posts,
@@ -63,12 +37,32 @@ export default {
       console.log(error)
     }
   },
-  data () {
-    return {
-      posts: [],
-      needToLoad: false,
-      resultsCount: ''
-    }
+  created () {
+    this.$root.$on('goSearch', async (searchString) => {
+      console.log(searchParser.sanitizeString(searchString))
+      const parseResult = searchParser.parseString(searchString)
+      if (parseResult !== false) {
+        const s = parseResult.restString
+        const request = {
+          endpoint: `${urls.restURL}/search${s}`,
+          headers: urls.restHeaders
+        }
+        try {
+          const res = await this.$axios.get(request.endpoint, request.headers)
+          if (res.data.posts.length > 0) {
+            // this.$router.replace({ path: '/search/' + this.searchString })
+            this.posts = res.data.posts
+            this.needToLoad = res.data.allCount > res.data.posts.length
+          } else {
+            // this.$router.replace({ path: '/search/' + this.searchString })
+            this.posts = false
+            this.needToLoad = false
+          }
+        } catch (error) {
+          console.log(error)
+        }
+      }
+    })
   }
 }
 </script>

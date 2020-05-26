@@ -1,5 +1,5 @@
 <template>
-  <footer>
+  <footer v-show="isShow">
     <Subscribe />
     <div class="footer-logo-cont">
       <a class="logo-link" href="/">
@@ -32,8 +32,8 @@
     </div>
     <div class="footer-bottom-cont">
       <div class="copyright">
-©&thinsp;2020
-</div>
+        ©&thinsp;2020
+      </div>
       <FooterNavBar />
       <div class="by-kontora-cont">
         <a class="by-kontora-link" href="https://kontora.cc" />
@@ -85,6 +85,11 @@ export default {
     return {
       menu: [],
       socialURL: urls.socials
+    }
+  },
+  computed: {
+    isShow () {
+      return !(this.$route.name === 'search' || this.$route.name === 'search-s')
     }
   }
 }

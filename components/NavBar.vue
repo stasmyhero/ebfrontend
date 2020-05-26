@@ -18,18 +18,6 @@ import urls from '@/assets/js/url'
 
 export default {
   name: 'Navbar',
-  // computed: {
-  //   classObject: () => {
-  //     return {
-  //       active: this.activeItem ===
-  //     }
-  //   }
-  // },
-  // beforeMount () {
-  //   if (this.getFromStore() === false) {
-  //     this.load()
-  //   }
-  // },
   async fetch () {
     if (this.$store.getters['menu/menu'].length === 0) {
       await this.$store.dispatch('menu/fetch')
@@ -47,33 +35,6 @@ export default {
     setActive (index) {
       this.activeItem = parseInt(index, 10)
     }
-    // load () {
-    //   const request = {
-    //     endpoint: urls.restURL + '/menu/',
-    //     headers: {
-    //       ContentType: 'application/json',
-    //       Accept: 'application/json',
-    //       'Access-Control-Allow-Origin': '*'
-    //     }
-    //   }
-    //   axios.get(request.endpoint, request.headers)
-    //     .then((response) => {
-    //       if (response.data) {
-    //         this.menu = response.data
-    //         localStorage.setItem('menuItems', JSON.stringify(this.menu))
-    //       }
-    //     })
-    //     .catch((error) => {
-    //       console.log(error)
-    //     })
-    // },
-    // getFromStore () {
-    //   if (localStorage.getItem('menuItems') !== null) {
-    //     this.menu = JSON.parse(localStorage.getItem('menuItems'))
-    //   } else {
-    //     return false
-    //   }
-    // }
   }
 }
 </script>

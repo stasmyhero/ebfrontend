@@ -56,6 +56,8 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
+    proxyHeaders: false,
+    credentials: false
   },
   /*
   ** Build configuration
