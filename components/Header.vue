@@ -6,7 +6,7 @@
         <span class="logo-triangle">▲</span>пресс
       </a>
     </div>
-    <div class="logo-and-nav-cont">
+    <div v-show="isShowMenu" class="logo-and-nav-cont">
       <Logo />
       <Navbar />
     </div>
@@ -78,7 +78,13 @@ export default {
     position: fixed;
     top: 0px;
  }
- .header-search-page .search-icon {
+  .logo-and-nav-cont {
+      transition:  opacity 0.5s ease;
+  }
+
+ .header-search-page .logo-and-nav-cont  {
+   opacity: 0;
 
  }
+
 </style>

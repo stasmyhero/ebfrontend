@@ -28,7 +28,7 @@
             class="search-request-item"
           />
         </template>
-        <input v-model="searchString" type="text" class="search-input" @keyup.enter="goSearch()">
+        <input v-model="searchString" type="text" class="search-input" @keyup.enter="goSearch()" @keyup.delete="deleteLastBlock()">
       </div>
     </transition>
   </div>
@@ -59,9 +59,6 @@ export default {
       blocks: []
     }
   },
-  mounted () {
-    this.$root.$on('deleteBlock', (index) => { this.deleteBlock(index) })
-  },
   computed: {
     isOpened () {
       return (this.$route.name === 'search' || this.$route.name === 'search-s')
@@ -74,6 +71,9 @@ export default {
         return newValue
       }
     }
+  },
+  mounted () {
+    this.$root.$on('deleteBlock', (index) => { this.deleteBlock(index) })
   },
   methods: {
     open () {
@@ -91,13 +91,19 @@ export default {
       const parseResult = searchParser.parseString(this.searchString)
       this.blocks = parseResult.blocks
       this.searchString = ''
-      if (this.$route.fullPath !== ('/search' + parseResult.restString)) {
-        this.$router.replace({ path: '/search' + parseResult.restString })
-      }
+      // if (this.$route.fullPath !== ('/search' + parseResult.restString)) {
+      //   this.$router.replace({ path: '/search' + parseResult.restString })
+      // }
+      this.$root.$emit('goSearch', parseResult.restString)
     },
     deleteBlock (ind) {
       console.log(ind)
       this.blocks.splice(ind, 1)
+    },
+    deleteLastBlock () {
+      if (this.searchString === '' && this.blocks.length > 0) {
+        this.blocks.splice(-1, 1)
+      }
     }
   }
 

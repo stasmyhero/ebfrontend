@@ -569,10 +569,10 @@ button:hover {
     fill: var(--Gray100);
 }
 
-.header-search-page .logo-and-nav-cont,
+/* .header-search-page .logo-and-nav-cont,
 .header-search-page .header-social-cont {
     display: none;
-}
+} */
 
 .search-input-container {
     position: relative;

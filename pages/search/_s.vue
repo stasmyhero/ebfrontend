@@ -7,7 +7,7 @@
       <template v-if="posts">
         <Post
           v-for="mypost in posts"
-          :key="mypost.id"
+          :key="mypost.ID"
           :post="mypost"
         />
       </template>
@@ -81,13 +81,41 @@ export default {
       return this.$route.fullPath
     }
   },
-  watch: {
-    async searchString (old, newS) {
+  mounted () {
+    this.$root.$on('goSearch', (restString) => { this.searchRequest(restString) })
+  },
+  methods: {
+    infiniteHandler ($state) {
+      if (this.isLoading) { return }
+      this.isLoading = true
+      const request = {
+        endpoint: `${urls.restURL}${this.searchString}&page=${this.page}`,
+        headers: urls.restHeaders
+      }
+      this.$axios.get(request.endpoint)
+        .then((res) => {
+          if (res.data.posts.length > 0) {
+            this.page += 1
+            this.posts.push(...res.data.posts)
+            this.isNeedToUpload = res.data.allCount > res.data.posts.length
+            this.resultsCount = res.data.resultsCount
+            this.isLoading = false
+            $state.loaded()
+          } else {
+            this.isLoading = true
+            $state.complete()
+          }
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    },
+    async searchRequest (restString) {
       this.page = 1
       if (this.isLoading === true) { return }
       this.isLoading = true
       const request = {
-        endpoint: `${urls.restURL}${newS}&page=${this.page}`,
+        endpoint: `${urls.restURL}/search${restString}&page=${this.page}`,
         headers: urls.restHeaders
       }
       try {
@@ -96,32 +124,19 @@ export default {
           this.posts = res.data.posts
           this.isNeedToUpload = res.data.allCount > res.data.posts.length
           this.resultsCount = res.data.resultsCount
+          this.page += 1
+          this.isLoading = false
+          this.$router.replace({ path: '/search' + restString })
         } else {
           this.posts = false
           this.isNeedToUpload = false
+          this.resultsCount = ''
+          this.isLoading = false
         }
         this.isLoading = false
       } catch (error) {
         console.log(error)
       }
-    }
-  },
-  methods: {
-    infiniteHandler () {
-      const request = {
-        endpoint: `${urls.restURL}${this.searchString}&page=${this.page}`,
-        headers: urls.restHeaders
-      }
-      this.$axios.get(request.endpoint)
-        .then((res) => {
-          this.posts = res.data.posts
-          this.isNeedToUpload = res.data.allCount > res.data.posts.length
-          this.resultsCount = res.data.resultsCount
-          this.page += 1
-        })
-        .catch((error) => {
-          console.log(error)
-        })
     }
   }
 }

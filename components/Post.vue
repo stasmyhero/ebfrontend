@@ -23,7 +23,7 @@
       </div>
     </nuxt-link>
   </div>
-  <div v-else class="article-item-wrapper new-post" :class="'rubric-'+ post.category_id">
+  <div v-else-if="post.category_id" class="article-item-wrapper new-post" :class="'rubric-'+ post.category_id">
     <nuxt-link :to="'/'+ post.category_link + '/' + post.slug" class="article-item">
       <template v-if="post.thumb">
         <div class="article-item-ill-cont">

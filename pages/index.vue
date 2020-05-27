@@ -64,6 +64,7 @@ import Post from '@/components/Post.vue'
 import AttachedPosts from '@/components/AttachedPosts.vue'
 
 export default {
+  transition: 'fade',
   components: {
     LoadMore,
     Post,
