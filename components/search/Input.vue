@@ -88,21 +88,36 @@ export default {
       this.$router.go(-1)
     },
     goSearch () {
-      const parseResult = searchParser.parseString(this.searchString)
-      this.blocks = parseResult.blocks
+      const newBlocks = searchParser.stringToBlocks(this.searchString)
+      if (newBlocks.length === 0) { this.$root.$emit('goSearch', '') }
+      // const acum = []
+      // for (const nb in newBlocks) {
+      //   for (const b in this.blocks) {
+      //     if (nb.toLowerCase() !== b.toLowerCase()) { this.acum }
+      //   }
+      // }
+      this.blocks.push(...newBlocks)
+      this.blocks = Array.from(new Set(this.blocks))
       this.searchString = ''
+      const restString = searchParser.blocksToRestString(this.blocks)
       // if (this.$route.fullPath !== ('/search' + parseResult.restString)) {
       //   this.$router.replace({ path: '/search' + parseResult.restString })
       // }
-      this.$root.$emit('goSearch', parseResult.restString)
+      console.log(restString)
+      this.$root.$emit('goSearch', restString)
     },
     deleteBlock (ind) {
       console.log(ind)
       this.blocks.splice(ind, 1)
+      this.goSearch()
     },
     deleteLastBlock () {
       if (this.searchString === '' && this.blocks.length > 0) {
         this.blocks.splice(-1, 1)
+        this.goSearch()
+      }
+      if (this.blocks.length === 0 && this.searchString === '') {
+        this.goSearch()
       }
     }
   }

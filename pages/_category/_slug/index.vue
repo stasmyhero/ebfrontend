@@ -53,7 +53,6 @@ export default {
       perPage: 10,
       method: 'last'
     }, $axios)
-    await window.setTimeout(() => { console.log('timeout') }, 10)
     return {
       post: res.data,
       lastPosts: last.posts

@@ -5,17 +5,23 @@ export default {
     s = s.replace(/@+/g, '@')
     s = s.replace('`', '')
     s = s.replace(/(<([^>]+)>)/ig, '')
-    return s
+    return s.toLowerCase()
   },
   parseString (s) {
     if (s.trim() === '') { return false }
-    const inputString = this.sanitizeString(s)
-    const w = inputString.split(' ')
+
+    const w = this.stringToBlocks(s)
     const restSearchString = this.blocksToRestString(w)
     return {
       restString: restSearchString,
       blocks: w
     }
+  },
+  stringToBlocks (s) {
+    if (s.trim() === '') { return [] }
+    const inputString = this.sanitizeString(s)
+    const w = inputString.split(' ')
+    return w.filter(w => w.trim() !== '')
   },
   blocksToRestString (w) {
     const fullString = []
