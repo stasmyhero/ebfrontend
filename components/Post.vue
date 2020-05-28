@@ -52,6 +52,8 @@
 </template>
 
 <script>
+import urls from '@/assets/js/url'
+
 export default {
   name: 'Post',
   props: {
@@ -60,11 +62,19 @@ export default {
       default: false,
       required: true
     }
-    // page: {
-    //   type: [String, Number],
-    //   default: 1,
-    //   required: false
-    // }
+  },
+  mounted () {
+    console.log(this.post)
+    let loadPostview = false
+    if (!localStorage.getItem(this.post.id) && !loadPostview) {
+      loadPostview = false
+      const url = urls.restURL + '/postview/' + this.post.id
+      this.$axios.post(url)
+        .then((res) => {
+          loadPostview = true
+          localStorage.setItem(this.post.id, 'true')
+        })
+    }
   }
 }
 </script>

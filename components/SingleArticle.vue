@@ -26,6 +26,11 @@
             {{ post.views }}
           </div>
         </template>
+        <template v-else>
+           <div class="article-item-page-views-counter">
+            1 просмотр
+          </div>
+        </template>
       </div>
     </div>
     <div v-if="post.subtitle" class="article-item-subtitle">
