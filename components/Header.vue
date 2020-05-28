@@ -1,9 +1,18 @@
 <template>
   <header :class="headerClass">
     <transition name="fadeFast" mode="out-in">
-      <div v-if="!isShowMenu" key="burger" class="logo-and-nav-cont">
-        <a>
-          <span class="logo-triangle" @click.prevent="showMenu()">▲</span>
+      <div v-if="!isShowMenu" key="burger" class="logo-and-nav-cont logo-burger">
+        <a class="logo-short-link" @click.prevent="showMenu">
+          <svg class="logo-short-link-svg">
+            <use xlink:href="/images/sprite.svg#logo-short" />
+          </svg>
+        </a>
+        <a href="#" class="burger-menu-link">
+          <span class="icon-burger">
+            <span class="icon-burger-line" />
+            <span class="icon-burger-line" />
+            <span class="icon-burger-line" />
+          </span>
         </a>
       </div>
       <div v-else key="normal" class="logo-and-nav-cont">
@@ -41,6 +50,8 @@
     <div class="search">
       <SearchInput />
     </div>
+  </header>
+</template>
   </header>
 </template>
 

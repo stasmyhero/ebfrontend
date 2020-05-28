@@ -431,6 +431,10 @@ button:hover {
     z-index: 99;
 }
 
+.header-inner-page .logo-and-nav-cont {
+    margin-left: 1.6rem;
+}
+
 .logo-cont {
     background: var(--White100);
     display: inline-flex;
@@ -438,15 +442,72 @@ button:hover {
     padding: .8rem .4rem 0 .8rem;
 }
 
-.logo-link {
-    font-family: var(--font-arnold);
-    font-size: 5.6rem;
+.logo-short-link-svg {
+    height: 4rem;
+    width: 5.5rem;
 }
 
-.logo-triangle {
-    color: var(--LightBlue100);
-    font-size: 2.2rem;
-    margin: 0 .4rem;
+.logo-short-link-svg:hover>use {
+    fill: var(--LightBlue100);
+}
+
+.logo-footer-svg {
+    width: 18.8rem;
+    height: 2.4rem;
+    transition: transform .15s ease-in-out;
+    will-change: transform;
+}
+.logo-footer-svg:hover {
+    transform: scale(1.03);
+}
+
+.logo-footer-svg>use {
+    fill: var(--White100);
+}
+
+
+
+/* Burger menu */
+
+.burger-menu-link {
+    display: inline-block;
+    margin-left: 1.6rem;
+}
+
+.icon-burger {
+    cursor: pointer;
+    display: block;
+    float: right;
+    height: 4rem;
+    width: 5.2rem;
+    transition: margin .15s ease-in-out;
+}
+.burger-menu-link:hover .icon-burger {
+}
+
+.icon-burger-line {
+    display: block;
+    height: 2.5px;
+    margin-bottom: 1.6rem;
+    background-color: var(--Black100);
+    transition: background-color .15s linear, margin .15s ease-in-out;
+}
+.site-header-rubrics-showmore:hover .icon-burger-line {
+    background-color: var(--LightBlue100);
+    margin-bottom: 8px;
+}
+
+.icon-burger.icon-burger-close .icon-burger-line:nth-child(1){
+    top: 1.3rem;
+    -webkit-transform: rotate(-45deg);
+            transform: rotate(-45deg);
+}
+.icon-burger.icon-burger-close .icon-burger-line:nth-child(2){
+    opacity: 0;
+}
+.icon-burger.icon-burger-close .icon-burger-line:nth-child(3){
+    -webkit-transform: rotate(45deg);
+            transform: rotate(45deg);
 }
 
 
@@ -1696,6 +1757,17 @@ main {
     grid-column: 1/5;
     grid-row: 1/2;
     padding-left: calc(var(--widthxheight1000) + 2rem);
+}
+
+.icon-elbrus-triangle-last-news-svg {
+    display: inline-block;
+    height: 3.3rem;
+    margin-right: 2rem;
+    width: 4.9rem;
+}
+
+.icon-elbrus-triangle-last-news-svg>use {
+    fill: var(--LightBlue100);
 }
 
 

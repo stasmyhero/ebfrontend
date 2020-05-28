@@ -4,8 +4,9 @@
       <Subscribe />
       <div class="footer-logo-cont">
         <a class="logo-link" href="/">
-          <i>Эльбрус</i>
-          <span class="logo-triangle">▲</span>пресс
+          <svg class="logo-footer-svg">
+            <use xlink:href="/images/sprite.svg#logo-footer" />
+          </svg>
         </a>
       </div>
       <div class="footer-social-cont">
