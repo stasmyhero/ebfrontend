@@ -81,6 +81,7 @@ export default {
       socials: urls.socials
     }
   },
+
   mounted () {
     this.$root.$on('loadPosts', () => { this.isLoadedOnce = true })
   },

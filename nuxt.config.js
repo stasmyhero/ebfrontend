@@ -6,8 +6,8 @@ export default {
   */
   cache: true,
   filenames: {
-    app: ({ isDev }) => isDev ? '[name].[hash].js' : '[chunkhash].js',
-    chunk: ({ isDev }) => isDev ? '[name].[hash].js' : '[chunkhash].js'
+    // app: ({ isDev }) => isDev ? '[name].[hash].js' : '[chunkhash].js',
+    // chunk: ({ isDev }) => isDev ? '[name].[hash].js' : '[chunkhash].js'
   },
   head: {
     title: 'ЭльбрусПресс',

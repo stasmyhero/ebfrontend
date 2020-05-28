@@ -74,7 +74,7 @@ export default {
       return this.$route.fullPath
     }
   },
-  async mounted () {
+  mounted () {
     this.$root.$on('goSearch', (restString) => { this.searchRequest(restString) })
     // if (this.$route.params.s === undefined || this.$route.params.s === '' && !this.$route.query) {
     //     this.posts = false
