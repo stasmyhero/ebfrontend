@@ -5,6 +5,10 @@ export default {
   ** Headers of the page
   */
   cache: true,
+  filenames: {
+    app: ({ isDev }) => isDev ? '[name].[hash].js' : '[chunkhash].js',
+    chunk: ({ isDev }) => isDev ? '[name].[hash].js' : '[chunkhash].js'
+  },
   head: {
     title: 'ЭльбрусПресс',
     meta: [

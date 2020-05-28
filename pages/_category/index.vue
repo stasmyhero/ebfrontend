@@ -2,9 +2,11 @@
   <main>
     <div class="category-grid" :class="'rubric-'+ categoryID">
       <div class="superheader">
-        <template v-if="posts">
-          {{ posts[0].category }}
-        </template>
+        <div class="superheader-inner">
+          <nobr class="superheader-inner-nobr">
+            <template v-if="posts">{{ posts[0].category }}</template>
+          </nobr>
+        </div>
       </div>
       <div class="clear-item-cont on-desktop-and-tablet" />
       <div class="ad-item-wrapper category-ad-grid-1">
