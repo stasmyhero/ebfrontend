@@ -5,8 +5,8 @@
       <AttachedPosts :posts="attachedPosts" />
       <Telegram :link="socials.telegram" />
       <Twitter :link="socials.twitter" />
-      <Adv pos="1" img="/images/ad-banner-350x500-1.png" link="#" />
-      <Adv pos="2" img="/images/ad-banner-350x500-2.png" link="#" />
+      <Adv pos="1" />
+      <Adv pos="2" />
       <Post
         v-for="mypost in posts"
         :key="mypost.id"

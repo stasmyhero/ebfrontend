@@ -9,18 +9,8 @@
         </div>
       </div>
       <div class="clear-item-cont on-desktop-and-tablet" />
-      <div class="ad-item-wrapper category-ad-grid-1">
-        <div class="ad-item">
-          <a class="ad-item-link" href="#"><img class="ad-item-img" src="/images/ad-banner-350x500-1.png"></a>
-          <a class="link-to-ad-prices link-underline" href="#">Разместить рекламу</a>
-        </div>
-      </div>
-      <div class="ad-item-wrapper category-ad-grid-2">
-        <div class="ad-item">
-          <a class="ad-item-link" href="#"><img class="ad-item-img" src="/images/ad-banner-350x500-2.png"></a>
-          <a class="link-to-ad-prices link-underline" href="#">Разместить рекламу</a>
-        </div>
-      </div>
+      <Adv pos="1" />
+      <Adv pos="2" />
       <Post
         v-for="mypost in posts"
         :key="mypost.id"
@@ -50,13 +40,15 @@
 import postsLoader from '@/components/mixins/PostsLoader.js'
 import urls from '@/assets/js/url'
 import Post from '@/components/Post'
+import Adv from '@/components/Adv'
 import LoadMore from '@/components/LoadMore'
 
 export default {
   transition: 'fade',
   components: {
     LoadMore,
-    Post
+    Post,
+    Adv
   },
   async asyncData ({ params, $axios }) {
     const res = await postsLoader.load({
