@@ -3,8 +3,17 @@
     <template v-if="isShowAll">
       <transition name="fadeFast" mode="out-in">
         <div v-if="!isShowMenu" key="burger" class="logo-and-nav-cont">
-          <a>
-            <span class="logo-triangle">▲</span>
+          <a class="logo-short-link" href="/">
+            <svg class="logo-short-link-svg">
+              <use xlink:href="/images/sprite.svg#logo-short" />
+            </svg>
+          </a>
+          <a href="#" class="burger-menu-link">
+            <span class="icon-burger">
+              <span class="icon-burger-line"></span>
+              <span class="icon-burger-line"></span>
+              <span class="icon-burger-line"></span>
+            </span>
           </a>
         </div>
         <div v-else key="normal" class="logo-and-nav-cont">
@@ -12,9 +21,7 @@
           <Navbar />
         </div>
       </transition>
-      <div
-        class="header-social-cont"
-      >
+      <div class="header-social-cont">
         <div class="header-social-cont-title-wrapper">
           <span class="header-social-cont-title">В соцсетях</span>
         </div>
