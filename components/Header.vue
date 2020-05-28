@@ -1,20 +1,19 @@
 <template>
   <header :class="headerClass">
-    <div style="display: none;" class="logo-cont">
-      <a class="logo-link" href="/">
-        <i>Эльбрус</i>
-        <span class="logo-triangle">▲</span>пресс
-      </a>
-    </div>
-    <div v-show="isShowMenu" class="logo-and-nav-cont">
-      <Logo />
-      <Navbar />
-    </div>
-    <transition name="fade">
+    <template v-if="isShowAll">
+      <transition name="fadeFast" mode="out-in">
+        <div v-if="!isShowMenu" key="burger" class="logo-and-nav-cont">
+          <a>
+            <span class="logo-triangle">▲</span>
+          </a>
+        </div>
+        <div v-else key="normal" class="logo-and-nav-cont">
+          <Logo v-show="isShowLogo" />
+          <Navbar />
+        </div>
+      </transition>
       <div
-        v-show="isShowMenu"
         class="header-social-cont"
-        @openSearch="menuFadeOut"
       >
         <div class="header-social-cont-title-wrapper">
           <span class="header-social-cont-title">В соцсетях</span>
@@ -24,7 +23,7 @@
         <a class="header-social-link social-link social-link-vk" :href="socialURL.vk" />
         <a class="header-social-link social-link social-link-twitter" :href="socialURL.twitter" />
       </div>
-    </transition>
+    </template>
     <div class="search">
       <SearchInput />
     </div>
@@ -44,28 +43,82 @@ export default {
     Logo,
     SearchInput
   },
+  fetch () {
+    if (this.$route.name === 'index') { this.headerClass = 'header-main-page' } else if (this.$route.name === 'search' || this.$route.name === 'search-s') { this.headerClass = 'header-search-page' } else { this.headerClass = 'header-inner-page' }
+  },
   data () {
     return {
       socialURL: urls.socials,
-      isShowMenu: true
+      isShowMenu: true,
+      isShowLogo: true,
+      isShowAll: true,
+      headerClass: 'header-main-page'
     }
+  },
+  beforeRouteLeave (to, from, next) {
+    console.log('a')
+    switch (to.name) {
+      case 'index': this.headerClass = 'header-main-page'
+        this.isShowAll = true
+        this.isShowMenu = true
+        this.isShowLogo = true
+        break
+      case 'search' || 'search-s': this.headerClass = 'header-search-page'
+        this.isShowAll = false
+        this.isShowMenu = true
+        this.isShowLogo = true
+        break
+      case 'category-slug':
+        this.isShowAll = false
+        this.isShowMenu = false
+        this.isShowLogo = false
+        break
+      default: this.headerClass = 'header-main-page'
+        this.isShowAll = true
+        this.isShowMenu = false
+        this.isShowLogo = false
+        break
+    }
+    next()
   },
   computed: {
-    headerClass () {
-      if (this.$route.name === 'index') { return 'header-main-page' }
-      if (this.$route.name === 'search' || this.$route.name === 'search-s') { return 'header-search-page' }
-      return 'header-inner-page'
-    }
+    // headerClass: {
+    //   get () {
+    //     if (this.$route.name === 'index') { return 'header-main-page' }
+    //     if (this.$route.name === 'search' || this.$route.name === 'search-s') { return 'header-search-page' }
+    //     return 'header-inner-page'
+    //   },
+    //   set (value) {
+    //     this.headerClass = value
+    //   }
+    // }
   },
   created () {
-    this.$on('goSearch', (searchString) => {
+    // this.$route.meta
+    this.$root.$on('goSearch', (searchString) => {
       console.log('a')
       this.$emit('goSearch', 'asd')
+    })
+    this.$root.$on('openSearch', () => { this.menuFadeOut() })
+    this.$root.$on('closeSearch', () => { this.menuFadeIn() })
+  },
+  mounted () {
+    let animTrigger = 300
+    if (document.querySelector('.clear-item-cont ')) { animTrigger = document.querySelector('.clear-item-cont ').offsetHeight ?? 300 }
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > animTrigger) {
+        this.isShowMenu = false
+      } else {
+        this.isShowMenu = true
+      }
     })
   },
   methods: {
     menuFadeOut () {
-      this.isShowMenu = false
+      this.isShowAll = false
+    },
+    menuFadeIn () {
+      this.isShowAll = true
     }
   }
 }
@@ -79,12 +132,17 @@ export default {
     top: 0px;
  }
   .logo-and-nav-cont {
-      transition:  opacity 0.5s ease;
+      transition:  opacity 0.25s ease;
   }
 
- .header-search-page .logo-and-nav-cont  {
+ /* .header-search-page .logo-and-nav-cont  {
    opacity: 0;
 
- }
-
+ } */
+  .fadeFast-enter-active, .fadeFast-leave-active {
+    transition: opacity .25s;
+  }
+  .fadeFast-enter, .fadeFast-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+  }
 </style>

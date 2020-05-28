@@ -77,7 +77,7 @@ export default {
   },
   methods: {
     open () {
-      this.$emit('openSearch')
+      this.$root.$emit('openSearch')
       this.width = 'calc(100% - 4.2rem)'
       gsap.set(this, { isShowCloseButton: true, delay: 0.5 })
     },
@@ -86,6 +86,9 @@ export default {
       // gsap.set(this, { isOpened: false, delay: 0.2 })
       this.searchString = ''
       this.$router.go(-1)
+      window.setTimeout(() => {
+        this.$root.$emit('closeSearch')
+      }, 1000)
     },
     goSearch () {
       const newBlocks = searchParser.stringToBlocks(this.searchString)
