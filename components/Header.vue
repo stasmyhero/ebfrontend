@@ -67,47 +67,46 @@ export default {
       socialURL: urls.socials,
       isShowMenu: true,
       isShowLogo: true,
-      isShowAll: true,
-      headerClass: 'header-main-page'
+      isShowAll: true
     }
   },
-  beforeRouteLeave (to, from, next) {
-    console.log('a')
-    switch (to.name) {
-      case 'index': this.headerClass = 'header-main-page'
-        this.isShowAll = true
-        this.isShowMenu = true
-        this.isShowLogo = true
-        break
-      case 'search' || 'search-s': this.headerClass = 'header-search-page'
-        this.isShowAll = false
-        this.isShowMenu = true
-        this.isShowLogo = true
-        break
-      case 'category-slug':
-        this.isShowAll = false
-        this.isShowMenu = false
-        this.isShowLogo = false
-        break
-      default: this.headerClass = 'header-main-page'
-        this.isShowAll = true
-        this.isShowMenu = false
-        this.isShowLogo = false
-        break
-    }
-    next()
-  },
+  // beforeRouteLeave (to, from, next) {
+  //   console.log('a')
+  //   switch (to.name) {
+  //     case 'index': this.headerClass = 'header-main-page'
+  //       this.isShowAll = true
+  //       this.isShowMenu = true
+  //       this.isShowLogo = true
+  //       break
+  //     case 'search' || 'search-s': this.headerClass = 'header-search-page'
+  //       this.isShowAll = false
+  //       this.isShowMenu = true
+  //       this.isShowLogo = true
+  //       break
+  //     case 'category-slug':
+  //       this.isShowAll = false
+  //       this.isShowMenu = false
+  //       this.isShowLogo = false
+  //       break
+  //     default: this.headerClass = 'header-main-page'
+  //       this.isShowAll = true
+  //       this.isShowMenu = false
+  //       this.isShowLogo = false
+  //       break
+  //   }
+  //   next()
+  // },
   computed: {
-    // headerClass: {
-    //   get () {
-    //     if (this.$route.name === 'index') { return 'header-main-page' }
-    //     if (this.$route.name === 'search' || this.$route.name === 'search-s') { return 'header-search-page' }
-    //     return 'header-inner-page'
-    //   },
-    //   set (value) {
-    //     this.headerClass = value
-    //   }
-    // }
+    headerClass: {
+      get () {
+        if (this.$route.name === 'index') { return 'header-main-page' }
+        if (this.$route.name === 'search' || this.$route.name === 'search-s') { return 'header-search-page' }
+        return 'header-inner-page'
+      },
+      set (value) {
+        this.headerClass = value
+      }
+    }
   },
   created () {
     // this.$route.meta
