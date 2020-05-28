@@ -52,6 +52,8 @@
 </template>
 
 <script>
+import urls from '@/assets/js/url'
+
 export default {
   name: 'Post',
   props: {
@@ -60,11 +62,9 @@ export default {
       default: false,
       required: true
     }
-    // page: {
-    //   type: [String, Number],
-    //   default: 1,
-    //   required: false
-    // }
+  },
+  mounted () {
+
   }
 }
 </script>

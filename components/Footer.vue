@@ -42,6 +42,7 @@
       </div>
       <div class="footer-bg-triangles">
         <svg
+          ref="triangleLeft"
           class="footer-bg-triangle-left"
           width="991"
           height="679"
@@ -55,6 +56,7 @@
           />
         </svg>
         <svg
+          ref="triangleRight"
           class="footer-bg-triangle-right"
           width="991"
           height="679"
@@ -86,13 +88,52 @@ export default {
   data () {
     return {
       menu: [],
-      socialURL: urls.socials
+      socialURL: urls.socials,
+      shift: 0,
+      maxShift: 58
     }
   },
   computed: {
     isShow () {
       return !(this.$route.name === 'search' || this.$route.name === 'search-s')
     }
+  },
+  mounted () {
+    this.shift = (window.scrollY > this.$el.offsetTop - 1000) ? this.maxShift : 0
+    this.$refs.triangleLeft.style.transform = `translate(-${this.maxShift}%)`
+    this.$refs.triangleRight.style.transform = `translate(${this.maxShift}%)`
+    window.addEventListener('scroll', () => {
+      this.shift = (window.scrollY > this.$el.offsetTop - 1000) ? this.maxShift : 0
+      if (this.shift !== 0) {
+        this.$refs.triangleLeft.style.transform = `translate(-${this.maxShift}%)`
+        this.$refs.triangleRight.style.transform = `translate(${this.maxShift}%)`
+      } else {
+        this.$refs.triangleLeft.style.transform = 'translate(-50%)'
+        this.$refs.triangleRight.style.transform = 'translate(50%)'
+      }
+    })
   }
 }
 </script>
+
+<style scoped>
+  .footer-bg-triangles {
+    width: 100%;
+    left:50%;
+    transform:translateX(-50%);
+    position:absolute;
+  }
+  .footer-bg-triangle-left, .footer-bg-triangle-right {
+    transition: all .5s linear;
+  }
+  .footer-bg-triangle-left {
+    left: 50%;
+    transform: translate(-50%);
+  }
+
+   .footer-bg-triangle-right {
+    right: 50%;
+    transform: translate(50%);
+  }
+
+</style>
