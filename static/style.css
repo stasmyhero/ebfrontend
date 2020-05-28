@@ -530,10 +530,10 @@ button:hover {
     z-index: 3;
 }
 
-.header-search-page .search {
+/* .header-search-page .search {
     position: fixed;
     width: calc(100% - 3.2rem);
-}
+} */
 
 .search-open.icon-search {
     display: inline-block;
@@ -569,10 +569,10 @@ button:hover {
     fill: var(--Gray100);
 }
 
-.header-search-page .logo-and-nav-cont,
+/* .header-search-page .logo-and-nav-cont,
 .header-search-page .header-social-cont {
     display: none;
-}
+} */
 
 .search-input-container {
     position: relative;

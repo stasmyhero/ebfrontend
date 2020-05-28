@@ -3,7 +3,7 @@
     <template v-if="$route.params.category === 'news'">
       <Single :slug="$route.params.slug" :post="post" />
     </template>
-    <template v-else>
+    <template v-else-if="$route.params.category">
       <SingleArticle :slug="$route.params.slug" :post="post" />
     </template>
     <LastPosts :posts="lastPosts" />
@@ -12,7 +12,7 @@
         <template v-if="isLoadedOnce">
           <infinite-loading
             spinner="spiral"
-            distance="500"
+            distance="300"
             @infinite="infiniteHandler"
           >
             <div slot="no-more" />
@@ -72,7 +72,7 @@ export default {
   },
   methods: {
     infiniteHandler ($state) {
-      if (this.isLoading === true) { return }
+      if (this.isLoading === true || this.isLoadedOnce === false) { return }
       this.isLoading = true
       const request = {
         endpoint: `${urls.restURL}/last/${this.page}`,

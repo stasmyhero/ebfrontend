@@ -23,7 +23,7 @@
       </div>
     </nuxt-link>
   </div>
-  <div v-else class="article-item-wrapper new-post" :class="'rubric-'+ post.category_id">
+  <div v-else-if="post.category_id" class="article-item-wrapper new-post" :class="'rubric-'+ post.category_id">
     <nuxt-link :to="'/'+ post.category_link + '/' + post.slug" class="article-item">
       <template v-if="post.thumb">
         <div class="article-item-ill-cont">
@@ -52,7 +52,6 @@
 </template>
 
 <script>
-import urls from '@/assets/js/url'
 
 export default {
   name: 'Post',
@@ -64,17 +63,6 @@ export default {
     }
   },
   mounted () {
-    console.log(this.post)
-    let loadPostview = false
-    if (!localStorage.getItem(this.post.id) && !loadPostview) {
-      loadPostview = false
-      const url = urls.restURL + '/postview/' + this.post.id
-      this.$axios.post(url)
-        .then((res) => {
-          loadPostview = true
-          localStorage.setItem(this.post.id, 'true')
-        })
-    }
   }
 }
 </script>
