@@ -56,8 +56,6 @@
     <LightBox v-show="isLightboxOpened" />
   </div>
 </template>
-  </div>
-</template>
 
 <script>
 import LightBox from '@/components/LightBox'
