@@ -46,7 +46,7 @@ export default {
       isError: false,
       isSubscribeSuccess: false,
       isUnSubscribeSuccess: false,
-      apiKey: '',
+      apiKey: '9af4d8381781baccb0f915e554f8798d',
       isAlreadySubscribed: false
     }
   },
@@ -58,7 +58,12 @@ export default {
         lists: 1
       }
       const res = await this.$axios.post(`${urls.apiBaseURL}/newsletter/v1/subscribe`, urls.restHeaders.data, data)
-      this.isSuccess = true
+      if (res.data.code === -1) {
+        this.isAlreadySubscribed = true
+      }
+      if (!res.data && res.status === 200) {
+        this.isSubscribeSuccess = true
+      }
     },
     async unSubscribe () {
       const data = {
@@ -67,10 +72,11 @@ export default {
         lists: 1
       }
       const res = await this.$axios.post(`${urls.apiBaseURL}/newsletter/v1/unsubscribe`, urls.restHeaders.data, data)
-      this.isUnSubscribeSuccess = true
+      if (res.data.length === 0 && res.status === 200) {
+        this.email = ''
+        this.isSubscribeSuccess = false
+      }
     }
   }
 }
 </script>
-  </div>
-</template>
