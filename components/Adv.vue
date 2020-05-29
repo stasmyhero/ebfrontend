@@ -18,7 +18,7 @@ export default {
   name: 'Adv',
   props: {
     pos: {
-      type: String,
+      type: Number,
       required: true,
       default: () => 1
     }

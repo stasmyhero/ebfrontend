@@ -62,7 +62,10 @@ export default {
       required: true
     }
   },
-  mounted () {
+  data () {
+    return {
+      isLightboxOpened: false
+    }
   }
 }
 </script>
