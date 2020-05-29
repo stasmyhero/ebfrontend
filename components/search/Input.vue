@@ -28,7 +28,7 @@
             class="search-request-item"
           />
         </template>
-        <input v-model="searchString" type="text" class="search-input" @keyup.enter="goSearch()" @keyup.delete="deleteLastBlock()">
+        <input v-model="searchString" type="text" class="search-input" @keyup.enter="goSearch()" ref="searchInput" @keyup.delete="deleteLastBlock()">
       </div>
     </transition>
   </div>
@@ -80,11 +80,14 @@ export default {
       this.$root.$emit('openSearch')
       this.width = 'calc(100% - 4.2rem)'
       gsap.set(this, { isShowCloseButton: true, delay: 0.5 })
+      this.$refs.searchInput.focus()
     },
     close () {
       this.isShowCloseButton = false
       // gsap.set(this, { isOpened: false, delay: 0.2 })
       this.searchString = ''
+      this.$refs.searchInput.blur()
+
       this.$router.go(-1)
       window.setTimeout(() => {
         this.$root.$emit('closeSearch')
