@@ -27,7 +27,7 @@
           </div>
         </template>
         <template v-else>
-           <div class="article-item-page-views-counter">
+          <div class="article-item-page-views-counter">
             1 просмотр
           </div>
         </template>
@@ -59,6 +59,29 @@ export default {
   props: {
     slug: String,
     post: Object
+  },
+  data () {
+    return {
+      isLightboxOpened: false
+    }
+  },
+  mounted () {
+    const images = document.querySelectorAll('.gallery-pic-wrapper')
+    console.log(images.length)
+    for (let i = 0; i < images.length; i++) {
+      images[i].addEventListener('click', () => {
+        if (!this.isLightboxOpened) {
+          const gallerObj = {
+            images: images[i].parentNode.querySelectorAll('.gallery-pic-wrapper'),
+            currentIndex: i
+          }
+          this.$root.$emit('openLightBox', gallerObj)
+          console.log(gallerObj.images)
+          this.isLightboxOpened = true
+        }
+      })
+    }
+    this.$root.$on('closeLightBox', () => { this.isLightboxOpened = false })
   }
 }
 </script>
