@@ -1,21 +1,24 @@
 <template>
-  <transition name="fade">
-    <div v-show="isShow && images.length > 0" class="wrapper">
-      <div class="overlay" />
-      <div class="cont">
-        <div class="left" @click="left">
-          L
+  <div class="gallery-lightbox-wrapper">
+    <transition-group name="fade">
+      <div v-show="isShow && images.length > 0" key="overlay" class="gallery-lightbox-overlay" />
+      <div v-show="isShow && images.length > 0" key="cont" class="gallery-lightbox-cont">
+        <div class="gallery-lightbox-left" @click="left" />
+        <div class="gallery-lightbox-body">
+          <img class="gallery-lightbox-current-image" :src="currentImg">
+          <div class="gallery-lightbox-numb">
+            {{ currentIndex+1 }} / {{ imgCount }}
+          </div>
         </div>
-        <div class="body">
-          <img class="current-image" :src="currentImg">
-          <div class="numb">{{ currentIndex+1 }} / {{ imgCount }}</div>
-        </div>
-        <div class="right" @click="right">
+        <div class="gallery-lightbox-right" @click="right">
           R
         </div>
+        <div class="gallery-lightbox-close" @click="close">
+          X
+        </div>
       </div>
-    </div>
-  </transition>
+    </transition-group>
+  </div>
 </template>
 
 <script>
@@ -32,7 +35,7 @@ export default {
     }
   },
   mounted () {
-    this.$root.$on('openLightBox', async (galleryData) => { await this.load(galleryData); this.open() })
+    this.$root.$on('openLightBox', (galleryData) => { this.load(galleryData); this.open() })
   },
   methods: {
     load (galleryData) {
@@ -68,13 +71,18 @@ export default {
     close () {
       this.isShow = false
       document.body.style.overflow = 'scroll'
+      this.$root.$emit('closeLightBox')
     }
   }
 }
 </script>
 
 <style scoped>
-  .overlay {
+  .gallery-lightbox-wrapper {
+    z-index: 101;
+  }
+
+  .gallery-lightbox-overlay {
     position: fixed;
     top: 0px;
     left: 0px;
@@ -86,7 +94,7 @@ export default {
     min-width: 100vw;
   }
 
-  .cont {
+  .gallery-lightbox-cont {
     position: fixed;
     left: 50%;
     transform: translateX(-50%);
@@ -95,11 +103,11 @@ export default {
     top:0;
   }
 
-  .left {
+  .gallery-lightbox-left {
     width: 2rem;
   }
 
-  .right {
+  .gallery-lightbox-right {
     width: 2rem;
   }
 </style>

@@ -1960,7 +1960,7 @@ footer input:matches([type="password"], [type="search"], [type="email"]):valid +
     padding: .1rem .4rem 0;
 }
 .footer-rubric-link:not(:last-child) {
-    margin-right: 3.6rem 
+    margin-right: 3.6rem
 }
 .footer-rubric-link:hover {
     border-color: var(--White100);

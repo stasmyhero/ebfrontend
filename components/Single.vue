@@ -53,13 +53,14 @@
         </template>
       </div>
     </div>
-    <LightBox />
+    <LightBox v-show="isLightboxOpened" />
+  </div>
+</template>
   </div>
 </template>
 
 <script>
 import LightBox from '@/components/LightBox'
-
 
 export default {
   name: 'Single',
