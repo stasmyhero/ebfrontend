@@ -9,7 +9,7 @@
     <template v-if="!isSubscribeSuccess">
       <form class="footer-email-subscribe-form" @submit.prevent="subsrcibe">
         <div class="input-wrapper">
-          <input type="email" class="subscribe-form-input" required>
+          <input v-model="email" type="email" class="subscribe-form-input" required>
           <label class="floating-label" data-placeholder="Ваш имейл" />
         </div>
         <input type="submit" class="subscribe-form-submit" value="Подписаться">
@@ -23,51 +23,53 @@
       </div>
     </template>
     <template v-if="isSubscribeSuccess">
-      <div
-        class=""
-        template
-      />
+      <div>Ваш email-адрес добавлен в рассылку</div>
+      <button @click="unSubscribe()">
+        Отписаться
+      </button>
     </template>
     <template v-if="isAlreadySubscribed">
       <div>Данный email-адрес уже находится в рассылке </div>
       <a @click="toSubsrcibeForm()">Назад</a>
     </template>
+  </div>
+</template>
+<script>
 
-    <script>
-      import urls from '@/assets/js/url'
+import urls from '@/assets/js/url'
 
-      export default {
-      name: 'Subscribe',
-      data () {
-      return {
+export default {
+  name: 'Subscribe',
+  data () {
+    return {
       email: '',
       isError: false,
       isSubscribeSuccess: false,
       isUnSubscribeSuccess: false,
       apiKey: ''
-      }
-      },
-      methods: {
-      async subsrcibe () {
+    }
+  },
+  methods: {
+    async subsrcibe () {
       const data = {
-      api_key: this.apiKey,
-      email: this.email,
-      lists: 1
+        api_key: this.apiKey,
+        email: this.email,
+        lists: 1
       }
-      const res = await this.$axios.post(`${urls.apiBaseURL}/newsletter/v1/subscribe`, urls.restHeaders.data)
+      const res = await this.$axios.post(`${urls.apiBaseURL}/newsletter/v1/subscribe`, urls.restHeaders.data, data)
       this.isSuccess = true
-      },
-      async unSubscribe () {
+    },
+    async unSubscribe () {
       const data = {
-      api_key: this.apiKey,
-      email: this.email,
-      lists: 1
+        api_key: this.apiKey,
+        email: this.email,
+        lists: 1
       }
-      const res = await this.$axios.post(`${urls.apiBaseURL}/newsletter/v1/unsubscribe`, urls.restHeaders.data)
+      const res = await this.$axios.post(`${urls.apiBaseURL}/newsletter/v1/unsubscribe`, urls.restHeaders.data, data)
       this.isUnSubscribeSuccess = true
-      }
-      }
-      }
-    </script>
+    }
+  }
+}
+</script>
   </div>
 </template>
