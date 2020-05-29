@@ -5,8 +5,8 @@
       <AttachedPosts :posts="attachedPosts" />
       <Telegram :link="socials.telegram" />
       <Twitter :link="socials.twitter" />
-      <Adv pos="1" />
-      <Adv pos="2" />
+      <Adv :pos="1" class="ad-item-wrapper mainpage-ad-grid-2" />
+      <Adv :pos="2" class="ad-item-wrapper mainpage-ad-grid-2" />
       <Post
         v-for="mypost in posts"
         :key="mypost.id"

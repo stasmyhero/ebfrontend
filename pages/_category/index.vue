@@ -9,8 +9,8 @@
         </div>
       </div>
       <div class="clear-item-cont on-desktop-and-tablet" />
-      <Adv pos="1" />
-      <Adv pos="2" />
+      <Adv pos="3" class="ad-item-wrapper mainpage-ad-grid-1"/>
+      <Adv pos="4" class="ad-item-wrapper mainpage-ad-grid-2"/>
       <Post
         v-for="mypost in posts"
         :key="mypost.id"
