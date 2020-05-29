@@ -46,7 +46,8 @@ export default {
       isError: false,
       isSubscribeSuccess: false,
       isUnSubscribeSuccess: false,
-      apiKey: ''
+      apiKey: '',
+      isAlreadySubscribed: false
     }
   },
   methods: {

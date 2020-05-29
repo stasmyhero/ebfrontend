@@ -1,9 +1,11 @@
 <template>
   <main>
-    <div class="page-title">
-      {{ pageTitle }}
+    <div class="news-body-cont">
+      <div class="news-item-page-header-cont">
+       <h1 class="news-item-page-header"> {{ pageTitle }} </h1>
+      </div>
+      <div class="news-item-text-wrapper" v-html="pageContent" />
     </div>
-    <div class="page-content" v-html="pageContent" />
   </main>
 </template>
 
@@ -13,18 +15,18 @@ import urls from '@/assets/js/url'
 export default {
   async asyncData ({ $axios, params, error }) {
     try {
-      const res = await $axios.get(urls.restURL + '/pages/?slug=' + params.pageslug, urls.restHeaders)
-      if (res.data.content) {
+      const res = await $axios.get(urls.apiBaseURL + 'wp-json/wp/v2/pages/?slug=' + params.pageslug, urls.restHeaders)
+      if (res.data.length > 0) {
         return {
-          pageTitle: res.data.title,
-          pageContent: res.data.content
+          pageTitle: res.data[0].title.rendered,
+          pageContent: res.data[0].content.rendered
         }
       } else {
         // eslint-disable-next-line no-throw-literal
         throw ({ statusCode: 404, message: 'Страница не найдена' })
       }
     } catch (error) {
-      error(error)
+      console.log(error)
     }
   }
 }
