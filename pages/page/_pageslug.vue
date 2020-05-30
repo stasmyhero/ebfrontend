@@ -14,9 +14,10 @@ import urls from '@/assets/js/url'
 
 export default {
   async asyncData ({ $axios, params, error }) {
+    console.log(error)
     try {
       const res = await $axios.get(urls.apiBaseURL + 'wp-json/wp/v2/pages/?slug=' + params.pageslug, urls.restHeaders)
-      if (res.data.length > 0) {
+      if (res.data.length > 0 && res.status !== 200) {
         return {
           pageTitle: res.data[0].title.rendered,
           pageContent: res.data[0].content.rendered
@@ -25,8 +26,8 @@ export default {
         // eslint-disable-next-line no-throw-literal
         throw ({ statusCode: 404, message: 'Страница не найдена' })
       }
-    } catch (error) {
-      console.log(error)
+    } catch (e) {
+      error(e)
     }
   }
 }

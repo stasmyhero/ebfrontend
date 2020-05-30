@@ -4,13 +4,15 @@
       <div class="superheader">
         <div class="superheader-inner">
           <nobr class="superheader-inner-nobr">
-            <template v-if="posts">{{ posts[0].category }}</template>
+            <template v-if="posts">
+              {{ posts[0].category }}
+            </template>
           </nobr>
         </div>
       </div>
       <div class="clear-item-cont on-desktop-and-tablet" />
-      <Adv :pos="3" class="ad-item-wrapper mainpage-ad-grid-1"/>
-      <Adv :pos="4" class="ad-item-wrapper mainpage-ad-grid-2"/>
+      <Adv :pos="3" class="ad-item-wrapper mainpage-ad-grid-1" />
+      <Adv :pos="4" class="ad-item-wrapper mainpage-ad-grid-2" />
       <Post
         v-for="mypost in posts"
         :key="mypost.id"
@@ -50,17 +52,30 @@ export default {
     Post,
     Adv
   },
-  async asyncData ({ params, $axios }) {
-    const res = await postsLoader.load({
-      paged: 1,
-      perPage: 10,
-      category: params.category,
-      method: `category/${params.category}`
-    }, $axios)
-    return {
-      posts: res.posts,
-      categoryID: res.posts[0].category_id,
-      isNeedToUpload: res.allCount > res.posts.length
+  async asyncData ({ params, $axios, error }) {
+    try {
+      const res = await postsLoader.load({
+        paged: 1,
+        perPage: 10,
+        category: params.category,
+        method: `category/${params.category}`
+      }, $axios, error)
+      if (!res) {
+        // eslint-disable-next-line no-throw-literal
+        throw ({ statusCode: 404, message: 'Страница не найдена' })
+      }
+      if (res.data.posts.length > 0 && res.status === 200) {
+        return {
+          posts: res.posts,
+          categoryID: res.posts[0].category_id,
+          isNeedToUpload: res.allCount > res.posts.length
+        }
+      } else {
+        // eslint-disable-next-line no-throw-literal
+        throw ({ statusCode: 404, message: 'Страница не найдена' })
+      }
+    } catch (e) {
+      error(e)
     }
   },
   data () {

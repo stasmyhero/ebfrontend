@@ -28,7 +28,7 @@ export default {
   components: {
     Post
   },
-  async asyncData ({ $axios, route }) {
+  async asyncData ({ $axios, route, error }) {
     // if (route.params.s === undefined || route.params.s === '') {
     //   return {
     //     posts: null,
@@ -72,6 +72,11 @@ export default {
   computed: {
     searchString () {
       return this.$route.fullPath
+    }
+  },
+  created () {
+    if ((!this.$route.query.w && !this.$route.query.t && !this.$route.query.a) && this.$route.params.s === 's') {
+      // this.error({ statusCode: 404, message: 'Страница не найдена' })
     }
   },
   mounted () {

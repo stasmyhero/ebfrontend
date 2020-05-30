@@ -42,12 +42,20 @@ export default {
     LastPosts,
     LoadMore
   },
-  async asyncData ({ $axios, params }) {
+  async asyncData ({ $axios, params, error }) {
     const request = {
       endpoint: `${urls.restURL}/single/${params.slug}`,
       headers: urls.restHeaders
     }
-    const res = await $axios.get(request.endpoint)
+    try {
+      const res = await $axios.get(request.endpoint)
+      if (res.data.day === false) {
+        // eslint-disable-next-line no-throw-literal
+        throw ({ statusCode: 404, message: 'Страница не найдена' })
+      }
+    } catch (e) {
+      error(e)
+    }
     const last = await postsLoader.load({
       paged: 1,
       perPage: 10,
