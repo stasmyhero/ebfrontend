@@ -1,13 +1,13 @@
 <template>
   <header :class="headerClass">
     <transition name="fadeFast" mode="out-in">
-      <div v-if="!isShowMenu" key="burger" class="logo-and-nav-cont logo-burger">
-        <a class="logo-short-link" @click.prevent="showMenu">
+      <div v-if="isBurger" key="burger" class="logo-and-nav-cont logo-burger">
+        <nuxt-link to="/" class="logo-short-link">
           <svg class="logo-short-link-svg">
             <use xlink:href="/images/sprite.svg#logo-short" />
           </svg>
-        </a>
-        <a href="#" class="burger-menu-link">
+        </nuxt-link>
+        <a class="burger-menu-link" @click.prevent="showMenu">
           <span class="icon-burger">
             <span class="icon-burger-line" />
             <span class="icon-burger-line" />
@@ -77,6 +77,9 @@ export default {
   computed: {
     headerClass () {
       return this.$store.getters['header/headerClass']
+    },
+    isBurger () {
+      return this.$store.getters['header/isBurger']
     }
   },
   created () {
@@ -92,9 +95,9 @@ export default {
     if (document.querySelector('.clear-item-cont ')) { animTrigger = document.querySelector('.clear-item-cont ').offsetHeight ?? 300 }
     window.addEventListener('scroll', () => {
       if (window.scrollY > animTrigger) {
-        this.isShowMenu = false
+        this.$store.commit('header/isBurger', true)
       } else if (this.$route.name !== 'category-slug') {
-        this.isShowMenu = true
+        this.$store.commit('header/isBurger', false)
       }
     })
   },
@@ -106,7 +109,8 @@ export default {
       this.isShowAll = true
     },
     showMenu () {
-      this.isShowMenu = true
+      this.$store.commit('header/isBurger', false)
+
     },
     hideMenu () {
       this.isShowMenu = false
@@ -132,6 +136,11 @@ export default {
 .header-search-page .header-social-cont  {
    opacity: 0;
  }
+
+  .header-search-page .logo-cont{
+    opacity: 0 !important;
+  }
+
 
   .header-inner-page .logo-cont{
     opacity: 0 !important;
