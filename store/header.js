@@ -1,5 +1,3 @@
-import urls from '@/assets/js/url'
-
 export const state = () => ({
   headerClass: 'header-main-page'
 })

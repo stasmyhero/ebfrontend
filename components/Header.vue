@@ -52,8 +52,6 @@
     </div>
   </header>
 </template>
-  </header>
-</template>
 
 <script>
 import urls from '@/assets/js/url.js'
@@ -77,15 +75,8 @@ export default {
     }
   },
   computed: {
-    headerClass: {
-      get () {
-        if (this.$route.name === 'index') { return 'header-main-page' }
-        if (this.$route.name === 'search' || this.$route.name === 'search-s') { return 'header-search-page' }
-        return 'header-inner-page'
-      },
-      set (value) {
-        this.headerClass = value
-      }
+    headerClass () {
+      return this.$store.getters['header/headerClass']
     }
   },
   created () {

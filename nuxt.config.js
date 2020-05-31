@@ -26,7 +26,8 @@ export default {
     ]
   },
   router: {
-    linkActiveClass: 'header-rubric-link-active'
+    linkActiveClass: 'header-rubric-link-active',
+    middleware: 'header'
   },
   /*
   ** Customize the progress-bar color
