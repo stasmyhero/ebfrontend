@@ -16,6 +16,11 @@
 <script>
 export default {
   props: ['error'],
-  layout: 'e'
+  layout: 'e',
+  head () {
+    return {
+      title: process.env.baseTitle + 'Ошибка'
+    }
+  }
 }
 </script>

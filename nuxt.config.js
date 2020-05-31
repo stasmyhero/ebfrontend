@@ -5,12 +5,15 @@ export default {
   ** Headers of the page
   */
   cache: true,
+  env: {
+    baseTitle: 'ЭльбрусПресс - '
+  },
   filenames: {
     // app: ({ isDev }) => isDev ? '[name].[hash].js' : '[chunkhash].js',
     // chunk: ({ isDev }) => isDev ? '[name].[hash].js' : '[chunkhash].js'
   },
   head: {
-    title: 'ЭльбрусПресс',
+    title: 'ЭльбрусПресс - Главная',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },

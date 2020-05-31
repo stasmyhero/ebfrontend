@@ -29,6 +29,7 @@
 <script>
 import postsLoader from '@/components/mixins/PostsLoader'
 import urls from '@/assets/js/url'
+import og from '@/assets/js/og'
 import Single from '@/components/Single'
 import SingleArticle from '@/components/SingleArticle'
 import LastPosts from '@/components/LastPosts.vue'
@@ -73,6 +74,21 @@ export default {
       isLoadedOnce: false,
       isNeedToUpload: true,
       isLoading: false
+    }
+  },
+  head () {
+    return {
+      title: process.env.baseTitle + this.post.post_title,
+      meta: [
+        { hid: 'og:title', name: 'og:title', content: 'ЭльбрусПресс - ' + this.post.post_title },
+        { hid: 'twitter:title', name: 'twitter:title', content: 'ЭльбрусПресс - ' + this.post.post_title },
+        { hid: 'og:description', name: 'og:description', content: this.post.subtitle || 'Новостной сайт ЭльбруссПресс' },
+        { hid: 'og:url', name: 'og:url', content: urls.baseURL + this.$route.fullPath },
+        { hid: 'twitter-description', name: 'twitter:description', content: this.post.subtitle || 'Новостной сайт ЭльбруссПресс' },
+        { hid: 'twitter-image', name: 'twitter:image', content: this.post.thumb || '' },
+        { hid: 'og-image', name: 'og:image', content: this.post.thumb || '' },
+        ...og
+      ]
     }
   },
   mounted () {

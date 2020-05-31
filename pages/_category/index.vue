@@ -41,6 +41,7 @@
 <script>
 import postsLoader from '@/components/mixins/PostsLoader.js'
 import urls from '@/assets/js/url'
+import og from '@/assets/js/og'
 import Post from '@/components/Post'
 import Adv from '@/components/Adv'
 import LoadMore from '@/components/LoadMore'
@@ -66,7 +67,9 @@ export default {
       return {
         posts: data.posts,
         isNeedToUpload: data.allCount > data.posts.length,
-        categoryID: data.posts[0].categoryID
+        categoryID: data.posts[0].categoryID,
+        categoryName: data.posts[0].category,
+        categoryDescription: data.categoryDescr
       }
     } catch (e) {
       error(e)
@@ -103,6 +106,22 @@ export default {
           this.isLoading = false
         })
         .catch((error) => { console.log(error) })
+    }
+  },
+  head () {
+    const meta = [
+      { hid: 'og:title', name: 'og:title', content: 'ЭльбрусПресс - ' + this.categoryName },
+      { hid: 'og:description', name: 'og:description', content: 'Рубрика ' + this.categoryDescription },
+      { hid: 'og:url', name: 'og:url', content: urls.baseURL + this.$route.fullPath },
+      { hid: 'twitter-description', name: 'twitter:description', content: this.categoryDescription },
+      { hid: 'twitter-image', name: 'twitter:image', content: '' },
+      { hid: 'og-image', name: 'og:image', content: '' },
+      { hid: 'description', name: 'description', content: this.categoryDescription }
+    ]
+    meta.push(...og)
+    return {
+      title: process.env.baseTitle + this.categoryName,
+      meta
     }
   }
 }
