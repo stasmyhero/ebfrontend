@@ -196,18 +196,18 @@ h3 {
 }
 
 h4 {
+    font-size: 2.8rem;
+    line-height: 3.6rem;
+}
+
+h5 {
     font-size: 2.4rem;
     line-height: 3.4rem;
 }
 
-h5 {
+h6 {
     font-size: 2rem;
     line-height: 2.8rem;
-}
-
-h6 {
-    font-size: 1.6rem;
-    line-height: 2.4rem;
 }
 
 a {
@@ -342,6 +342,13 @@ button:hover {
     content: '#';
 }
 
+hr {
+    background-color: var(--LightBlue100);
+    border: none;
+    display: block;
+    height: 2.5px;
+}
+
 @media (min-width: 0) {
     .on-desktop-and-tablet {
         display: none;
@@ -407,6 +414,7 @@ button:hover {
 }
 
 .search-close.icon-close {
+    cursor: pointer;
     height: 3.2rem;
     width: 3.2rem;
     position: absolute;
@@ -418,6 +426,19 @@ button:hover {
 .icon-close-svg {
     height: 3.2rem;
     width: 3.2rem;
+    transition: transform .175s ease-in-out;
+}
+
+.search-close.icon-close:hover .icon-close-svg {
+    transform: scale(1.075);
+}
+
+.icon-close-svg>use {
+    transition: fill .175s ease-in-out;
+}
+
+.search-close.icon-close:hover use {
+    fill: var(--LightBlue100);
 }
 
 
@@ -431,10 +452,6 @@ button:hover {
     z-index: 99;
 }
 
-.header-inner-page .logo-and-nav-cont {
-    margin-left: 1.6rem;
-}
-
 .logo-cont {
     background: var(--White100);
     display: inline-flex;
@@ -442,13 +459,22 @@ button:hover {
     padding: .8rem .4rem 0 .8rem;
 }
 
+.logo-short-link {
+    margin-left: 1.6rem;
+}
+
 .logo-short-link-svg {
     height: 4rem;
     width: 5.5rem;
 }
 
+.logo-short-link-svg>use {
+    transition: fill .5s ease-in-out;
+    will-change: fill;
+}
 .logo-short-link-svg:hover>use {
     fill: var(--LightBlue100);
+    transition: fill .5s ease-in-out;
 }
 
 .logo-footer-svg {
@@ -479,10 +505,13 @@ button:hover {
     display: block;
     float: right;
     height: 4rem;
+    position: relative;
     width: 5.2rem;
-    transition: margin .15s ease-in-out;
+    transition: transform .175s ease-in-out;
+    will-change: transform;
 }
 .burger-menu-link:hover .icon-burger {
+    transform: translateY(-2px);
 }
 
 .icon-burger-line {
@@ -490,11 +519,12 @@ button:hover {
     height: 2.5px;
     margin-bottom: 1.6rem;
     background-color: var(--Black100);
-    transition: background-color .15s linear, margin .15s ease-in-out;
+    transition: background-color .175s ease-in-out, margin .175s ease-in-out;
+    will-change: background-color, margin;
 }
-.site-header-rubrics-showmore:hover .icon-burger-line {
+.burger-menu-link:hover:hover .icon-burger-line {
     background-color: var(--LightBlue100);
-    margin-bottom: 8px;
+    margin-bottom: 1.8rem;
 }
 
 .icon-burger.icon-burger-close .icon-burger-line:nth-child(1){
@@ -644,6 +674,39 @@ button:hover {
     height: 8.8rem;
     padding-left: 6rem !important;
     width: 100%;
+}
+
+.search-request-item {
+    border-radius: 100px;
+    display: inline-block;
+    background: var(--LightBlue100);
+    
+    padding: 1.6rem 2rem;
+}
+
+.search-request-item:not(:last-child) {
+    margin-right: 1.2rem;
+}
+
+.icon-search-request-item-delete-svg {
+    cursor: pointer;
+    display: inline-block;
+    height: 1.9rem;
+    margin-right: .8rem;
+    transition: all .125s ease-in-out;
+    vertical-align: top;
+    width: 1.9rem;
+    will-change: transform;
+}
+.icon-search-request-item-delete-svg:hover {
+    transform: scale(1.1);
+}
+.icon-search-request-item-delete-svg>use {
+    transition: fill .15s ease-in-out;
+    will-change: fill;
+}
+.icon-search-request-item-delete-svg:hover>use {
+    fill: var(--White100);
 }
 
 .search-results-grid {
@@ -1372,6 +1435,50 @@ main {
     margin-top: 4.4rem;
 }
 
+.news-item-text-wrapper h1,
+.article-item-text-wrapper h1 {
+    margin-top: 4rem;
+}
+
+.news-item-text-wrapper h2,
+.article-item-text-wrapper h2,
+.news-item-text-wrapper h3,
+.article-item-text-wrapper h3 {
+    margin-top: 3.2rem;
+}
+
+.news-item-text-wrapper h4,
+.article-item-text-wrapper h4,
+.news-item-text-wrapper h5,
+.article-item-text-wrapper h5,
+.news-item-text-wrapper h6,
+.article-item-text-wrapper h6,
+.news-item-text-wrapper ul,
+.article-item-text-wrapper ul {
+    margin-top: 2.8rem;
+}
+
+.article-item-text-wrapper h1,
+.article-item-text-wrapper h2,
+.article-item-text-wrapper h3,
+.article-item-text-wrapper h4,
+.article-item-text-wrapper h5,
+.article-item-text-wrapper h6,
+.article-item-text-wrapper ul {
+    margin-left: 13.6rem;
+    max-width: 72.4rem;
+}
+
+.news-item-text-wrapper hr,
+.article-item-text-wrapper hr {
+    margin-top: 2.8rem;
+}
+
+.article-item-text-wrapper hr {
+    max-width: 72.4rem;
+    margin-left: 13.6rem;
+}
+
 .gallery-cont {
     display: grid;
     grid-gap: .1rem;
@@ -1603,6 +1710,7 @@ main {
 }
 
 .article-item-page-subheader {
+    font-family: var(--font-arnold);
     font-size: 4.4rem;
     line-height: 6rem;
 }
@@ -1628,11 +1736,21 @@ main {
     line-height: 4rem;
     margin: 3.2rem auto 4.4rem;
     max-width: 78.4rem;
-    padding-bottom: 2.8rem;
     text-align: center;
+}
+.article-item-subtitle:after {
+    background-image: url("data:image/svg+xml,%3Csvg width='19' height='13' viewBox='0 0 19 13' fill='…5 13L19 -9.53674e-07L0 -9.53674e-07L9.5 13Z' fill='black'/%3E%3C/svg%3E%0A");
+    content: '';
+    font-style: normal;
+    display: block;
+    height: 1.3rem;
+    margin: 2.8rem auto 0;
+    width: 1.9rem;
 }
 
 .article-item-text-wrapper {
+    font-size: 2rem;
+    line-height: 2.8rem;
     margin-top: 4.4rem;
     width: 100%;
 }
@@ -1868,7 +1986,7 @@ footer input:matches([type="password"], [type="search"], [type="email"]):valid +
 
 }
 
-.footer-email-subscribe-header>h4 {
+.footer-email-subscribe-header>h5 {
     letter-spacing: 0.06em;
     text-transform: uppercase;
 }

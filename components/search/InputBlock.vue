@@ -1,9 +1,7 @@
 <template>
   <div class="search-request-item">
+    <span class="search-request-item-delete" @click="$root.$emit('deleteBlock', ind)"><svg class="icon-search-request-item-delete-svg"><use xlink:href="/images/sprite.svg#icon-close-small" /></svg></span>
     {{ block }}
-    <span class="search-request-item-delete" @click="$root.$emit('deleteBlock', ind)">
-      X
-    </span>
   </div>
 </template>
 
