@@ -53,17 +53,17 @@ export default {
         // eslint-disable-next-line no-throw-literal
         throw ({ statusCode: 404, message: 'Страница не найдена' })
       }
+      const last = await postsLoader.load({
+        paged: 1,
+        perPage: 10,
+        method: 'last'
+      }, $axios)
+      return {
+        post: res.data,
+        lastPosts: last.posts
+      }
     } catch (e) {
       error(e)
-    }
-    const last = await postsLoader.load({
-      paged: 1,
-      perPage: 10,
-      method: 'last'
-    }, $axios)
-    return {
-      post: res.data,
-      lastPosts: last.posts
     }
   },
   data () {

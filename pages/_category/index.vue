@@ -53,26 +53,20 @@ export default {
     Adv
   },
   async asyncData ({ params, $axios, error }) {
+    let data = []
     try {
-      const res = await postsLoader.load({
+      data = await postsLoader.load({
         paged: 1,
         perPage: 10,
         category: params.category,
         method: `category/${params.category}`
       }, $axios, error)
-      if (!res) {
-        // eslint-disable-next-line no-throw-literal
-        throw ({ statusCode: 404, message: 'Страница не найдена' })
-      }
-      if (res.data.posts.length > 0 && res.status === 200) {
-        return {
-          posts: res.posts,
-          categoryID: res.posts[0].category_id,
-          isNeedToUpload: res.allCount > res.posts.length
-        }
-      } else {
-        // eslint-disable-next-line no-throw-literal
-        throw ({ statusCode: 404, message: 'Страница не найдена' })
+      // eslint-disable-next-line no-throw-literal
+      if (data === undefined) { throw ({ statusCode: 404, message: 'Страница не найдена' }) }
+      return {
+        posts: data.posts,
+        isNeedToUpload: data.allCount > data.posts.length,
+        categoryID: data.posts[0].categoryID
       }
     } catch (e) {
       error(e)
