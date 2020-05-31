@@ -4,7 +4,7 @@
       <h3>
         <i>Еженедельная</i>
       </h3>
-      <h4>Рассылка новостей</h4>
+      <h5>Рассылка новостей</h5>
     </div>
     <form class="footer-email-subscribe-form">
       <div class="input-wrapper">
