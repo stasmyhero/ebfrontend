@@ -3,7 +3,7 @@
   <div>
     <div class="ad-item" v-if="isLoaded">
       <a class="ad-item-link" :href="url"><img class="ad-item-img" :src="img"></a>
-      <a class="link-to-ad-prices link-underline" href="#">Разместить рекламу</a>
+      <nuxt-link to="pages/adv" class="link-to-ad-prices link-underline" href="#">Разместить рекламу</nuxt-link>
     </div>
     <div v-else class="ad-item-loading">
       Загрузка
