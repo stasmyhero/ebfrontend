@@ -19,7 +19,7 @@
         <div ref="thumb" class="attached-news-item-img-cont">
           <img v-if="currentPost.thumb" :src="currentPost.thumb">
         </div>
-        <div ref="gradient" class="attached-news-item-gradient-cont" :css="false" />
+        <div ref="gradient" class="attached-news-item-gradient-cont" :style="{ 'background': gradient }" />
       </div>
     </nuxt-link>
   </div>
@@ -45,36 +45,8 @@ export default {
     }
   },
   computed: {
-    className: {
-      get () {
-        return 'rubrics-' + this.currentPost.category_id
-      },
-      set (val) {
-        this.className = val
-      }
-    },
-    thumb () {
-      return this.currentPost.thumb
-    }
-  },
-  watch: {
-    className (oldClassName, newClassName) {
-      const bgGradient = background.gradients[this.currentPost.category_link]
-      gsap.to(this.$refs.gradient, {
-        background: bgGradient,
-        duration: 0.6,
-        ease: 'slow'
-      })
-    },
-    thumb (oldThumb, newThumb) {
-      if (this.currentPost.thumb === undefined) {
-        return
-      }
-      if (newThumb !== false) {
-        gsap.fromTo(this.$refs.thumb, { opacity: 0, duration: 0.0 }, { opacity: 1, duration: 0.4 })
-      } else {
-        gsap.to(this.$refs.thumb, { opacity: 1, duration: 0.4, delay: 0.2 })
-      }
+    gradient () {
+      return background.mobileGradients[this.currentPost.category_link]
     }
   }
 }

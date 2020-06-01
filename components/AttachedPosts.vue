@@ -21,7 +21,7 @@
     </template>
     <template v-else>
       <div v-for="post in posts" :key="post.id" class="attached-news-cont">
-        <CurrentAttachedPost :current-post="post" />
+        <MobileAttachedPost :current-post="post" />
       </div>
     </template>
   </div>
@@ -30,11 +30,14 @@
 <script>
 import urls from '@/assets/js/url.js'
 import CurrentAttachedPost from '@/components/CurrentAttachedPost'
+import MobileAttachedPost from '@/components/MobileAttachedPost'
+
 
 export default {
   name: 'AttachedPosts',
   components: {
-    CurrentAttachedPost
+    CurrentAttachedPost,
+    MobileAttachedPost
   },
   props: {
     posts: Array
@@ -61,3 +64,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .rubric-3 {
+    background: radial-gradient(55.58% 94.3% at 0% 77.4%, rgba(239, 228, 232, 0) 39.5%, rgba(239, 228, 232, 0.56) 61.93%, #e94c89 100%);
+  }
+</style>
