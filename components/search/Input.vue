@@ -28,7 +28,8 @@
             class="search-request-item"
           />
         </template>
-        <input v-model="searchString" type="text" class="search-input" @keyup.enter="goSearch()" ref="searchInput" @keyup.delete="deleteLastBlock()">
+        <input v-model="searchString" type="text" class="search-input" ref="searchInput" @keyup.enter="goSearch()" 
+        @keyup.delete="deleteLastBlock()">
       </div>
     </transition>
   </div>
