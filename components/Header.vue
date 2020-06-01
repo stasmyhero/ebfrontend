@@ -75,8 +75,15 @@ export default {
     }
   },
   computed: {
-    headerClass () {
-      return this.$store.getters['header/headerClass']
+    headerClass: {
+      get () {
+        if (this.$route.name === 'index') { return 'header-main-page' }
+        if (this.$route.name === 'search' || this.$route.name === 'search-s') { return 'header-search-page' }
+        return 'header-inner-page'
+      },
+      set (value) {
+        this.headerClass = value
+      }
     },
     isBurger () {
       return this.$store.getters['header/isBurger']
@@ -93,13 +100,16 @@ export default {
   mounted () {
     let animTrigger = 300
     if (document.querySelector('.clear-item-cont ')) { animTrigger = document.querySelector('.clear-item-cont ').offsetHeight ?? 300 }
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > animTrigger) {
-        this.$store.commit('header/isBurger', true)
-      } else if (this.$route.name !== 'category-slug') {
-        this.$store.commit('header/isBurger', false)
-      }
-    })
+    if (this.$store.getters['header/isMobile'] === false) {
+      window.addEventListener('scroll', () => {
+        if (this.$store.getters['header/isMobile'] === false) { return }
+        if (window.scrollY > animTrigger) {
+          this.$store.commit('header/isBurger', true)
+        } else if (this.$route.name !== 'category-slug') {
+          this.$store.commit('header/isBurger', false)
+        }
+      })
+    }
   },
   methods: {
     menuFadeOut () {
@@ -110,7 +120,6 @@ export default {
     },
     showMenu () {
       this.$store.commit('header/isBurger', false)
-
     },
     hideMenu () {
       this.isShowMenu = false
@@ -140,7 +149,6 @@ export default {
   .header-search-page .logo-cont{
     opacity: 0 !important;
   }
-
 
   .header-inner-page .logo-cont{
     opacity: 0 !important;

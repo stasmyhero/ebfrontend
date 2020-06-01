@@ -1,7 +1,9 @@
 export const state = () => ({
   headerClass: 'header-main-page',
   isBurger: false,
-  isShowMenu: true
+  isShowMenu: true,
+  isMobile: false,
+  isLogo: false
 })
 
 export const mutations = {
@@ -13,6 +15,12 @@ export const mutations = {
   },
   isShowMenu (state, val) {
     state.isShowMenu = val
+  },
+  isMobile (state, val) {
+    state.isMobile = val
+  },
+  isLogo (state, val) {
+    state.isLogo = val
   }
 }
 
@@ -21,6 +29,6 @@ export const mutations = {
 
 export const getters = {
   headerClass: s => s.headerClass,
-  isBurger: s => s.isBurger
-
+  isBurger: s => s.isBurger,
+  isMobile: s => s.isMobile
 }
