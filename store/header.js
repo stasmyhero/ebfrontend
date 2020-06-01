@@ -30,5 +30,6 @@ export const mutations = {
 export const getters = {
   headerClass: s => s.headerClass,
   isBurger: s => s.isBurger,
-  isMobile: s => s.isMobile
+  isMobile: s => s.isMobile,
+  isLogo: s => s.isLogo
 }

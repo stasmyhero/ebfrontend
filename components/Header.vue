@@ -15,8 +15,16 @@
           </span>
         </a>
       </div>
-      <div v-else key="normal" class="logo-and-nav-cont">
-        <Logo />
+      <div v-else-if="!isBurger && isLogo" key="normal" class="logo-and-nav-cont">
+        <Logo v-if="isLogo" />
+        <Navbar />
+      </div>
+      <div v-else-if="!isBurger && !isLogo" key="category" class="logo-and-nav-cont">
+        <nuxt-link to="/" class="logo-short-link">
+          <svg class="logo-short-link-svg">
+            <use xlink:href="/images/sprite.svg#logo-short" />
+          </svg>
+        </nuxt-link>
         <Navbar />
       </div>
     </transition>
@@ -87,6 +95,9 @@ export default {
     },
     isBurger () {
       return this.$store.getters['header/isBurger']
+    },
+    isLogo () {
+      return this.$store.getters['header/isLogo']
     }
   },
   created () {
@@ -100,16 +111,16 @@ export default {
   mounted () {
     let animTrigger = 300
     if (document.querySelector('.clear-item-cont ')) { animTrigger = document.querySelector('.clear-item-cont ').offsetHeight ?? 300 }
-    if (this.$store.getters['header/isMobile'] === false) {
-      window.addEventListener('scroll', () => {
-        if (this.$store.getters['header/isMobile'] === false) { return }
-        if (window.scrollY > animTrigger) {
-          this.$store.commit('header/isBurger', true)
-        } else if (this.$route.name !== 'category-slug') {
-          this.$store.commit('header/isBurger', false)
-        }
-      })
-    }
+    window.addEventListener('scroll', () => {
+      if (this.$store.getters['header/isMobile'] === false) { return }
+      if (window.scrollY > animTrigger) {
+        this.$store.commit('header/isBurger', true)
+        if (this.$route.name === 'index') { this.$store.commit('header/isLogo', true) }
+      } else if (this.$route.name !== 'category-slug') {
+        this.$store.commit('header/isBurger', false)
+        this.$store.commit('header/isLogo', false)
+      }
+    })
   },
   methods: {
     menuFadeOut () {
