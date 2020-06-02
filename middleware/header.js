@@ -22,7 +22,6 @@ export default function ({ route, isMobile, store }) {
     case 'category-slug': case 'page-slug' :
       store.commit('header/setHeaderClass', 'header-inner-page header-single')
       store.commit('header/isBurger', true)
-      store.commit('header/isLogo', false)
       break
   }
 }
