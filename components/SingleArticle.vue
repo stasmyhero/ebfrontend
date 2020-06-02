@@ -41,7 +41,7 @@
       {{ post.author }}
     </div>
     <template v-if="post.tags">
-      <div class="news-item-page-tags-cont">
+      <div class="article-item-page-tags-cont">
         <a
           v-for="tag in post.tags"
           :key="tag.id"
