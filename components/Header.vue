@@ -1,6 +1,6 @@
 <template>
   <header :class="headerClass">
-    <transition-group name="fadeFast" mode="out-in">
+    <transition name="fadeFast" mode="out-in">
       <div v-if="isBurger" key="burger" class="logo-and-nav-cont logo-burger">
         <nuxt-link to="/" class="logo-short-link">
           <svg class="logo-short-link-svg">
@@ -27,7 +27,7 @@
         </nuxt-link>
         <Navbar />
       </div>
-    </transition-group>
+    </transition>
     <div
       class="header-social-cont"
     >

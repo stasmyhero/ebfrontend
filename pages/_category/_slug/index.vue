@@ -38,7 +38,31 @@ import LastPosts from '@/components/LastPosts.vue'
 import LoadMore from '@/components/LoadMore.vue'
 
 export default {
-  transition: 'fade',
+  transition: {
+    name: 'fade',
+    beforeLeave (el) {
+      switch (this.$route.name) {
+        case 'search': case 'search-s' :
+          this.$store.commit('header/setHeaderClass', 'header-search-page header-search')
+          break
+        case 'index' :
+          this.$store.commit('header/setHeaderClass', 'header-main-page header-index')
+          this.$store.commit('header/isBurger', false)
+          this.$store.commit('header/isLogo', true)
+          break
+        case 'category' :
+          this.$store.commit('header/setHeaderClass', 'header-inner-page header-category')
+          this.$store.commit('header/isBurger', false)
+          this.$store.commit('header/isLogo', false)
+          break
+        case 'category-slug': case 'page-pageslug' :
+          this.$store.commit('header/setHeaderClass', 'header-inner-page header-single')
+          this.$store.commit('header/isBurger', true)
+          break
+        default: break
+      }
+    }
+  },
   components: {
     Single,
     SingleArticle,
@@ -80,6 +104,7 @@ export default {
   },
   mounted () {
     this.$root.$on('loadPosts', () => { this.isLoadedOnce = true })
+    console.log('mounted single')
   },
   methods: {
     infiniteHandler ($state) {

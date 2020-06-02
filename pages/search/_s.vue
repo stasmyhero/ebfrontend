@@ -24,7 +24,30 @@ import Post from '@/components/Post'
 
 export default {
   name: 'SearchPage',
-  transition: 'fade',
+  transition: {
+    name: 'fade',
+    beforeLeave (el) {
+      switch (this.$route.name) {
+        case 'search': case 'search-s' :
+          this.$store.commit('header/setHeaderClass', 'header-search-page header-search')
+          break
+        case 'index' :
+          this.$store.commit('header/setHeaderClass', 'header-main-page header-index')
+          this.$store.commit('header/isBurger', false)
+          this.$store.commit('header/isLogo', true)
+          break
+        case 'category' :
+          this.$store.commit('header/setHeaderClass', 'header-inner-page header-category')
+          this.$store.commit('header/isBurger', false)
+          this.$store.commit('header/isLogo', false)
+          break
+        case 'category-slug': case 'page-slug' :
+          this.$store.commit('header/setHeaderClass', 'header-inner-page header-single')
+          this.$store.commit('header/isBurger', true)
+          break
+      }
+    }
+  },
   components: {
     Post
   },
