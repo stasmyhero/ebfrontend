@@ -1,5 +1,5 @@
 <template>
-  <div class="social-item-wrapper telegram-item-wrapper" @mouseenter="playAnim()" @mouseleave="stopAnim()">
+  <div class="social-item-wrapper telegram-item-wrapper" @mouseenter="stopAnim()" @mouseleave="playAnim()">
     <a class="social-item telegram-item" :href="link">
       <div class="telegram-item-bg" />
       <div class="telegram-item-logo" />
@@ -22,7 +22,7 @@ export default {
   },
   data () {
     return {
-      playState: 'paused'
+      playState: 'play'
     }
   },
   methods: {

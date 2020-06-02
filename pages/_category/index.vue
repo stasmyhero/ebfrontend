@@ -18,6 +18,8 @@
         :key="mypost.id"
         :post="mypost"
       />
+    </div>
+    <div class="button-showmore-wrapper">
       <template v-if="isNeedToUpload">
         <template v-if="isLoadedOnce">
           <infinite-loading
@@ -29,12 +31,12 @@
           </infinite-loading>
         </template>
       </template>
+      <template v-if="!isLoadedOnce && isNeedToUpload">
+        <transition name="fade">
+          <LoadMore />
+        </transition>
+      </template>
     </div>
-    <template v-if="!isLoadedOnce && isNeedToUpload">
-      <transition name="fade">
-        <LoadMore />
-      </transition>
-    </template>
   </main>
 </template>
 
