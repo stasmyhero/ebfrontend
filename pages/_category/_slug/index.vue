@@ -8,20 +8,22 @@
     </template>
     <LastPosts :posts="lastPosts" />
     <template v-if="isNeedToUpload">
-      <transition name="fade">
-        <template v-if="isLoadedOnce">
-          <infinite-loading
-            spinner="spiral"
-            distance="300"
-            @infinite="infiniteHandler"
-          >
-            <div slot="no-more" />
-          </infinite-loading>
-        </template>
-        <template v-else>
-          <LoadMore />
-        </template>
-      </transition>
+      <div class="button-showmore-wrapper">
+        <transition name="fade">
+          <template v-if="isLoadedOnce">
+            <infinite-loading
+              spinner="spiral"
+              distance="300"
+              @infinite="infiniteHandler"
+            >
+              <div slot="no-more" />
+            </infinite-loading>
+          </template>
+          <template v-else>
+            <LoadMore />
+          </template>
+        </transition>
+      </div>
     </template>
   </main>
 </template>
@@ -76,21 +78,6 @@ export default {
       isLoading: false
     }
   },
-  head () {
-    return {
-      title: process.env.baseTitle + this.post.post_title,
-      meta: [
-        { hid: 'og:title', name: 'og:title', content: 'ЭльбрусПресс - ' + this.post.post_title },
-        { hid: 'twitter:title', name: 'twitter:title', content: 'ЭльбрусПресс - ' + this.post.post_title },
-        { hid: 'og:description', name: 'og:description', content: this.post.subtitle || 'Новостной сайт ЭльбруссПресс' },
-        { hid: 'og:url', name: 'og:url', content: urls.baseURL + this.$route.fullPath },
-        { hid: 'twitter-description', name: 'twitter:description', content: this.post.subtitle || 'Новостной сайт ЭльбруссПресс' },
-        { hid: 'twitter-image', name: 'twitter:image', content: this.post.thumb || '' },
-        { hid: 'og-image', name: 'og:image', content: this.post.thumb || '' },
-        ...og
-      ]
-    }
-  },
   mounted () {
     this.$root.$on('loadPosts', () => { this.isLoadedOnce = true })
   },
@@ -114,6 +101,21 @@ export default {
           this.isLoading = false
         })
         .catch((error) => { console.log(error) })
+    }
+  },
+  head () {
+    return {
+      title: process.env.baseTitle + this.post.post_title,
+      meta: [
+        { hid: 'og:title', name: 'og:title', content: 'ЭльбрусПресс - ' + this.post.post_title },
+        { hid: 'twitter:title', name: 'twitter:title', content: 'ЭльбрусПресс - ' + this.post.post_title },
+        { hid: 'og:description', name: 'og:description', content: this.post.subtitle || 'Новостной сайт ЭльбруссПресс' },
+        { hid: 'og:url', name: 'og:url', content: urls.baseURL + this.$route.fullPath },
+        { hid: 'twitter-description', name: 'twitter:description', content: this.post.subtitle || 'Новостной сайт ЭльбруссПресс' },
+        { hid: 'twitter-image', name: 'twitter:image', content: this.post.thumb || '' },
+        { hid: 'og-image', name: 'og:image', content: this.post.thumb || '' },
+        ...og
+      ]
     }
   }
 }
