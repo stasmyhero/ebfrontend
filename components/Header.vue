@@ -1,33 +1,33 @@
 <template>
   <header :class="headerClass">
-    <transition name="fadeFast" mode="out-in">
-      <div v-if="isBurger" key="burger" class="logo-and-nav-cont logo-burger">
-        <nuxt-link to="/" class="logo-short-link">
-          <svg class="logo-short-link-svg">
-            <use xlink:href="/images/sprite.svg#logo-short" />
-          </svg>
-        </nuxt-link>
-        <a class="burger-menu-link" @click.prevent="showMenu">
-          <span class="icon-burger">
-            <span class="icon-burger-line" />
-            <span class="icon-burger-line" />
-            <span class="icon-burger-line" />
-          </span>
-        </a>
-      </div>
-      <div v-else-if="!isBurger && isLogo" key="normal" class="logo-and-nav-cont">
-        <Logo v-if="isLogo" />
-        <Navbar />
-      </div>
-      <div v-else-if="!isBurger && !isLogo" key="category" class="logo-and-nav-cont">
-        <nuxt-link to="/" class="logo-short-link">
-          <svg class="logo-short-link-svg">
-            <use xlink:href="/images/sprite.svg#logo-short" />
-          </svg>
-        </nuxt-link>
-        <Navbar />
-      </div>
-    </transition>
+    <div class="logo-and-nav-cont">
+      <transition name="fadeFast" mode="out-in">
+        <div v-if="isLogo" key="normal">
+          <Logo />
+        </div>
+        <div v-else key="mobile">
+          <nuxt-link to="/" class="logo-short-link">
+            <svg class="logo-short-link-svg">
+              <use xlink:href="/images/sprite.svg#logo-short" />
+            </svg>
+          </nuxt-link>
+        </div>
+      </transition>
+      <transition name="fadeFast" mode="out-in">
+        <div v-if="isBurger" key="burger">
+          <a class="burger-menu-link" @click.prevent="showMenu">
+            <span class="icon-burger">
+              <span class="icon-burger-line" />
+              <span class="icon-burger-line" />
+              <span class="icon-burger-line" />
+            </span>
+          </a>
+        </div>
+        <div v-else key="normal">
+          <Navbar />
+        </div>
+      </transition>
+    </div>
     <div
       class="header-social-cont"
     >
@@ -57,6 +57,7 @@
     </div>
     <div class="search">
       <SearchInput />
+    </div>
     </div>
   </header>
 </template>
@@ -101,39 +102,33 @@ export default {
     }
   },
   created () {
-    // this.$route.meta
     this.$root.$on('goSearch', (searchString) => {
       this.$emit('goSearch', 'asd')
     })
     this.$root.$on('openSearch', () => { this.menuFadeOut() })
     this.$root.$on('closeSearch', () => { this.menuFadeIn() })
   },
-  mounted () {
+  beforeMount () {
     let animTrigger = 300
     if (document.querySelector('.clear-item-cont ')) { animTrigger = document.querySelector('.clear-item-cont ').offsetHeight ?? 300 }
+    if (window.scrollY > 300) {
+      this.$store.commit('header/isBurger', true)
+    }
+
     window.addEventListener('scroll', () => {
-      if (this.$store.getters['header/isMobile'] === false) { return }
+      if (this.$store.getters['header/isMobile'] === true) { return }
       if (window.scrollY > animTrigger) {
         this.$store.commit('header/isBurger', true)
-        if (this.$route.name === 'index') { this.$store.commit('header/isLogo', true) }
+        if (this.$route.name === 'index') { this.$store.commit('header/isLogo', false) }
       } else if (this.$route.name !== 'category-slug') {
         this.$store.commit('header/isBurger', false)
-        this.$store.commit('header/isLogo', false)
+        if (this.$route.name === 'index') { this.$store.commit('header/isLogo', true) }
       }
     })
   },
   methods: {
-    menuFadeOut () {
-      this.isShowAll = false
-    },
-    menuFadeIn () {
-      this.isShowAll = true
-    },
     showMenu () {
       this.$store.commit('header/isBurger', false)
-    },
-    hideMenu () {
-      this.isShowMenu = false
     }
   }
 }
@@ -148,20 +143,19 @@ export default {
  }
   .logo-and-nav-cont {
       transition:  opacity 0.25s ease;
+      display: flex;
+      flex-direction: row;
   }
 
  .header-search-page .logo-and-nav-cont  {
    opacity: 0;
  }
+
 .header-search-page .header-social-cont  {
    opacity: 0;
  }
 
   .header-search-page .logo-cont{
-    opacity: 0 !important;
-  }
-
-  .header-inner-page .logo-cont{
     opacity: 0 !important;
   }
 

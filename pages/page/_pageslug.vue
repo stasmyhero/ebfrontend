@@ -26,7 +26,7 @@ export default {
           this.$store.commit('header/isLogo', true)
           break
         case 'category' :
-          this.$store.commit('header/setHeaderClass', 'header-inner-page header-category')
+          this.$store.commit('header/setHeaderClass', 'header-inner-page')
           this.$store.commit('header/isBurger', false)
           this.$store.commit('header/isLogo', false)
           break

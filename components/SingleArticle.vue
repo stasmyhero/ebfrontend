@@ -67,7 +67,6 @@ export default {
   },
   mounted () {
     const images = document.querySelectorAll('.gallery-pic-wrapper')
-    console.log(images.length)
     for (let i = 0; i < images.length; i++) {
       images[i].addEventListener('click', () => {
         if (!this.isLightboxOpened) {
@@ -76,7 +75,6 @@ export default {
             currentIndex: i
           }
           this.$root.$emit('openLightBox', gallerObj)
-          console.log(gallerObj.images)
           this.isLightboxOpened = true
         }
       })

@@ -63,12 +63,13 @@ export default {
           break
         case 'category' :
           this.$store.commit('header/setHeaderClass', 'header-inner-page header-category')
-          this.$store.commit('header/isBurger', false)
+          // this.$store.commit('header/isBurger', false)
           this.$store.commit('header/isLogo', false)
           break
         case 'category-slug': case 'page-pageslug' :
           this.$store.commit('header/setHeaderClass', 'header-inner-page header-single')
           this.$store.commit('header/isBurger', true)
+          this.$store.commit('header/isLogo', false)
           break
       }
     }
