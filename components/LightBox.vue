@@ -3,18 +3,20 @@
     <transition-group name="fade">
       <div v-show="isShow && images.length > 0" key="overlay" class="gallery-lightbox-overlay" />
       <div v-show="isShow && images.length > 0" key="cont" class="gallery-lightbox-cont">
-        <div class="gallery-lightbox-left" @click="left" />
         <div class="gallery-lightbox-body">
           <img class="gallery-lightbox-current-image" :src="currentImg">
           <div class="gallery-lightbox-numb">
             {{ currentIndex+1 }} / {{ imgCount }}
           </div>
         </div>
+        <div class="gallery-lightbox-left" @click="left">
+          <svg class="icon-arrow-svg icon-arrow-left-svg"><use xlink:href="/images/sprite.svg#icon-arrow-left"></use></svg>
+        </div>
         <div class="gallery-lightbox-right" @click="right">
-          R
+          <svg class="icon-arrow-svg icon-arrow-right-svg"><use xlink:href="/images/sprite.svg#icon-arrow-right"></use></svg>
         </div>
         <div class="gallery-lightbox-close" @click="close">
-          X
+          <svg class="icon-close-svg"><use xlink:href="/images/sprite.svg#icon-close"></use></svg>
         </div>
       </div>
     </transition-group>
@@ -84,30 +86,101 @@ export default {
 
   .gallery-lightbox-overlay {
     position: fixed;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 100%;
-    background-color: #4444;
-    opacity: 0.8;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--Black92);
     z-index: 101;
     min-width: 100vw;
   }
 
   .gallery-lightbox-cont {
     position: fixed;
-    left: 50%;
-    transform: translateX(-50%);
     display: flex;
     z-index: 102;
-    top:0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+
+  .gallery-lightbox-body {
+    position: absolute;
+    top: 3.2rem;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .gallery-lightbox-current-image {
+    max-width: calc(100vw - 3.2rem);
+    max-height: 90vh;
+  }
+
+  .gallery-lightbox-close {
+    cursor: pointer;
+    position: absolute;
+    left: 1.6rem;
+    top: 3.2rem;
+    transition: transform .175s ease-in-out;
+    will-change: transform;
+  }
+  .gallery-lightbox-close:hover {
+    transform: scale(1.075);
+  }
+
+  .gallery-lightbox-close .icon-close-svg>use {
+    fill: var(--White56);
+    transition: fill .175s ease-in-out;
+  }
+  .gallery-lightbox-close:hover .icon-close-svg>use {
+    fill: var(--White100);
+  }
+
+  .gallery-lightbox-left,
+  .gallery-lightbox-right {
+    position: absolute;
+    height: 100%;
+    width: 10rem;
+  }
+  .gallery-lightbox-left:hover,
+  .gallery-lightbox-right:hover {
+    cursor: pointer;
   }
 
   .gallery-lightbox-left {
-    width: 2rem;
+    left: 0;
   }
 
   .gallery-lightbox-right {
-    width: 2rem;
+    right: 0;
+  }
+
+  .gallery-lightbox-left .icon-arrow-svg,
+  .gallery-lightbox-right .icon-arrow-svg {
+    top: calc(50vh - 1.8rem);
+    position: absolute;
+  }
+
+  .gallery-lightbox-left .icon-arrow-svg {
+    left: 1.6rem;
+  }
+
+  .gallery-lightbox-right .icon-arrow-svg {
+    right: 1.6rem;
+  }
+
+  .icon-arrow-svg>use {
+    fill: var(--White56);
+  }
+  .gallery-lightbox-left:hover>.icon-arrow-svg>use,
+  .gallery-lightbox-right:hover>.icon-arrow-svg>use {
+    fill: var(--White100);
+  }
+
+  .gallery-lightbox-numb {
+    color: var(--White100);
+    font-size: 2.4rem;
+    text-align: center;
   }
 </style>

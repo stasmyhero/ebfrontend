@@ -3,6 +3,7 @@
 
 :root {
     --Black100: #000;
+    --Black92: rgba(0, 0, 0, .92);
     --Black4: rgba(0, 0, 0, .04);
 
     --LightBlack100: #252525;
@@ -443,6 +444,14 @@ hr {
     fill: var(--LightBlue100);
 }
 
+.icon-arrow-svg {
+    height: 3.2rem;
+    width: 3.2rem;
+}
+
+.icon-arrow-svg>use {
+    transition: all .175s ease-in-out;
+}
 
 
 /* Logo */
@@ -620,7 +629,7 @@ hr {
     top: .8rem;
     right: 1.6rem;
     width: 4.2rem;
-    z-index: 3;
+    z-index: 100;
 }
 
 /* .header-search-page .search {
@@ -641,7 +650,8 @@ hr {
     transform: scale(1.1);
 }
 
-.header-search-page .search-open.icon-search:hover {
+.header-search-page .search-open.icon-search.nuxt-link-exact-active {
+    cursor: default !important;
     transform: none;
 }
 
@@ -1506,6 +1516,16 @@ main {
 .news-item-pic,
 .article-item-pic {
     display: block;
+}
+
+.news-item-pic {
+    height: inherit;
+    max-height: 80vh;
+    width: auto;
+    margin: 0 auto;
+}
+
+.article-item-pic {
     height: auto;
     width: 100%;
 }
@@ -1610,7 +1630,7 @@ main {
 }
 
 .article-image-cover-cont {
-    background-color: rgba(0,0,0,.12);
+    background-color: transparent;
     min-height: 32rem;
     height: auto;
     max-height: 64vh;
@@ -1749,7 +1769,7 @@ main {
     text-align: center;
 }
 .article-item-subtitle:after {
-    background-image: url("data:image/svg+xml,%3Csvg width='19' height='13' viewBox='0 0 19 13' fill='…5 13L19 -9.53674e-07L0 -9.53674e-07L9.5 13Z' fill='black'/%3E%3C/svg%3E%0A");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='19' height='13' viewBox='0 0 19 13' fill='none'%3E%3Cpath d='M9.5 13L19 -9.53674e-07L0 -9.53674e-07L9.5 13Z' fill='black'/%3E%3C/svg%3E%0A");
     content: '';
     font-style: normal;
     display: block;
@@ -2429,6 +2449,10 @@ footer input:matches([type="password"], [type="search"], [type="email"]):valid +
         margin-right: 1.6rem;
     }
 
+    .article-item-pic-comment-wrapper {
+        margin-left: 1.6rem;
+    }
+
     .article-item-page-tags-cont,
     .article-author {
         margin-left: 1.6rem;
@@ -2523,8 +2547,11 @@ footer input:matches([type="password"], [type="search"], [type="email"]):valid +
         font-size: 8rem;
     }
 }
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> des
 
  /*animations */
 
@@ -2600,5 +2627,3 @@ opacity: 0;
   animation: loadingRight 0.5s linear;
   animation-iteration-count: infinite;
 }
-
-
