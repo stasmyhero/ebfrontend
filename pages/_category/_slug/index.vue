@@ -101,11 +101,21 @@ export default {
       lastPosts: [],
       isLoadedOnce: false,
       isNeedToUpload: true,
-      isLoading: false
+      isLoading: false,
+      loadPostview: false
     }
   },
   mounted () {
     this.$root.$on('loadPosts', () => { this.isLoadedOnce = true })
+    if (!localStorage.getItem(this.post.ID) && !this.loadPostview) {
+      this.loadPostview = true
+      const url = urls.restURL + '/postview/' + this.post.ID
+      this.$axios.post(url)
+        .then((res) => {
+          this.loadPostview = false
+          localStorage.setItem(this.post.ID, 'true')
+        })
+    }
   },
   methods: {
     infiniteHandler ($state) {
