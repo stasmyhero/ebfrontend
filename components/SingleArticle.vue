@@ -67,17 +67,20 @@ export default {
   },
   mounted () {
     const images = document.querySelectorAll('.gallery-pic-wrapper')
-    for (let i = 0; i < images.length; i++) {
-      images[i].addEventListener('click', () => {
-        if (!this.isLightboxOpened) {
-          const gallerObj = {
-            images: images[i].parentNode.querySelectorAll('.gallery-pic-wrapper'),
-            currentIndex: i
+    if (this.isMobile === false) {
+      for (let i = 0; i < images.length; i++) {
+        images[i].addEventListener('click', () => {
+          if (this.isMobile === true) { return }
+          if (!this.isLightboxOpened) {
+            const gallerObj = {
+              images: images[i].parentNode.querySelectorAll('.gallery-pic-wrapper'),
+              currentIndex: i
+            }
+            this.$root.$emit('openLightBox', gallerObj)
+            this.isLightboxOpened = true
           }
-          this.$root.$emit('openLightBox', gallerObj)
-          this.isLightboxOpened = true
-        }
-      })
+        })
+      }
     }
     this.$root.$on('closeLightBox', () => { this.isLightboxOpened = false })
   }
