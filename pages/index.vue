@@ -12,23 +12,30 @@
         :key="mypost.id"
         :post="mypost"
       />
+    </div>
+    <div class="button-showmore-wrapper">
       <template v-if="isNeedToUpload">
         <template v-if="isLoadedOnce">
           <infinite-loading
-            spinner="spiral"
             :distance="200"
             @infinite="infiniteHandler"
           >
             <div slot="no-more" />
+            <div slot="spinner">
+              <div class="loading-triangle-wrapper">
+                <div class="loading-triangle loading-triangle-left" />
+                <div class="loading-triangle loading-triangle-right" />
+              </div>
+            </div>
           </infinite-loading>
         </template>
       </template>
+      <template v-if="!isLoadedOnce && isNeedToUpload">
+        <transition name="fade">
+          <LoadMore />
+        </transition>
+      </template>
     </div>
-    <template v-if="!isLoadedOnce && isNeedToUpload">
-      <transition name="fade">
-        <LoadMore />
-      </transition>
-    </template>
   </main>
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="social-item-wrapper twitter-item-wrapper" @mouseenter="playAnim()" @mouseleave="stopAnim()">
+  <div class="social-item-wrapper twitter-item-wrapper" @mouseenter="stopAnim()" @mouseleave="playAnim()">
     <a class="social-item twitter-item" :href="link">
       <div class="twitter-item-bg" />
       <div class="twitter-item-logo" />
@@ -22,7 +22,7 @@ export default {
   },
   data () {
     return {
-      playState: 'paused'
+      playState: 'play'
     }
   },
   methods: {
