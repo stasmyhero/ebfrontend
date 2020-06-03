@@ -42,12 +42,12 @@
     </div>
     <template v-if="post.tags">
       <div class="article-item-page-tags-cont">
-        <a
+        <nuxt-link
           v-for="tag in post.tags"
           :key="tag.id"
           class="tag"
-          :href="tag.url"
-        >{{ tag.name }}</a>
+          :to="'/search/?s=' + encodeURIComponent( JSON.stringify(['#'+ tag.name.replace(' ', '_')]))"
+        >{{ tag.name }}</nuxt-link>
       </div>
     </template>
   </div>

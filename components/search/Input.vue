@@ -34,7 +34,6 @@
           type="text"
           class="search-input"
           @keyup.enter="goSearch()"
-          @keyup.delete="deleteLastBlock()"
         >
       </div>
     </transition>

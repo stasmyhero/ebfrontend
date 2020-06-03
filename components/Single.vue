@@ -14,7 +14,9 @@
         </div>
         <template v-if="post.author">
           <div class="news-item-author-source-cont">
-            <a class="news-item-author-source-cont-link link-underline" href="#">{{ post.author }}</a>
+            <nuxt-link :to="'/search/?s=' + encodeURIComponent( JSON.stringify(['@'+ post.author.replace(' ','_')]))" class="news-item-author-source-cont-link link-underline">
+              {{ post.author }}
+            </nuxt-link>
           </div>
         </template>
         <div class="news-item-rubrics-cont">
@@ -43,12 +45,14 @@
         <div v-html="post.post_content" />
         <template v-if="post.tags">
           <div class="news-item-page-tags-cont">
-            <a
+            <nuxt-link
               v-for="tag in post.tags"
               :key="tag.id"
               class="tag"
-              :href="tag.url"
-            >{{ tag.name }}</a>
+              :to="'/search/?s=' + encodeURIComponent( JSON.stringify(['#'+ tag.name.replace(' ', '_')]))"
+            >
+              {{ tag.name }}
+            </nuxt-link>
           </div>
         </template>
       </div>
