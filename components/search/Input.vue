@@ -52,13 +52,6 @@ export default {
   components: {
     InputBlock
   },
-  fetch () {
-    if (this.$route.name === 'search' || this.$route.name === 'search-s') {
-      this.isShowCloseButton = true
-    } else {
-      this.isShowCloseButton = false
-    }
-  },
   data () {
     return {
       isAnimate: false,
@@ -80,8 +73,9 @@ export default {
       }
     }
   },
-  mounted () {
+  created () {
     this.$root.$on('deleteBlock', (index) => { this.deleteBlock(index) })
+    this.$root.$on('parseURL', (url) => { this.parseURL(url) })
   },
   methods: {
     open () {
@@ -92,24 +86,25 @@ export default {
     },
     close () {
       this.isShowCloseButton = false
-      // gsap.set(this, { isOpened: false, delay: 0.2 })
       this.searchString = ''
+      this.blocks = []
       this.$refs.searchInput.blur()
-
       this.$router.go(-1)
       window.setTimeout(() => {
         this.$root.$emit('closeSearch')
       }, 1000)
     },
     goSearch () {
-      const newBlocks = searchParser.stringToBlocks(this.searchString)
+      const newWords = searchParser.stringToWords(this.searchString)
+      const newBlocks = searchParser.parseWords(newWords)
       if (newBlocks.length === 0) { this.$root.$emit('goSearch', '') }
       this.blocks.push(...newBlocks)
       this.blocks = Array.from(new Set(this.blocks))
       this.searchString = ''
       const restString = searchParser.blocksToRestString(this.blocks)
       const urlString = searchParser.blocksToURLString(this.blocks)
-      window.history.replaceState({ }, '', urls.baseURL + '/search/?s=' + urlString)
+      window.history.replaceState({ }, '', urls.baseURL + 'search/?s=' + urlString)
+      console.log(restString)
       this.$root.$emit('goSearch', restString)
     },
     deleteBlock (ind) {
@@ -125,6 +120,12 @@ export default {
       if (this.blocks.length === 0 && this.searchString === '') {
         this.goSearch()
       }
+    },
+    parseURL (url) {
+      if (url === '') { return }
+      this.blocks = searchParser.URLtoBlocks(url)
+      const restString = searchParser.blocksToRestString(this.blocks)
+      this.$root.$emit('goSearch', restString)
     }
   }
 

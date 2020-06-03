@@ -28,9 +28,6 @@ export default {
     name: 'fade',
     beforeLeave (el) {
       switch (this.$route.name) {
-        case 'search': case 'search-s' :
-          this.$store.commit('header/setHeaderClass', 'header-search-page header-search')
-          break
         case 'index' :
           this.$store.commit('header/setHeaderClass', 'header-main-page header-index')
           this.$store.commit('header/isBurger', false)
@@ -44,8 +41,18 @@ export default {
         case 'category-slug': case 'page-slug' :
           this.$store.commit('header/setHeaderClass', 'header-inner-page header-single')
           this.$store.commit('header/isBurger', true)
+          this.$store.commit('header/isLogo', false)
           break
       }
+    },
+    beforeEnter (el) {
+      // if (this.$route.name === 'search-s') {
+      //   if (this.$route.query.s !== '' && this.$route.query.s !== undefined) {
+      //     window.setTimeout(() => {
+      //       this.$root.$emit('parseURL', this.$route.query.s)
+      //     }, 1000)
+      //   }
+      // }
     }
   },
   components: {
@@ -67,6 +74,11 @@ export default {
         this.searchRequest(restString)
       }
     })
+    if (this.$route.name === 'search-s') {
+      if (this.$route.query.s !== '' && this.$route.query.s !== undefined) {
+        this.$root.$emit('parseURL', this.$route.query.s)
+      }
+    }
   },
   methods: {
     // infiniteHandler ($state) {
@@ -100,12 +112,9 @@ export default {
         this.resultsCount = ''
         this.posts = []
         this.isLoading = false
-        if (this.$route.path !== '/search') { this.$router.replace({ path: '/search' }) }
         return
       }
       this.page = 1
-      if (this.isLoading === true) { return }
-      this.isLoading = true
       const request = {
         endpoint: `${urls.restURL}/search${restString}&page=${this.page}`,
         headers: urls.restHeaders
@@ -118,13 +127,11 @@ export default {
           this.resultsCount = res.data.resultsCount
           this.page += 1
           this.isLoading = false
-          if (this.$route.path !== '/search' + restString) { this.$router.replace({ path: '/search' + restString }) }
         } else {
           this.posts = false
           this.isNeedToUpload = false
           this.resultsCount = ''
           this.isLoading = false
-          if (this.$route.path !== '/search' + restString) { this.$router.replace({ path: '/search' + restString }) }
         }
         this.isLoading = false
       } catch (error) {

@@ -10,34 +10,36 @@ export default {
   parseString (s) {
     if (s.trim() === '') { return false }
 
-    const w = this.stringToBlocks(s)
+    const w = this.stringToWords(s)
+    const b = this.parseWords(w)
     const restSearchString = this.blocksToRestString(w)
     return {
       restString: restSearchString,
-      blocks: w
+      blocks: b,
+      words: w
     }
   },
-  stringToBlocks (s) {
+  stringToWords (s) {
     if (s.trim() === '') { return [] }
     const inputString = this.sanitizeString(s)
     const w = inputString.split(' ')
     return w.filter(w => w.trim() !== '')
   },
-  blocksToRestString (w) {
+  blocksToRestString (b) {
     const fullString = []
     const tags = []
     const authors = []
-    w = Array.from(new Set(w))
-    for (const word of w) {
-      if (word[0] === '#') {
-        tags.push(word.replace('#', ''))
+    b = Array.from(new Set(b))
+    for (const block of b) {
+      if (block[0] === '#') {
+        tags.push(block.replace('#', ''))
         continue
       }
-      if (word[0] === '@') {
-        authors.push(word.replace('@', ''))
+      if (block[0] === '@') {
+        authors.push(block.replace('@', ''))
         continue
       }
-      fullString.push(word)
+      fullString.push(block)
     }
     let restSearchString = '/s?'
 
@@ -56,7 +58,32 @@ export default {
 
     return restSearchString
   },
-
+  parseWords (w) {
+    let phrase = ''
+    const blocks = []
+    w = Array.from(new Set(w))
+    for (const word of w) {
+      if (word[0] === '#') {
+        if (phrase !== '') {
+          blocks.push(phrase)
+          phrase = ''
+        }
+        blocks.push(word)
+        continue
+      }
+      if (word[0] === '@') {
+        if (phrase !== '') {
+          blocks.push(phrase)
+          phrase = ''
+        }
+        blocks.push(word)
+        continue
+      }
+      if (phrase === '') { phrase = word } else { phrase += (' ' + word) }
+    }
+    if (phrase !== '') { blocks.push(phrase) }
+    return blocks
+  },
   blocksToURLString (blocks) {
     return encodeURIComponent(JSON.stringify(blocks))
   },

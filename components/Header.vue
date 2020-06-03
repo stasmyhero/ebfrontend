@@ -58,7 +58,6 @@
     <div class="search">
       <SearchInput />
     </div>
-    </div>
   </header>
 </template>
 
