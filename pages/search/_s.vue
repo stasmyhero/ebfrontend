@@ -60,6 +60,14 @@ export default {
       resultsCount: ''
     }
   },
+  mounted () {
+    this.$root.$on('goSearch', (restString) => {
+      if (this.isLoading === false) {
+        this.isLoading = true
+        this.searchRequest(restString)
+      }
+    })
+  },
   methods: {
     // infiniteHandler ($state) {
     //   if (this.isLoading) { return }
@@ -87,6 +95,41 @@ export default {
     //     })
     // },
     async searchRequest (restString) {
+      if (restString === '' || restString === '/s?') {
+        this.isNeedToUpload = false
+        this.resultsCount = ''
+        this.posts = []
+        this.isLoading = false
+        if (this.$route.path !== '/search') { this.$router.replace({ path: '/search' }) }
+        return
+      }
+      this.page = 1
+      if (this.isLoading === true) { return }
+      this.isLoading = true
+      const request = {
+        endpoint: `${urls.restURL}/search${restString}&page=${this.page}`,
+        headers: urls.restHeaders
+      }
+      try {
+        const res = await this.$axios.get(request.endpoint)
+        if (res.data.posts.length > 0) {
+          this.posts = res.data.posts
+          this.isNeedToUpload = res.data.allCount > res.data.posts.length
+          this.resultsCount = res.data.resultsCount
+          this.page += 1
+          this.isLoading = false
+          if (this.$route.path !== '/search' + restString) { this.$router.replace({ path: '/search' + restString }) }
+        } else {
+          this.posts = false
+          this.isNeedToUpload = false
+          this.resultsCount = ''
+          this.isLoading = false
+          if (this.$route.path !== '/search' + restString) { this.$router.replace({ path: '/search' + restString }) }
+        }
+        this.isLoading = false
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 }

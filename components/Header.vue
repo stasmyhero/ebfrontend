@@ -101,13 +101,6 @@ export default {
       return this.$store.getters['header/isLogo']
     }
   },
-  created () {
-    this.$root.$on('goSearch', (searchString) => {
-      this.$emit('goSearch', 'asd')
-    })
-    this.$root.$on('openSearch', () => { this.menuFadeOut() })
-    this.$root.$on('closeSearch', () => { this.menuFadeIn() })
-  },
   mounted () {
     window.addEventListener('scroll', () => {
       if (this.$store.getters['header/isMobile'] === true) { return }

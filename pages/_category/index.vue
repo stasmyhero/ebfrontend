@@ -115,7 +115,6 @@ export default {
   },
   mounted () {
     this.$root.$on('loadPosts', () => { this.isLoadedOnce = true })
-    console.log('mounted ct')
   },
   methods: {
     infiniteHandler ($state) {

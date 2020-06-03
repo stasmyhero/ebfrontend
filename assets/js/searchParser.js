@@ -55,5 +55,12 @@ export default {
     if (restSearchString === 's?') { return false }
 
     return restSearchString
+  },
+
+  blocksToURLString (blocks) {
+    return encodeURIComponent(JSON.stringify(blocks))
+  },
+  URLtoBlocks (url) {
+    return JSON.parse(decodeURIComponent(url))
   }
 }

@@ -44,6 +44,7 @@
 <script>
 import gsap from 'gsap'
 import searchParser from '../../assets/js/searchParser'
+import urls from '../../assets/js/url'
 import InputBlock from '@/components/search/InputBlock'
 
 export default {
@@ -103,20 +104,12 @@ export default {
     goSearch () {
       const newBlocks = searchParser.stringToBlocks(this.searchString)
       if (newBlocks.length === 0) { this.$root.$emit('goSearch', '') }
-      // const acum = []
-      // for (const nb in newBlocks) {
-      //   for (const b in this.blocks) {
-      //     if (nb.toLowerCase() !== b.toLowerCase()) { this.acum }
-      //   }
-      // }
       this.blocks.push(...newBlocks)
       this.blocks = Array.from(new Set(this.blocks))
       this.searchString = ''
       const restString = searchParser.blocksToRestString(this.blocks)
-      // if (this.$route.fullPath !== ('/search' + parseResult.restString)) {
-      //   this.$router.replace({ path: '/search' + parseResult.restString })
-      // }
-      console.log(restString)
+      const urlString = searchParser.blocksToURLString(this.blocks)
+      window.history.replaceState({ }, '', urls.baseURL + '/search/?s=' + urlString)
       this.$root.$emit('goSearch', restString)
     },
     deleteBlock (ind) {
