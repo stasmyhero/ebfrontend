@@ -63,7 +63,11 @@ export default {
           break
         case 'category' :
           this.$store.commit('header/setHeaderClass', 'header-inner-page header-category')
-          // this.$store.commit('header/isBurger', false)
+          // if (window.scrollY > (document.querySelector('.clear-item-cont ').offsetHeight ?? 300)) {
+          //   this.$store.commit('header/isBurger', true)
+          // } else {
+          //   this.$store.commit('header/isBurger', false)
+          // }
           this.$store.commit('header/isLogo', false)
           break
         case 'category-slug': case 'page-pageslug' :

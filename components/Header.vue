@@ -108,16 +108,10 @@ export default {
     this.$root.$on('openSearch', () => { this.menuFadeOut() })
     this.$root.$on('closeSearch', () => { this.menuFadeIn() })
   },
-  beforeMount () {
-    let animTrigger = 300
-    if (document.querySelector('.clear-item-cont ')) { animTrigger = document.querySelector('.clear-item-cont ').offsetHeight ?? 300 }
-    if (window.scrollY > 300) {
-      this.$store.commit('header/isBurger', true)
-    }
-
+  mounted () {
     window.addEventListener('scroll', () => {
       if (this.$store.getters['header/isMobile'] === true) { return }
-      if (window.scrollY > animTrigger) {
+      if (window.scrollY > 300) {
         this.$store.commit('header/isBurger', true)
         if (this.$route.name === 'index') { this.$store.commit('header/isLogo', false) }
       } else if (this.$route.name !== 'category-slug') {

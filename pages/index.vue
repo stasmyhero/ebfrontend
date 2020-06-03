@@ -13,8 +13,8 @@
         :post="mypost"
       />
     </div>
-    <div class="button-showmore-wrapper">
-      <template v-if="isNeedToUpload">
+    <template v-if="isNeedToUpload">
+      <div class="button-showmore-wrapper">
         <template v-if="isLoadedOnce">
           <infinite-loading
             :distance="200"
@@ -29,13 +29,13 @@
             </div>
           </infinite-loading>
         </template>
-      </template>
-      <template v-if="!isLoadedOnce && isNeedToUpload">
-        <transition name="fade">
-          <LoadMore />
-        </transition>
-      </template>
-    </div>
+        <template v-if="!isLoadedOnce && isNeedToUpload">
+          <transition name="fade">
+            <LoadMore />
+          </transition>
+        </template>
+      </div>
+    </template>
   </main>
 </template>
 
@@ -59,12 +59,16 @@ export default {
           break
         case 'index' :
           this.$store.commit('header/setHeaderClass', 'header-main-page header-index')
-          this.$store.commit('header/isBurger', false)
-          this.$store.commit('header/isLogo', true)
+          // this.$store.commit('header/isBurger', false)
+          // this.$store.commit('header/isLogo', true)
           break
         case 'category' :
           this.$store.commit('header/setHeaderClass', 'header-inner-page header-category')
-          this.$store.commit('header/isBurger', false)
+          if (window.scrollY > (document.querySelector('.clear-item-cont ').offsetHeight ?? 300)) {
+            this.$store.commit('header/isBurger', true)
+          } else {
+            this.$store.commit('header/isBurger', false)
+          }
           this.$store.commit('header/isLogo', false)
           break
         case 'category-slug': case 'page-pageslug' :
@@ -109,11 +113,26 @@ export default {
       page: 2,
       isLoadedOnce: false,
       isLoading: false,
-      socials: urls.socials
+      socials: urls.socials,
+      isScrolled: false
     }
   },
 
   mounted () {
+    // if (this.$store.getters['header/isMobile'] === true) { return }
+    // window.addEventListener('scroll', () => {
+    //   this.isScrolled = true
+    // })
+    // if (this.isScrolled) {
+    //   if (window.scrollY > 300) {
+    //     this.$store.commit('header/isBurger', true)
+    //     this.$store.commit('header/isLogo', true)
+    //   } else {
+    //     this.$store.commit('header/isBurger', false)
+    //     this.$store.commit('header/isLogo', true)
+    //   }
+    // }
+
     this.$root.$on('loadPosts', () => { this.isLoadedOnce = true })
   },
   methods: {

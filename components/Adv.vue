@@ -2,13 +2,12 @@
 <template>
   <div>
     <div v-if="isLoaded" class="ad-item">
-      <a class="ad-item-link" :href="url"><img class="ad-item-img" :src="img"></a>
-      <nuxt-link to="pages/adv" class="link-to-ad-prices link-underline" href="#">
+      <a class="ad-item-link" :href="url">
+        <img class="ad-item-img" :src="img">
+      </a>
+      <nuxt-link to="pages/adv" class="link-to-ad-prices link-underline">
         Разместить рекламу
       </nuxt-link>
-    </div>
-    <div v-else class="ad-item-loading">
-      Загрузка
     </div>
   </div>
 </template>
@@ -29,8 +28,8 @@ export default {
     try {
       const res = await this.$axios.get(urls.restURL + `/adv/${this.pos}`)
       if (res.data !== false) {
-        this.img = res.data[Math.random() * res.data.length >> 0].img
-        this.url = res.data[Math.random() * res.data.length >> 0].url
+        this.img = res.data[(Math.random() * res.data.length) >> 0].img
+        this.url = res.data[(Math.random() * res.data.length) >> 0].url
         this.isLoaded = true
       }
     } catch (error) {
@@ -45,4 +44,5 @@ export default {
     }
   }
 }
+
 </script>
