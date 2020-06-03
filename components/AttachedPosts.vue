@@ -1,23 +1,21 @@
 <template>
   <div class="attached-news-cont">
     <template v-if="!isMobile">
-      <div class="attached-news-cont">
-        <ul class="attached-news-list">
-          <li
-            v-for="(post, index) in posts"
-            :key="post.id"
-            class="attached-news-list-item-link-cont"
-            :class="{ 'active': currentPost.id === post.id }"
-            @mouseover.prevent="changeCurrentPost(index)"
-          >
-            <nuxt-link class="attached-news-list-item-link" :to="`/${post.category_link}/${post.slug}`">
-              <span class="news-item-header">{{ post.title }}</span>
-              <span class="news-item-subheader">{{ post.subtitle }}</span>
-            </nuxt-link>
-          </li>
-        </ul>
-        <CurrentAttachedPost :current-post="currentPost" />
-      </div>
+      <ul class="attached-news-list">
+        <li
+          v-for="(post, index) in posts"
+          :key="post.id"
+          class="attached-news-list-item-link-cont"
+          :class="{ 'active': currentPost.id === post.id }"
+          @mouseover.prevent="changeCurrentPost(index)"
+        >
+          <nuxt-link class="attached-news-list-item-link" :to="`/${post.category_link}/${post.slug}`">
+            <span class="news-item-header">{{ post.title }}</span>
+            <span class="news-item-subheader">{{ post.subtitle }}</span>
+          </nuxt-link>
+        </li>
+      </ul>
+      <CurrentAttachedPost :current-post="currentPost" />
     </template>
     <template v-else>
       <div v-for="post in posts" :key="post.id" class="attached-news-cont">
@@ -31,7 +29,6 @@
 import urls from '@/assets/js/url.js'
 import CurrentAttachedPost from '@/components/CurrentAttachedPost'
 import MobileAttachedPost from '@/components/MobileAttachedPost'
-
 
 export default {
   name: 'AttachedPosts',

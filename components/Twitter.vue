@@ -1,5 +1,5 @@
 <template>
-  <div class="social-item-wrapper twitter-item-wrapper" @mouseenter="stopAnim()" @mouseleave="playAnim()">
+  <div class="social-item-wrapper twitter-item-wrapper">
     <a class="social-item twitter-item" :href="link">
       <div class="twitter-item-bg" />
       <div class="twitter-item-logo" />
@@ -66,11 +66,11 @@ export default {
   }
 }
 .rotating {
-  -webkit-animation: rotating 2s linear infinite;
-  -moz-animation: rotating 2s linear infinite;
-  -ms-animation: rotating 2s linear infinite;
-  -o-animation: rotating 2s linear infinite;
-  animation: rotating 2s linear infinite;
+  -webkit-animation: rotating 9s linear infinite;
+  -moz-animation: rotating 9s linear infinite;
+  -ms-animation: rotating 9s linear infinite;
+  -o-animation: rotating 9s linear infinite;
+  animation: rotating 9s linear infinite;
     animation-play-state:paused;
 
 }
