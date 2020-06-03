@@ -86,7 +86,6 @@ export default {
               currentIndex: i
             }
             this.$root.$emit('openLightBox', gallerObj)
-            console.log(gallerObj.images)
             this.isLightboxOpened = true
           }
         })
