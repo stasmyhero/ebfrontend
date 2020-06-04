@@ -1,7 +1,7 @@
 <template>
   <div class="attached-news-cont">
     <template v-if="!isMobile">
-      <div class="attached-news-cont">
+      <div class="attached-news-cont-inner">
         <ul class="attached-news-list">
           <li
             v-for="(post, index) in posts"
@@ -20,7 +20,7 @@
       </div>
     </template>
     <template v-else>
-      <div v-for="post in posts" :key="post.id" class="attached-news-cont">
+      <div v-for="post in posts" :key="post.id" class="attached-news-cont-inner">
         <MobileAttachedPost :current-post="post" />
       </div>
     </template>

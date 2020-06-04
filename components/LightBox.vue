@@ -114,6 +114,7 @@ export default {
 
   .gallery-lightbox-current-image {
     max-width: calc(100vw - 3.2rem);
+    height: 100%;
     max-height: 90vh;
   }
 

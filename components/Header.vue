@@ -14,7 +14,7 @@
         </div>
       </transition>
       <transition name="fadeFast" mode="out-in">
-        <div v-if="isBurger" key="burger">
+        <div v-if="isBurger" key="burger" class="burger-menu-link-wrapper" >
           <a class="burger-menu-link" @click.prevent="showMenu">
             <span class="icon-burger">
               <span class="icon-burger-line" />
@@ -23,7 +23,7 @@
             </span>
           </a>
         </div>
-        <div v-else key="normal">
+        <div v-else key="normal" class="header-rubrics-cont-wrapper">
           <Navbar />
         </div>
       </transition>
