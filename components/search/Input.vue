@@ -106,6 +106,10 @@ export default {
       }, 1000)
     },
     goSearch () {
+      if (this.searchString.trim() === '') {
+        this.searchString = ''
+        return
+      }
       const newWords = searchParser.stringToWords(this.searchString)
       const newBlocks = searchParser.parseWords(newWords)
       if (newBlocks.length === 0) { this.$root.$emit('goSearch', '') }
@@ -121,7 +125,11 @@ export default {
       this.$root.$emit('goSearch', restString)
     },
     deleteBlock (ind) {
-      console.log(ind)
+      if (ind === 0) {
+        this.paddingLeft = '6rem'
+        this.$root.$emit('goSearch', '')
+        this.$refs.searchInput.focus()
+      }
       this.blocks.splice(ind, 1)
       this.goSearch()
     },
@@ -146,6 +154,10 @@ export default {
 </script>
 
 <style scoped>
+  .search {
+    transition: width 0.5s linear;
+  }
+
   .search-request-wrapper {
     display: inline;
     position: absolute;

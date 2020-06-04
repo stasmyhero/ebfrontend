@@ -1,12 +1,12 @@
 <template>
   <main>
+    <div v-if="resultsCount !=='' " class="search-count">
+      {{ resultsCount }}
+    </div>
+    <div v-else-if="resultsCount === false">
+      Ничего не найдено
+    </div>
     <div class="search-results-grid">
-      <div v-if="resultsCount !=='' " class="search-count">
-        Найдено {{ resultsCount }}
-      </div>
-      <div v-else-if="resultsCount === false">
-        Ничего не найдено
-      </div>
       <template v-if="posts">
         <Post
           v-for="mypost in posts"
@@ -15,6 +15,20 @@
         />
       </template>
     </div>
+    <template v-if="isNeedToUpload">
+      <infinite-loading
+        :distance="200"
+        @infinite="infiniteHandler"
+      >
+        <div slot="no-more" />
+        <div slot="spinner">
+          <div class="loading-triangle-wrapper">
+            <div class="loading-triangle loading-triangle-left" />
+            <div class="loading-triangle loading-triangle-right" />
+          </div>
+        </div>
+      </infinite-loading>
+    </template>
   </main>
 </template>
 
@@ -81,31 +95,32 @@ export default {
     }
   },
   methods: {
-    // infiniteHandler ($state) {
-    //   if (this.isLoading) { return }
-    //   this.isLoading = true
-    //   const request = {
-    //     endpoint: `${urls.restURL}${this.searchString}&page=${this.page}`,
-    //     headers: urls.restHeaders
-    //   }
-    //   this.$axios.get(request.endpoint)
-    //     .then((res) => {
-    //       if (res.data.posts.length > 0) {
-    //         this.page += 1
-    //         this.posts.push(...res.data.posts)
-    //         this.isNeedToUpload = res.data.allCount > res.data.posts.length
-    //         this.resultsCount = res.data.resultsCount
-    //         this.isLoading = false
-    //         $state.loaded()
-    //       } else {
-    //         this.isLoading = true
-    //         $state.complete()
-    //       }
-    //     })
-    //     .catch((error) => {
-    //       console.log(error)
-    //     })
-    // },
+    infiniteHandler ($state) {
+      if (this.isLoading) { return }
+      if (this.isNeedToUpload === false) { return }
+      this.isLoading = true
+      const request = {
+        endpoint: `${urls.restURL}/search${this.restString}&page=${this.page}`,
+        headers: urls.restHeaders
+      }
+      this.$axios.get(request.endpoint)
+        .then((res) => {
+          if (res.data.posts.length > 0) {
+            this.page += 1
+            this.posts.push(...res.data.posts)
+            this.isNeedToUpload = res.data.allCount > res.data.posts.length
+            // this.resultsCount = res.data.resultsCount
+            this.isLoading = false
+            $state.loaded()
+          } else {
+            this.isLoading = true
+            $state.complete()
+          }
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    },
     async searchRequest (restString) {
       if (restString === '' || restString === '/s?') {
         this.isNeedToUpload = false
@@ -133,6 +148,7 @@ export default {
           this.resultsCount = ''
           this.isLoading = false
         }
+        this.restString = restString
         this.isLoading = false
       } catch (error) {
         console.log(error)
@@ -141,3 +157,10 @@ export default {
   }
 }
 </script>
+
+<style>
+  .search-count {
+    padding:12rem 6.8rem 0 2.6rem;
+  }
+
+</style>
