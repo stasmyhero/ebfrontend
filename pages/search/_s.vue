@@ -58,15 +58,6 @@ export default {
           this.$store.commit('header/isLogo', false)
           break
       }
-    },
-    beforeEnter (el) {
-      // if (this.$route.name === 'search-s') {
-      //   if (this.$route.query.s !== '' && this.$route.query.s !== undefined) {
-      //     window.setTimeout(() => {
-      //       this.$root.$emit('parseURL', this.$route.query.s)
-      //     }, 1000)
-      //   }
-      // }
     }
   },
   components: {
