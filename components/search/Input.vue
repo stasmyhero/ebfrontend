@@ -161,7 +161,7 @@ export default {
   .search-request-wrapper {
     display: inline;
     position: absolute;
-    top:1rem;
+    top: 1.6rem;
     padding-left: 6rem;
   }
 </style>
