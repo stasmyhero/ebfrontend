@@ -37,6 +37,7 @@
           type="text"
           class="search-input"
           @keyup.enter="goSearch()"
+          @keyup.delete="deleteBlock(blocks.length - 1)"
         >
       </div>
     </transition>
@@ -48,7 +49,6 @@
 </style>
 
 <script>
-import gsap from 'gsap'
 import searchParser from '../../assets/js/searchParser'
 import urls from '../../assets/js/url'
 import InputBlock from '@/components/search/InputBlock'
@@ -134,15 +134,6 @@ export default {
       }
       this.blocks.splice(ind, 1)
       this.goSearch()
-    },
-    deleteLastBlock () {
-      if (this.searchString === '' && this.blocks.length > 0) {
-        this.blocks.splice(-1, 1)
-        this.goSearch()
-      }
-      if (this.blocks.length === 0 && this.searchString === '') {
-        this.goSearch()
-      }
     },
     parseURL (url) {
       if (url === '') { return }
