@@ -41,6 +41,7 @@ export default {
   transition: {
     name: 'fade',
     beforeLeave (el) {
+      if (this.isMobile) { return }
       switch (this.$route.name) {
         case 'index' :
           this.$store.commit('header/setHeaderClass', 'header-main-page header-index')

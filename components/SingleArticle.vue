@@ -38,7 +38,9 @@
     </div>
     <div class="article-item-text-wrapper" v-html="post.post_content" />
     <div v-if="post.author" class="article-author">
-      {{ post.author }}
+      <nuxt-link :to="'/search/?s=' + encodeURIComponent( JSON.stringify(['@'+ post.author.replace(' ','_')]))">
+        {{ post.author }}
+      </nuxt-link>
     </div>
     <template v-if="post.tags">
       <div class="article-item-page-tags-cont">
@@ -47,7 +49,9 @@
           :key="tag.id"
           class="tag"
           :to="'/search/?s=' + encodeURIComponent( JSON.stringify(['#'+ tag.name.replace(' ', '_')]))"
-        >{{ tag.name }}</nuxt-link>
+        >
+          {{ tag.name }}
+        </nuxt-link>
       </div>
     </template>
   </div>

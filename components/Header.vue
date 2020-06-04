@@ -14,7 +14,7 @@
         </div>
       </transition>
       <transition name="fadeFast" mode="out-in">
-        <div v-if="isBurger" key="burger" class="burger-menu-link-wrapper" >
+        <div v-if="isBurger" key="burger" class="burger-menu-link-wrapper">
           <a class="burger-menu-link" @click.prevent="showMenu">
             <span class="icon-burger">
               <span class="icon-burger-line" />
@@ -101,6 +101,7 @@ export default {
     }
   },
   mounted () {
+    if (this.$store.getters['header/isMobile'] === true) { return }
     window.addEventListener('scroll', () => {
       if (this.$store.getters['header/isMobile'] === true) { return }
       if (window.scrollY > 300) {

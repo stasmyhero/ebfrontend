@@ -41,7 +41,7 @@ export default {
   transition: {
     name: 'fade',
     beforeLeave (el) {
-      if (this.isMobile) { return }
+      if (this.$store.getters['header/isMobile'] === true) { return }
       switch (this.$route.name) {
         case 'search': case 'search-s' :
           this.$store.commit('header/setHeaderClass', 'header-search-page header-search')
