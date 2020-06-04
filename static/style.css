@@ -1540,6 +1540,7 @@ main {
     height: inherit;
     max-height: 80vh;
     width: auto;
+    max-width: 100%;
     margin: 0 auto;
 }
 
@@ -2338,6 +2339,29 @@ footer input:matches([type="password"], [type="search"], [type="email"]):valid +
 
     .search-open.icon-search {
         top: 1.6rem;
+    }
+
+    .search-input {
+        height: 7.2rem;
+    }
+
+    .search-request-wrapper {
+        top: .8rem !important;
+        padding-left: 5.2rem !important;
+    }
+
+    .search-count {
+        padding: 10rem 1.6rem 0 !important;
+        font-size: 2.4rem !important;
+    }
+
+    .search-results-grid {
+        grid-template-rows: repeat(auto-fill, 100vw);
+        grid-template-columns: 100%;
+        overflow: hidden;
+        padding: 2.8rem 1.6rem;
+        width: 100%;
+        max-width: 100vw;
     }
 
     .header-main-page .header-social-cont,

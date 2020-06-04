@@ -151,7 +151,11 @@ export default {
 
 <style>
   .search-count {
-    padding:12rem 6.8rem 0 2.6rem;
+    padding: 16rem 6.8rem 0 2.6rem;
+    font-family: var(--font-arnold);
+    font-style: italic;
+    font-size: 7.2rem;
+    text-align: center;
   }
 
 </style>
