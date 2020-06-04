@@ -19,31 +19,38 @@
             <use xlink:href="/images/sprite.svg#icon-close" />
           </svg>
         </a>
-        <template v-if="blocks.length">
-          <InputBlock
-            v-for="(block, index) in blocks"
-            :key="index"
-            :block="block"
-            :ind="index"
-            class="search-request-item"
-          />
-        </template>
+        <div ref="wrapper" class="search-request-wrapper">
+          <template v-if="blocks.length">
+            <InputBlock
+              v-for="(block, index) in blocks"
+              :key="index"
+              :block="block"
+              :ind="index"
+              class="search-request-item"
+            />
+          </template>
+        </div>
         <input
           ref="searchInput"
           v-model="searchString"
+          :style="{ 'padding-left': paddingLeft }"
           type="text"
           class="search-input"
           @keyup.enter="goSearch()"
-          @keyup.delete="deleteLastBlock()"
         >
       </div>
     </transition>
   </div>
 </template>
 
+<style scoped>
+
+</style>
+
 <script>
 import gsap from 'gsap'
 import searchParser from '../../assets/js/searchParser'
+import urls from '../../assets/js/url'
 import InputBlock from '@/components/search/InputBlock'
 
 export default {
@@ -51,19 +58,13 @@ export default {
   components: {
     InputBlock
   },
-  fetch () {
-    if (this.$route.name === 'search' || this.$route.name === 'search-s') {
-      this.isShowCloseButton = true
-    } else {
-      this.isShowCloseButton = false
-    }
-  },
   data () {
     return {
       isAnimate: false,
       isShowCloseButton: false,
       searchString: '',
-      blocks: []
+      blocks: [],
+      paddingLeft: '6rem'
     }
   },
   computed: {
@@ -81,6 +82,10 @@ export default {
   },
   mounted () {
     this.$root.$on('deleteBlock', (index) => { this.deleteBlock(index) })
+    this.$root.$on('parseURL', (url) => { this.parseURL(url) })
+    window.setTimeout(() => {
+      if (this.blocks.length > 0) { console.log(this.$refs.wrapper.offsetWidth); this.paddingLeft = this.$refs.wrapper.offsetWidth + 10 + 'px' }
+    }, 100)
   },
   methods: {
     open () {
@@ -88,39 +93,43 @@ export default {
       this.width = 'calc(100% - 4.2rem)'
       gsap.set(this, { isShowCloseButton: true, delay: 0.5 })
       this.$refs.searchInput.focus()
+      this.paddingLeft = '6rem'
     },
     close () {
       this.isShowCloseButton = false
-      // gsap.set(this, { isOpened: false, delay: 0.2 })
       this.searchString = ''
+      this.blocks = []
       this.$refs.searchInput.blur()
-
       this.$router.go(-1)
       window.setTimeout(() => {
         this.$root.$emit('closeSearch')
       }, 1000)
     },
     goSearch () {
-      const newBlocks = searchParser.stringToBlocks(this.searchString)
+      if (this.searchString.trim() === '') {
+        this.searchString = ''
+        return
+      }
+      const newWords = searchParser.stringToWords(this.searchString)
+      const newBlocks = searchParser.parseWords(newWords)
       if (newBlocks.length === 0) { this.$root.$emit('goSearch', '') }
-      // const acum = []
-      // for (const nb in newBlocks) {
-      //   for (const b in this.blocks) {
-      //     if (nb.toLowerCase() !== b.toLowerCase()) { this.acum }
-      //   }
-      // }
       this.blocks.push(...newBlocks)
       this.blocks = Array.from(new Set(this.blocks))
+      this.$nextTick(() => {
+        if (this.blocks.length > 0) { this.paddingLeft = this.$refs.wrapper.offsetWidth + 10 + 'px' } else { this.paddingLeft = '6rem' }
+      })
       this.searchString = ''
       const restString = searchParser.blocksToRestString(this.blocks)
-      // if (this.$route.fullPath !== ('/search' + parseResult.restString)) {
-      //   this.$router.replace({ path: '/search' + parseResult.restString })
-      // }
-      console.log(restString)
+      const urlString = searchParser.blocksToURLString(this.blocks)
+      window.history.replaceState({ }, '', urls.baseURL + 'search/?s=' + urlString)
       this.$root.$emit('goSearch', restString)
     },
     deleteBlock (ind) {
-      console.log(ind)
+      if (ind === 0) {
+        this.paddingLeft = '6rem'
+        this.$root.$emit('goSearch', '')
+        this.$refs.searchInput.focus()
+      }
       this.blocks.splice(ind, 1)
       this.goSearch()
     },
@@ -132,6 +141,12 @@ export default {
       if (this.blocks.length === 0 && this.searchString === '') {
         this.goSearch()
       }
+    },
+    parseURL (url) {
+      if (url === '') { return }
+      this.blocks = searchParser.URLtoBlocks(url)
+      const restString = searchParser.blocksToRestString(this.blocks)
+      this.$root.$emit('goSearch', restString)
     }
   }
 
@@ -140,6 +155,13 @@ export default {
 
 <style scoped>
   .search {
-    transition: width 0.5s ease;
+    transition: width 0.5s linear;
+  }
+
+  .search-request-wrapper {
+    display: inline;
+    position: absolute;
+    top:1rem;
+    padding-left: 6rem;
   }
 </style>

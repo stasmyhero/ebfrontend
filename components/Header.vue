@@ -58,7 +58,6 @@
     <div class="search">
       <SearchInput />
     </div>
-    </div>
   </header>
 </template>
 
@@ -100,13 +99,6 @@ export default {
     isLogo () {
       return this.$store.getters['header/isLogo']
     }
-  },
-  created () {
-    this.$root.$on('goSearch', (searchString) => {
-      this.$emit('goSearch', 'asd')
-    })
-    this.$root.$on('openSearch', () => { this.menuFadeOut() })
-    this.$root.$on('closeSearch', () => { this.menuFadeIn() })
   },
   mounted () {
     window.addEventListener('scroll', () => {

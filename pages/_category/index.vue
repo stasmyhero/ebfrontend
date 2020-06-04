@@ -97,7 +97,7 @@ export default {
       return {
         posts: data.posts,
         isNeedToUpload: data.allCount > data.posts.length,
-        categoryID: data.posts[0].categoryID,
+        categoryID: data.posts[0].category_id,
         categoryName: data.posts[0].category,
         categoryDescription: data.categoryDescr
       }
@@ -115,7 +115,6 @@ export default {
   },
   mounted () {
     this.$root.$on('loadPosts', () => { this.isLoadedOnce = true })
-    console.log('mounted ct')
   },
   methods: {
     infiniteHandler ($state) {

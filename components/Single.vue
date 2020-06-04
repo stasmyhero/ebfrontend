@@ -14,7 +14,9 @@
         </div>
         <template v-if="post.author">
           <div class="news-item-author-source-cont">
-            <a class="news-item-author-source-cont-link link-underline" href="#">{{ post.author }}</a>
+            <nuxt-link :to="'/search/?s=' + encodeURIComponent( JSON.stringify(['@'+ post.author.replace(' ','_')]))" class="news-item-author-source-cont-link link-underline">
+              {{ post.author }}
+            </nuxt-link>
           </div>
         </template>
         <div class="news-item-rubrics-cont">
@@ -43,12 +45,14 @@
         <div v-html="post.post_content" />
         <template v-if="post.tags">
           <div class="news-item-page-tags-cont">
-            <a
+            <nuxt-link
               v-for="tag in post.tags"
               :key="tag.id"
               class="tag"
-              :href="tag.url"
-            >{{ tag.name }}</a>
+              :to="'/search/?s=' + encodeURIComponent( JSON.stringify(['#'+ tag.name.replace(' ', '_')]))"
+            >
+              {{ tag.name }}
+            </nuxt-link>
           </div>
         </template>
       </div>
@@ -76,18 +80,20 @@ export default {
   },
   mounted () {
     const images = document.querySelectorAll('.gallery-pic-wrapper')
-    for (let i = 0; i < images.length; i++) {
-      images[i].addEventListener('click', () => {
-        if (!this.isLightboxOpened) {
-          const gallerObj = {
-            images: images[i].parentNode.querySelectorAll('.gallery-pic-wrapper'),
-            currentIndex: i
+    if (this.isMobile === false) {
+      for (let i = 0; i < images.length; i++) {
+        images[i].addEventListener('click', () => {
+          if (this.isMobile) { return }
+          if (!this.isLightboxOpened) {
+            const gallerObj = {
+              images: images[i].parentNode.querySelectorAll('.gallery-pic-wrapper'),
+              currentIndex: i
+            }
+            this.$root.$emit('openLightBox', gallerObj)
+            this.isLightboxOpened = true
           }
-          this.$root.$emit('openLightBox', gallerObj)
-          console.log(gallerObj.images)
-          this.isLightboxOpened = true
-        }
-      })
+        })
+      }
     }
     this.$root.$on('closeLightBox', () => { this.isLightboxOpened = false })
   }

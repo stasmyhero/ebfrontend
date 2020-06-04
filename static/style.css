@@ -689,7 +689,7 @@ hr {
 .search-input {
     background: linear-gradient(360deg, #FFFFFF 86.78%, rgba(255, 255, 255, 0) 100%);
     height: 8.8rem;
-    padding-left: 6rem !important;
+    padding-left: 6rem;
     width: 100%;
 }
 

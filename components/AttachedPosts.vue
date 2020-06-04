@@ -1,6 +1,7 @@
 <template>
   <div class="attached-news-cont">
     <template v-if="!isMobile">
+<<<<<<< HEAD
       <div class="attached-news-cont-inner">
         <ul class="attached-news-list">
           <li
@@ -18,6 +19,23 @@
         </ul>
         <CurrentAttachedPost :current-post="currentPost" />
       </div>
+=======
+      <ul class="attached-news-list">
+        <li
+          v-for="(post, index) in posts"
+          :key="post.id"
+          class="attached-news-list-item-link-cont"
+          :class="{ 'active': currentPost.id === post.id }"
+          @mouseover.prevent="changeCurrentPost(index)"
+        >
+          <nuxt-link class="attached-news-list-item-link" :to="`/${post.category_link}/${post.slug}`">
+            <span class="news-item-header">{{ post.title }}</span>
+            <span class="news-item-subheader">{{ post.subtitle }}</span>
+          </nuxt-link>
+        </li>
+      </ul>
+      <CurrentAttachedPost :current-post="currentPost" />
+>>>>>>> master
     </template>
     <template v-else>
       <div v-for="post in posts" :key="post.id" class="attached-news-cont-inner">
@@ -31,7 +49,6 @@
 import urls from '@/assets/js/url.js'
 import CurrentAttachedPost from '@/components/CurrentAttachedPost'
 import MobileAttachedPost from '@/components/MobileAttachedPost'
-
 
 export default {
   name: 'AttachedPosts',
@@ -64,9 +81,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-  .rubric-3 {
-    background: radial-gradient(55.58% 94.3% at 0% 77.4%, rgba(239, 228, 232, 0) 39.5%, rgba(239, 228, 232, 0.56) 61.93%, #e94c89 100%);
-  }
-</style>
