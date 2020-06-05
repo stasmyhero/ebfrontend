@@ -37,6 +37,7 @@
           type="text"
           class="search-input"
           @keyup.enter="goSearch()"
+          @keyup.delete="deleteBlock(blocks.length - 1)"
         >
       </div>
     </transition>
@@ -48,7 +49,6 @@
 </style>
 
 <script>
-import gsap from 'gsap'
 import searchParser from '../../assets/js/searchParser'
 import urls from '../../assets/js/url'
 import InputBlock from '@/components/search/InputBlock'
@@ -61,7 +61,6 @@ export default {
   data () {
     return {
       isAnimate: false,
-      isShowCloseButton: false,
       searchString: '',
       blocks: [],
       paddingLeft: '6rem'
@@ -71,9 +70,13 @@ export default {
     isOpened () {
       return (this.$route.name === 'search' || this.$route.name === 'search-s')
     },
+    isShowCloseButton () {
+      return (this.$route.name === 'search' || this.$route.name === 'search-s')
+    },
     width: {
       get () {
-        return (this.$route.name === 'search' || this.$route.name === 'search-s') ? 'calc(100% - 4.2rem)' : '4.2rem'
+        const minus = this.$store.getters['header/isMobile'] ? '1.6rem' : '4.2rem'
+        return (this.$route.name === 'search' || this.$route.name === 'search-s') ? `calc(100% - ${minus})` : '4.2rem'
       },
       set (newValue) {
         return newValue
@@ -90,13 +93,12 @@ export default {
   methods: {
     open () {
       this.$root.$emit('openSearch')
-      this.width = 'calc(100% - 4.2rem)'
-      gsap.set(this, { isShowCloseButton: true, delay: 0.5 })
+      this.width = this.$store.getters['header/isMobile'] ? 'calc(100% - 1.6rem)' : 'calc(100% - 4.2rem)'
+      // gsap.set(this, { isShowCloseButton: true, delay: 0.5 })
       this.$refs.searchInput.focus()
       this.paddingLeft = '6rem'
     },
     close () {
-      this.isShowCloseButton = false
       this.searchString = ''
       this.blocks = []
       this.$refs.searchInput.blur()
@@ -132,15 +134,6 @@ export default {
       }
       this.blocks.splice(ind, 1)
       this.goSearch()
-    },
-    deleteLastBlock () {
-      if (this.searchString === '' && this.blocks.length > 0) {
-        this.blocks.splice(-1, 1)
-        this.goSearch()
-      }
-      if (this.blocks.length === 0 && this.searchString === '') {
-        this.goSearch()
-      }
     },
     parseURL (url) {
       if (url === '') { return }

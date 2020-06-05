@@ -53,14 +53,14 @@ export default {
   transition: {
     name: 'fade',
     beforeLeave (el) {
+      if (this.$store.getters['header/isMobile'] === true) { return }
       switch (this.$route.name) {
         case 'search': case 'search-s' :
           this.$store.commit('header/setHeaderClass', 'header-search-page header-search')
           break
         case 'index' :
           this.$store.commit('header/setHeaderClass', 'header-main-page header-index')
-          // this.$store.commit('header/isBurger', false)
-          // this.$store.commit('header/isLogo', true)
+          this.$root.$emit('openMenuPage')
           break
         case 'category' :
           this.$store.commit('header/setHeaderClass', 'header-inner-page header-category')
@@ -70,11 +70,12 @@ export default {
             this.$store.commit('header/isBurger', false)
           }
           this.$store.commit('header/isLogo', false)
+          this.$store.commit('header/isShowMenu', false)
           break
         case 'category-slug': case 'page-pageslug' :
           this.$store.commit('header/setHeaderClass', 'header-inner-page header-single')
-          this.$store.commit('header/isBurger', true)
           this.$store.commit('header/isLogo', false)
+          this.$root.$emit('closeMenuPage')
           break
       }
     }
@@ -119,21 +120,13 @@ export default {
   },
 
   mounted () {
-    // if (this.$store.getters['header/isMobile'] === true) { return }
-    // window.addEventListener('scroll', () => {
-    //   this.isScrolled = true
-    // })
-    // if (this.isScrolled) {
-    //   if (window.scrollY > 300) {
-    //     this.$store.commit('header/isBurger', true)
-    //     this.$store.commit('header/isLogo', true)
-    //   } else {
-    //     this.$store.commit('header/isBurger', false)
-    //     this.$store.commit('header/isLogo', true)
-    //   }
-    // }
-
-    this.$root.$on('loadPosts', () => { this.isLoadedOnce = true })
+    window.setTimeout(() => {
+      console.log(window.scrollY)
+      if (window.scrollY < 20) {
+        this.$root.$emit('openMenuScroll')
+      }
+      this.$root.$on('loadPosts', () => { this.isLoadedOnce = true })
+    }, 100)
   },
   methods: {
     infiniteHandler ($state) {

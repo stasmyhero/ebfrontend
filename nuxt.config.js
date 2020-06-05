@@ -9,15 +9,13 @@ export default {
     baseTitle: 'ЭльбрусПресс - '
   },
   filenames: {
-    // app: ({ isDev }) => isDev ? '[name].[hash].js' : '[chunkhash].js',
-    // chunk: ({ isDev }) => isDev ? '[name].[hash].js' : '[chunkhash].js'
   },
   head: {
     title: 'ЭльбрусПресс - Главная',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'Новостной сайт ЭльбрусПресс'}
+      { hid: 'description', name: 'description', content: 'Новостной сайт ЭльбрусПресс' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon-2.ico' },

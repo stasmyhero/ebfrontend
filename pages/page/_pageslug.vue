@@ -2,7 +2,9 @@
   <main>
     <div class="news-body-cont">
       <div class="news-item-page-header-cont">
-       <h1 class="news-item-page-header"> {{ pageTitle }} </h1>
+        <h1 class="news-item-page-header">
+          {{ pageTitle }}
+        </h1>
       </div>
       <div class="news-item-text-wrapper" v-html="pageContent" />
     </div>
@@ -16,6 +18,7 @@ export default {
   transition: {
     name: 'fade',
     beforeLeave (el) {
+      if (this.$store.getters['header/isMobile'] === true) { return }
       switch (this.$route.name) {
         case 'search': case 'search-s' :
           this.$store.commit('header/setHeaderClass', 'header-search-page header-search')
@@ -41,7 +44,7 @@ export default {
     console.log(error)
     try {
       const res = await $axios.get(urls.apiBaseURL + 'wp-json/wp/v2/pages/?slug=' + params.pageslug, urls.restHeaders)
-      if (res.data.length > 0 && res.status !== 200) {
+      if (res.data.length > 0 && res.status === 200) {
         return {
           pageTitle: res.data[0].title.rendered,
           pageContent: res.data[0].content.rendered

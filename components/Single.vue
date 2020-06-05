@@ -20,7 +20,7 @@
           </div>
         </template>
         <div class="news-item-rubrics-cont">
-          <a class="news-item-rubric-link link-underline rubric-1" :href="post.category_url">{{ post.category }}</a>
+          <nuxt-link class="news-item-rubric-link link-underline rubric-1" :to="post.category_link">{{ post.category }}</nuxt-link>
         </div>
         <template v-if="post.views">
           <div class="news-item-page-views-counter">
@@ -80,10 +80,10 @@ export default {
   },
   mounted () {
     const images = document.querySelectorAll('.gallery-pic-wrapper')
-    if (this.isMobile === false) {
+    if (this.$store.getters['header/isMobile'] === false) {
       for (let i = 0; i < images.length; i++) {
         images[i].addEventListener('click', () => {
-          if (this.isMobile) { return }
+          if (this.$store.getters['header/isMobile'] === true) { return }
           if (!this.isLightboxOpened) {
             const gallerObj = {
               images: images[i].parentNode.querySelectorAll('.gallery-pic-wrapper'),

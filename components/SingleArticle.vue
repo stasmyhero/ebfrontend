@@ -5,7 +5,7 @@
     </div>
     <div class="article-item-header-card" :class="'rubric-' + post.category_id">
       <div class="article-item-rubrics-cont">
-        <nuxt-link class="article-item-rubric-link link-underline" to="'/' + post.category_link">
+        <nuxt-link class="article-item-rubric-link link-underline" :to="'/' + post.category_link">
           {{ post.category }}
         </nuxt-link>
       </div>
@@ -38,7 +38,9 @@
     </div>
     <div class="article-item-text-wrapper" v-html="post.post_content" />
     <div v-if="post.author" class="article-author">
-      {{ post.author }}
+      <nuxt-link :to="'/search/?s=' + encodeURIComponent( JSON.stringify(['@'+ post.author.replace(' ','_')]))">
+        {{ post.author }}
+      </nuxt-link>
     </div>
     <template v-if="post.tags">
       <div class="article-item-page-tags-cont">
@@ -47,7 +49,9 @@
           :key="tag.id"
           class="tag"
           :to="'/search/?s=' + encodeURIComponent( JSON.stringify(['#'+ tag.name.replace(' ', '_')]))"
-        >{{ tag.name }}</nuxt-link>
+        >
+          {{ tag.name }}
+        </nuxt-link>
       </div>
     </template>
   </div>
@@ -67,10 +71,10 @@ export default {
   },
   mounted () {
     const images = document.querySelectorAll('.gallery-pic-wrapper')
-    if (this.isMobile === false) {
+    if (this.$store.getters['header/isMobile'] === false) {
       for (let i = 0; i < images.length; i++) {
         images[i].addEventListener('click', () => {
-          if (this.isMobile === true) { return }
+          if (this.$store.getters['header/isMobile']) { return }
           if (!this.isLightboxOpened) {
             const gallerObj = {
               images: images[i].parentNode.querySelectorAll('.gallery-pic-wrapper'),
