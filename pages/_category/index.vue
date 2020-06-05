@@ -112,6 +112,7 @@ export default {
   },
   mounted () {
     window.setTimeout(() => {
+      if (this.$store.getters['header/isMobile']) { return }
       if (window.scrollY < 20) {
         this.$root.$emit('openMenuScroll')
       }

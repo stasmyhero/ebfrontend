@@ -120,12 +120,13 @@ export default {
   },
 
   mounted () {
+    this.$root.$on('loadPosts', () => { this.isLoadedOnce = true })
     window.setTimeout(() => {
+      if (this.$store.getters['header/isMobile']) { return }
       console.log(window.scrollY)
       if (window.scrollY < 20) {
         this.$root.$emit('openMenuScroll')
       }
-      this.$root.$on('loadPosts', () => { this.isLoadedOnce = true })
     }, 100)
   },
   methods: {

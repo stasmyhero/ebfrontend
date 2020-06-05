@@ -41,7 +41,10 @@ export default {
   transition: {
     name: 'fade',
     beforeLeave (el) {
-      if (this.$store.getters['header/isMobile'] === true) { return }
+      if (this.$store.getters['header/isMobile'] === true) {
+        this.$root.$emit('closeMenuPage')
+        return
+      }
       switch (this.$route.name) {
         case 'search': case 'search-s' :
           this.$store.commit('header/setHeaderClass', 'header-search-page header-search')
@@ -58,9 +61,10 @@ export default {
           break
         case 'category-slug': case 'page-slug' :
           this.$store.commit('header/setHeaderClass', 'header-inner-page header-single')
-          this.$store.commit('header/isBurger', true)
           this.$store.commit('header/isLogo', false)
           this.$store.commit('header/isShowMenu', false)
+          this.$root.$emit('closeMenuPage')
+
           break
         default: break
       }

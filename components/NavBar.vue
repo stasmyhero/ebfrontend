@@ -1,6 +1,31 @@
 <template>
   <div class="header-rubrics-cont-wrapper">
-    <transition name="fadeFast" mode="out-in">
+    <template v-if="!isMobile">
+      <transition name="fadeFast" mode="out-in">
+        <a v-if="isBurger" class="burger-menu-link" @click.prevent="toggleMenu()">
+          <span class="icon-burger" :class="{'icon-burger-close': burgerButtonCloseState }">
+            <span class="icon-burger-line" />
+            <span class="icon-burger-line" />
+            <span class="icon-burger-line" />
+          </span>
+        </a>
+      </transition>
+      <div class="header-rubrics-cont-wrapper">
+        <nav class="header-rubrics-cont">
+          <nuxt-link
+            v-for="(menuItem, index) in menu"
+            :key="menuItem.ID"
+            class="rubric-link header-rubric-link"
+            :class="[ 'rubric-' + (index+1), { 'active': activeItem === (index+1) }]"
+            :to=" '/' + menuItem.url"
+            @click="setActive(index+1)"
+          >
+            {{ menuItem.title }}
+          </nuxt-link>
+        </nav>
+      </div>
+    </template>
+    <template v-else>
       <a v-if="isBurger" class="burger-menu-link" @click.prevent="toggleMenu()">
         <span class="icon-burger" :class="{'icon-burger-close': burgerButtonCloseState }">
           <span class="icon-burger-line" />
@@ -8,9 +33,7 @@
           <span class="icon-burger-line" />
         </span>
       </a>
-    </transition>
-    <div class="header-rubrics-cont-wrapper">
-      <nav class="header-rubrics-cont">
+      <nav v-show="false" class="header-rubrics-cont">
         <nuxt-link
           v-for="(menuItem, index) in menu"
           :key="menuItem.ID"
@@ -22,7 +45,7 @@
           {{ menuItem.title }}
         </nuxt-link>
       </nav>
-    </div>
+    </template>
   </div>
 </template>
 
