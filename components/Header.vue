@@ -13,20 +13,7 @@
           </nuxt-link>
         </div>
       </transition>
-      <transition name="fadeFast" mode="out-in">
-        <div v-if="isBurger" key="burger" class="burger-menu-link-wrapper">
-          <a class="burger-menu-link" @click.prevent="showMenu">
-            <span class="icon-burger">
-              <span class="icon-burger-line" />
-              <span class="icon-burger-line" />
-              <span class="icon-burger-line" />
-            </span>
-          </a>
-        </div>
-        <div v-else key="normal" class="header-rubrics-cont-wrapper">
-          <Navbar />
-        </div>
-      </transition>
+      <Navbar />
     </div>
     <div
       class="header-social-cont"
@@ -77,9 +64,8 @@ export default {
   data () {
     return {
       socialURL: urls.socials,
-      isShowLogo: true,
-      isShowAll: true,
-      isShowMenu: true
+      isMenuClose: false
+
     }
   },
   computed: {
@@ -93,9 +79,6 @@ export default {
         this.headerClass = value
       }
     },
-    isBurger () {
-      return this.$store.getters['header/isBurger']
-    },
     isLogo () {
       return this.$store.getters['header/isLogo']
     }
@@ -104,19 +87,20 @@ export default {
     if (this.$store.getters['header/isMobile'] === true) { return }
     window.addEventListener('scroll', () => {
       if (this.$store.getters['header/isMobile'] === true) { return }
-      if (window.scrollY > 300) {
-        this.$store.commit('header/isBurger', true)
+      if (window.scrollY > 20) {
+        if (this.isMenuClose === false) {
+          this.$root.$emit('closeMenuScroll')
+          this.isMenuClose = true
+        }
         if (this.$route.name === 'index') { this.$store.commit('header/isLogo', false) }
       } else if (this.$route.name !== 'category-slug') {
-        this.$store.commit('header/isBurger', false)
+        if (this.isMenuClose === true) {
+          this.$root.$emit('openMenuScroll')
+          this.isMenuClose = false
+        }
         if (this.$route.name === 'index') { this.$store.commit('header/isLogo', true) }
       }
     })
-  },
-  methods: {
-    showMenu () {
-      this.$store.commit('header/isBurger', false)
-    }
   }
 }
 </script>

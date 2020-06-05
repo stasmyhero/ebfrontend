@@ -59,22 +59,18 @@ export default {
           break
         case 'index' :
           this.$store.commit('header/setHeaderClass', 'header-main-page header-index')
-          this.$store.commit('header/isBurger', false)
           this.$store.commit('header/isLogo', true)
+          this.$root.$emit('closeMenuPage')
           break
         case 'category' :
           this.$store.commit('header/setHeaderClass', 'header-inner-page header-category')
-          // if (window.scrollY > (document.querySelector('.clear-item-cont ').offsetHeight ?? 300)) {
-          //   this.$store.commit('header/isBurger', true)
-          // } else {
-          //   this.$store.commit('header/isBurger', false)
-          // }
-          this.$store.commit('header/isLogo', false)
+          this.$root.$emit('closeMenuPage')
           break
         case 'category-slug': case 'page-pageslug' :
           this.$store.commit('header/setHeaderClass', 'header-inner-page header-single')
-          this.$store.commit('header/isBurger', true)
           this.$store.commit('header/isLogo', false)
+          this.$root.$emit('closeMenuPage')
+
           break
       }
     }
@@ -115,6 +111,12 @@ export default {
     }
   },
   mounted () {
+    window.setTimeout(() => {
+      if (window.scrollY < 20) {
+        this.$root.$emit('openMenuScroll')
+      }
+      this.$root.$on('loadPosts', () => { this.isLoadedOnce = true })
+    }, 50)
     this.$root.$on('loadPosts', () => { this.isLoadedOnce = true })
   },
   methods: {

@@ -48,18 +48,19 @@ export default {
           break
         case 'index' :
           this.$store.commit('header/setHeaderClass', 'header-main-page header-index')
-          this.$store.commit('header/isBurger', false)
           this.$store.commit('header/isLogo', true)
+          this.$root.$emit('openMenuPage')
           break
         case 'category' :
           this.$store.commit('header/setHeaderClass', 'header-inner-page header-category')
-          this.$store.commit('header/isBurger', false)
           this.$store.commit('header/isLogo', false)
+          this.$root.$emit('closeMenuPage')
           break
         case 'category-slug': case 'page-slug' :
           this.$store.commit('header/setHeaderClass', 'header-inner-page header-single')
           this.$store.commit('header/isBurger', true)
           this.$store.commit('header/isLogo', false)
+          this.$store.commit('header/isShowMenu', false)
           break
         default: break
       }

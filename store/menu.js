@@ -1,5 +1,7 @@
 import urls from '@/assets/js/url'
 
+export const strict = false
+
 export const state = () => ({
   menu: []
 })

@@ -5,7 +5,7 @@
     </div>
     <div class="article-item-header-card" :class="'rubric-' + post.category_id">
       <div class="article-item-rubrics-cont">
-        <nuxt-link class="article-item-rubric-link link-underline" to="'/' + post.category_link">
+        <nuxt-link class="article-item-rubric-link link-underline" :to="'/' + post.category_link">
           {{ post.category }}
         </nuxt-link>
       </div>
@@ -71,10 +71,10 @@ export default {
   },
   mounted () {
     const images = document.querySelectorAll('.gallery-pic-wrapper')
-    if (this.isMobile === false) {
+    if (this.$store.getters['header/isMobile'] === false) {
       for (let i = 0; i < images.length; i++) {
         images[i].addEventListener('click', () => {
-          if (this.isMobile === true) { return }
+          if (this.$store.getters['header/isMobile']) { return }
           if (!this.isLightboxOpened) {
             const gallerObj = {
               images: images[i].parentNode.querySelectorAll('.gallery-pic-wrapper'),
