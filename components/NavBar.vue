@@ -85,6 +85,19 @@ export default {
     this.$root.$on('openMenuPage', () => { this.openMenuPage() })
     this.$root.$on('closeMenuPage', () => { this.closeMenuPage() })
   },
+  mounted () {
+    if (this.$store.getters['header/isMobile'] === true) { return }
+    window.addEventListener('scroll', () => {
+      if (this.$store.getters['header/isMobile'] === true) { return }
+      if (window.scrollY > 20) {
+        this.closeMenuScroll()
+        if (this.$route.name === 'index') { this.$store.commit('header/isLogo', false) }
+      } else if (this.$route.name !== 'category-slug') {
+        this.openMenuScroll()
+        if (this.$route.name === 'index') { this.$store.commit('header/isLogo', true) }
+      }
+    })
+  },
   methods: {
     setActive (index) {
       this.activeItem = parseInt(index, 10)
@@ -143,9 +156,9 @@ export default {
         })
     },
     openMenuScroll () {
-      // if (this.isMenuOpen === true) {
-      //   return
-      // }
+      if (this.isMenuOpen === true) {
+        return
+      }
       this.isAnimate = true
       this.$store.commit('header/isBurger', false)
 
@@ -167,10 +180,10 @@ export default {
         })
     },
     closeMenuScroll () {
-      // this.isAnimate = true
-      // if (this.isMenuOpen === false) {
-      //   return
-      // }
+      this.isAnimate = true
+      if (this.isMenuOpen === false) {
+        return
+      }
       gsap.to('.header-rubric-link',
         {
           autoAlpha: 0,
