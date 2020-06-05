@@ -52,7 +52,10 @@ export default {
   transition: {
     name: 'fade',
     beforeLeave (el) {
-      if (this.$store.getters['header/isMobile'] === true) { return }
+      if (this.$store.getters['header/isMobile'] === true) {
+        this.$root.$emit('closeMenuPage')
+        return
+      }
       switch (this.$route.name) {
         case 'search': case 'search-s' :
           this.$store.commit('header/setHeaderClass', 'header-search-page header-search')
@@ -60,18 +63,17 @@ export default {
         case 'index' :
           this.$store.commit('header/setHeaderClass', 'header-main-page header-index')
           this.$store.commit('header/isLogo', true)
-          this.$root.$emit('closeMenuPage')
           break
         case 'category' :
           this.$store.commit('header/setHeaderClass', 'header-inner-page header-category')
-          this.$root.$emit('closeMenuPage')
+          this.$store.commit('header/isLogo', false)
           break
-        case 'category-slug': case 'page-pageslug' :
+        case 'category-slug': case 'page-slug' :
           this.$store.commit('header/setHeaderClass', 'header-inner-page header-single')
           this.$store.commit('header/isLogo', false)
           this.$root.$emit('closeMenuPage')
-
           break
+        default: break
       }
     }
   },

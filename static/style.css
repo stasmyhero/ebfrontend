@@ -565,6 +565,7 @@ hr {
     max-width: 16rem;
     display: inline-block;
     vertical-align: top;
+
 }
 
 .rubric-link {
@@ -2341,6 +2342,9 @@ footer input:matches([type="password"], [type="search"], [type="email"]):valid +
     .header-rubrics-cont {
         max-width: 20rem;
         text-align: center;
+        min-width: 17rem;
+        margin-top: 2rem;
+        z-index: 100;
     }
 
     .header-rubric-link {
@@ -2449,7 +2453,7 @@ footer input:matches([type="password"], [type="search"], [type="email"]):valid +
         position: relative;
         min-height: 90vh;
     }
-    
+
     .attached-news-item-info-link,
     .attached-article-item-info-link {
         position: absolute;

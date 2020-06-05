@@ -20,7 +20,7 @@
           </div>
         </template>
         <div class="news-item-rubrics-cont">
-          <nuxt-link class="news-item-rubric-link link-underline rubric-1" :to="post.category_link">{{ post.category }}</nuxt-link>
+          <nuxt-link class="news-item-rubric-link link-underline rubric-1" :to="'/' + post.category_link">{{ post.category }}</nuxt-link>
         </div>
         <template v-if="post.views">
           <div class="news-item-page-views-counter">

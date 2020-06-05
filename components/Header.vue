@@ -84,7 +84,23 @@ export default {
     }
   },
   mounted () {
-
+    // if (this.$store.getters['header/isMobile'] === true) { return }
+    // window.addEventListener('scroll', () => {
+    //   if (this.$store.getters['header/isMobile'] === true) { return }
+    //   if (window.scrollY > 20) {
+    //     if (this.isMenuClose === false) {
+    //       this.$root.$emit('closeMenuScroll')
+    //       this.isMenuClose = true
+    //     }
+    //     if (this.$route.name === 'index') { this.$store.commit('header/isLogo', false) }
+    //   } else if (this.$route.name !== 'category-slug') {
+    //     if (this.isMenuClose === true) {
+    //       this.$root.$emit('openMenuScroll')
+    //       this.isMenuClose = false
+    //     }
+    //     if (this.$route.name === 'index') { this.$store.commit('header/isLogo', true) }
+    //   }
+    // })
   }
 }
 </script>

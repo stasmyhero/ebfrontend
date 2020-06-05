@@ -62,7 +62,6 @@ export default {
           this.$store.commit('header/isBurger', true)
           this.$store.commit('header/isLogo', false)
           this.$store.commit('header/isShowMenu', false)
-
           break
       }
     }

@@ -5,7 +5,7 @@
       <a class="ad-item-link" :href="url">
         <img class="ad-item-img" :src="img">
       </a>
-      <nuxt-link to="pages/adv" class="link-to-ad-prices link-underline">
+      <nuxt-link to="/page/adv" class="link-to-ad-prices link-underline">
         Разместить рекламу
       </nuxt-link>
     </div>

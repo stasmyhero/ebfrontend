@@ -13,7 +13,7 @@
           <template v-if="isLoadedOnce">
             <infinite-loading
               spinner="spiral"
-              distance="300"
+              :distance="300"
               @infinite="infiniteHandler"
             >
               <div slot="no-more" />
@@ -56,6 +56,8 @@ export default {
         case 'category' :
           this.$store.commit('header/setHeaderClass', 'header-inner-page header-category')
           this.$store.commit('header/isLogo', false)
+          this.$store.commit('header/isBurger', false)
+
           break
         case 'category-slug': case 'page-slug' :
           this.$store.commit('header/setHeaderClass', 'header-inner-page header-single')
