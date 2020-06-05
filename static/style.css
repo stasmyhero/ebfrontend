@@ -250,6 +250,7 @@ input:matches([type="password"], [type="search"], [type="email"], [type="text"])
     border-right: none;
     border-left: none;
     border-bottom: 2.5px solid var(--Black100);
+    border-radius: 0;
     letter-spacing: -.02em;
     outline: 0;
     padding: 2rem 0;
@@ -1117,17 +1118,22 @@ main {
     cursor: default;
 }
 
-.attached-news-item-info-wraper,
-.attached-article-item-info-wraper {
+.attached-news-item-info-link,
+.attached-article-item-info-link {
     color: var(--White100);
+    display: block;
     max-width: 52rem;
     margin: 4rem auto;
     position: relative;
     text-align: center;
     z-index: 1;
 }
+.attached-news-item-info-link:hover,
+.attached-article-item-info-link:hover {
+    color: var(--White100);
+}
 
-.attached-news-item-info-wraper .rubric-title {
+.attached-news-item-info-link .rubric-title {
     background: transparent !important;
     border: 1px solid var(--White100);
 }
@@ -1200,6 +1206,11 @@ main {
     position: absolute;
     top: 0;
     left: 0;
+    transition: transform .25s ease-in-out;
+}
+
+.attached-news-item-info-link:hover~.attached-news-item-bg-container>.attached-news-item-gradient-cont {
+    transform: scale(1.8);
 }
 
 .telegram-item-wrapper {
@@ -2328,7 +2339,17 @@ footer input:matches([type="password"], [type="search"], [type="email"]):valid +
     }
 
     .header-rubrics-cont {
+        max-width: 20rem;
         text-align: center;
+    }
+
+    .header-rubric-link {
+        font-size: 2.8rem;
+        line-height: 2.8rem;
+        padding: .4rem .1rem .3rem;
+    }
+    .header-rubric-link:not(:last-child) {
+        margin-bottom: 1.2rem;
     }
 
     .search {
@@ -2429,8 +2450,8 @@ footer input:matches([type="password"], [type="search"], [type="email"]):valid +
         min-height: 90vh;
     }
     
-    .attached-news-item-info-wraper,
-    .attached-article-item-info-wraper {
+    .attached-news-item-info-link,
+    .attached-article-item-info-link {
         position: absolute;
         bottom: 0;
     }
@@ -2450,6 +2471,12 @@ footer input:matches([type="password"], [type="search"], [type="email"]):valid +
     }
 
     .social-item { height: 100vw; }
+
+    .social-item-account {
+        height: 28.8rem;
+        width: 28.8rem;
+    }
+
     .telegram-item-wrapper,
     .twitter-item-wrapper { grid-column: 1/2; }
 
