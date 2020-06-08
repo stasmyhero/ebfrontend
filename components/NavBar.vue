@@ -45,7 +45,7 @@ export default {
       baseURL: urls.baseURL,
       isAnimate: false,
       isMenuOpen: false,
-      isOnScroll: false,
+      isOnScroll: true,
       burgerButtonCloseState: false
     }
   },
@@ -60,7 +60,10 @@ export default {
   created () {
     this.$root.$on('openMenuPage', () => { this.openMenuPage() })
     this.$root.$on('closeMenuPage', () => { this.closeMenuPage() })
-    if (this.isMobile === true) {
+    this.$root.$on('closeMenuScroll', () => { this.closeMenuScroll() })
+    this.$root.$on('openMenuScroll', () => { this.openMenuScroll() })
+
+    if (this.$store.getters['header/isMobile'] === true) {
       this.isOnScroll = false
       this.$store.commit('header/isLogo', false)
     }
@@ -68,7 +71,6 @@ export default {
   mounted () {
     if (this.$route.name === 'category-slug') {
       this.hideMenu()
-      this.isOnScroll = true
     }
     if (this.isMobile === true) {
       this.$nextTick(() => { this.hideMenu() })
@@ -104,10 +106,8 @@ export default {
       }
     },
     openMenu () {
-      if (this.isAnimate === true) { return }
       if (this.isMenuOpen === true) { return }
       this.isAnimate = true
-      // this.$store.commit('header/isBurger', false)
       this.burgerButtonCloseState = true
 
       gsap.to('.header-rubric-link',
@@ -122,14 +122,11 @@ export default {
             this.isAnimate = false
             this.isMenuOpen = true
             this.isOnScroll = true
-
-            // this.$store.commit('header/isBurger', false)
           },
           delay: 0.3
         })
     },
     closeMenu () {
-      if (this.isAnimate === true) { return }
       if (this.isMenuOpen === false) { return }
 
       this.isAnimate = true
@@ -215,7 +212,6 @@ export default {
             })
         }
       }, 100)
-      this.isAnimate = true
     },
     closeMenuPage () {
       gsap.to('.header-rubric-link',

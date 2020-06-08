@@ -64,13 +64,7 @@ export default {
           break
         case 'category' :
           this.$store.commit('header/setHeaderClass', 'header-inner-page header-category')
-          if (window.scrollY > (document.querySelector('.clear-item-cont ').offsetHeight ?? 300)) {
-            this.$store.commit('header/isBurger', true)
-          } else {
-            this.$store.commit('header/isBurger', false)
-          }
           this.$store.commit('header/isLogo', false)
-          this.$store.commit('header/isShowMenu', false)
           break
         case 'category-slug': case 'page-pageslug' :
           this.$store.commit('header/setHeaderClass', 'header-inner-page header-single')
@@ -123,11 +117,10 @@ export default {
     this.$root.$on('loadPosts', () => { this.isLoadedOnce = true })
     window.setTimeout(() => {
       if (this.$store.getters['header/isMobile']) { return }
-      console.log(window.scrollY)
       if (window.scrollY < 20) {
         this.$root.$emit('openMenuScroll')
       }
-    }, 100)
+    }, 50)
   },
   methods: {
     infiniteHandler ($state) {
