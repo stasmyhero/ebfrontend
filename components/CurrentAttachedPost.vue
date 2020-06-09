@@ -1,5 +1,5 @@
 <template>
-  <div class="attached-news-item" :class="'rubric-'+ currentPost.category_id">
+  <div class="attached-news-item">
     <div class="attached-news-item-wrapper">
       <nuxt-link :to="`/${currentPost.category_link}/${currentPost.slug}`" class="attached-news-item-info-link">
         <div class="rubric-title-wrapper">
@@ -17,17 +17,17 @@
       </nuxt-link>
       <div class="attached-news-item-bg-container">
         <div ref="thumb" class="attached-news-item-img-cont">
-          <img v-if="currentPost.thumb" :src="currentPost.thumb">
+          <img v-if="initThumb" :src="initThumb">
         </div>
         <div ref="gradient" class="attached-news-item-gradient-cont" :css="false" />
       </div>
     </div>
+    <div ref="bgComputed" style="display:none; opacity:0" :class="'rubric-' + currentPost.category_id" />
   </div>
 </template>
 
 <script>
 import gsap from 'gsap'
-import background from '@/assets/js/backgrounds'
 
 export default {
   name: 'CurrentAttachedPost',
@@ -47,7 +47,7 @@ export default {
   computed: {
     className: {
       get () {
-        return 'rubrics-' + this.currentPost.category_id
+        return 'rubric-' + this.currentPost.category_id
       },
       set (val) {
         this.className = val
@@ -58,24 +58,30 @@ export default {
     }
   },
   watch: {
-    className (oldClassName, newClassName) {
-      const bgGradient = background.gradients[this.currentPost.category_link]
+    className (newClassName, oldClassName) {
+      this.$refs.bgComputed.className = 'rubric-' + this.currentPost.category_id
+      const bgGradient = window.getComputedStyle(this.$refs.bgComputed).background
       gsap.to(this.$refs.gradient, {
         background: bgGradient,
-        duration: 0.6,
-        ease: 'slow'
+        duration: 0.3,
+        ease: 'slow',
+        delay: 0.12
       })
     },
-    thumb (oldThumb, newThumb) {
-      if (this.currentPost.thumb === undefined) {
-        return
-      }
-      if (newThumb !== false) {
-        gsap.fromTo(this.$refs.thumb, { opacity: 0, duration: 0.0 }, { opacity: 1, duration: 0.4 })
-      } else {
-        gsap.to(this.$refs.thumb, { opacity: 1, duration: 0.4, delay: 0.2 })
-      }
+    thumb (newThumb, oldThumb) {
+      gsap.to(this.$refs.thumb, { opacity: 0, duration: 0.15, onComplete: () => { this.initThumb = newThumb; console.log(this.initThumb) } })
+      gsap.to(this.$refs.thumb, { opacity: 1, duration: 0.2, delay: 0.38 })
     }
   }
 }
 </script>
+
+<style scoped>
+.rubric-1 {
+  background:radial-gradient(55.58% 94.3% at 0% 77.4%, rgba(244, 88, 0, 0) 39.5%, rgba(244, 88, 9, 0.56) 61.93%, rgba(244, 88, 9, 1.0) 100%);
+}
+
+.rubric-3 {
+  background:radial-gradient(55.58% 94.3% at 0% 77.4%, rgba(239, 228, 232, 0) 39.5%, rgba(239, 228, 232, 0.56) 61.93%, #e94c89 100%);
+}
+</style>

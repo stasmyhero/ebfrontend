@@ -1,5 +1,5 @@
 <template>
-  <div class="attached-news-cont">
+  <div :class="'attached-news-cont rubric-' + currentPost.category_id">
     <template v-if="!isMobile">
       <div class="attached-news-cont-inner">
         <ul class="attached-news-list">
@@ -63,3 +63,16 @@ export default {
   }
 }
 </script>
+
+<style>
+  .attached-news-cont  {
+  }
+
+  .attached-news-cont.rubric-1 {
+  background-color: rgba(244, 88, 9, 1.0) !important;
+}
+
+  .attached-news-cont.rubric-3 {
+  background-color: #e94c89 !important;
+}
+</style>
