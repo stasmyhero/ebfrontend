@@ -3,10 +3,10 @@ export default {
   apiBaseURL: 'https://api.elbrus.press/',
   restURL: 'https://api.elbrus.press/wp-json/elbruspress/v1',
   socials: {
-    twitter: 'https://twitter.com',
-    telegram: 'https://telegram.com',
-    facebook: 'https://facebook.com',
-    vk: 'https://vk.com'
+    twitter: 'https://twitter.com/elbruspress',
+    telegram: 'https://teleg.run/elbruspress',
+    facebook: 'https://facebook.com/elbruspress',
+    vk: 'https://vk.com/elbruspress'
   },
   restHeaders: {
     headers: {

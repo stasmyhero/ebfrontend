@@ -18,7 +18,7 @@
         Нажимая кнопку&nbsp;«Подписаться», вы&nbsp;соглашаетесь с&nbsp;
         <a
           class="link-underline"
-          href="#"
+          href="/page/privacy-policy"
         >условиями обработки персональных данных</a>
       </div>
     </template>

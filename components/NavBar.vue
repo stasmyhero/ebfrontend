@@ -9,7 +9,7 @@
         </span>
       </a>
     </transition>
-    <div class="header-rubrics-cont-wrapper">
+    <div class="header-rubrics-cont-nav-wrapper">
       <nav class="header-rubrics-cont">
         <nuxt-link
           v-for="(menuItem, index) in menu"
