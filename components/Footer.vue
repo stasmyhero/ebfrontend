@@ -71,6 +71,11 @@
           />
         </svg>
       </div>
+      <div class="license-wrapper">
+        <div class="license">
+          Свидетельство Эл № ФС77-72147 от 29 декабря 2017 г. выдано федеральной службой по надзору в сфере связи, информационных технологий и массовых коммуникаций
+        </div>
+      </div>
     </footer>
   </transition>
 </template>
@@ -91,7 +96,7 @@ export default {
       menu: [],
       socialURL: urls.socials,
       shift: 0,
-      maxShift: 58
+      maxShift: 62
     }
   },
   computed: {
@@ -136,5 +141,4 @@ export default {
     right: 50%;
     transform: translate(50%);
   }
-
 </style>

@@ -1506,9 +1506,9 @@ main {
 .telegram-item-bg {
     align-self: center;
     background: radial-gradient(50% 50% at 50% 50%, #41B1FF 0%, rgba(0, 178, 255, 0) 90%);
-    height: 24.2rem;
+    height: 80%;
     position: absolute;
-    width: 24.2rem;
+    width: 80%;
     left: 50%;
     bottom: 50%;
     transform: translateX(-50%) translateY(50%);
@@ -1523,8 +1523,8 @@ main {
     background: var(--Yellow100);
     border-radius: 900px;
     filter: blur(12px);
-    height: 16rem;
-    width: 16rem;
+    height: 56%;
+    width: 56%;
     position: absolute;
     left: 50%;
     bottom: 50%;
@@ -1542,25 +1542,33 @@ main {
     z-index: 2;
     transform: scale(.98);
     transition: transform .175s ease-in-out;
+    width: 100%;
+    height: 100%;
 }
 .social-item.twitter-item:hover .twitter-item-logo {
     transform: scale(1.03);
+}
+
+.twitter-item-logo>svg {
+    height: inherit;
+    width: inherit;
 }
 
 .telegram-item-logo {
     background-image: url("data:image/svg+xml,%3Csvg width='192' height='162' viewBox='0 0 192 162' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M72.216 151.284C66.4954 151.284 67.4679 149.124 65.4949 143.677L48.6744 88.3206L178.153 11.506' fill='%23C8DAEA'/%3E%3Cpath d='M72.2159 151.284C76.63 151.284 78.5795 149.265 81.044 146.87L104.586 123.979L75.2204 106.271' fill='%23A9C9DD'/%3E%3Cpath d='M75.2172 106.275L146.372 158.845C154.492 163.325 160.351 161.005 162.374 151.307L191.337 14.8209C194.302 2.93242 186.806 -2.46154 179.037 1.06528L8.96394 66.6447C-2.64498 71.3015 -2.57583 77.7784 6.84814 80.6637L50.4927 94.2869L151.534 30.5408C156.305 27.6481 160.683 29.2018 157.09 32.3917' fill='url(%23paint0_linear)'/%3E%3Cdefs%3E%3ClinearGradient id='paint0_linear' x1='126.72' y1='70.3739' x2='154.275' y2='133.155' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%23EFF7FC'/%3E%3Cstop offset='1' stop-color='white'/%3E%3C/linearGradient%3E%3C/defs%3E%3C/svg%3E%0A");
     background-size: cover;
     filter: drop-shadow(0px 12px 24px rgba(2, 118, 255, 0.16));
-    width: 19.2rem;
-    height: 16.1rem;
+    height: 59%;
+    width: 70%;
     position: absolute;
-    right: 4rem;
-    top: 2rem;
+    left: 50%;
+    top: 40%;
+    transform: translateX(-50%) translateY(-50%);
     transition: transform .15s ease-in-out;
     z-index: 2;
 }
 .telegram-item:hover .telegram-item-logo {
-    transform: translateX(-48px) translateY(40px) rotate(-6deg);
+    transform: translateX(-50%) translateY(-50%) scale(1.1);
 }
 
 .button-showmore-wrapper {
@@ -2227,7 +2235,7 @@ main {
     grid-row-gap: 4.8rem;
     grid-template-columns: repeat(auto-fill, var(--widthxheight1000));
     grid-template-rows: 5.6rem repeat(auto-fill, var(--widthxheight1000));
-    margin-top: 6.4rem;
+    margin-top: 10rem;
     padding: 0 6.8rem 0 1.6rem;
 }
 
@@ -2312,7 +2320,7 @@ footer {
     color: var(--White100);
     display: grid;
     font-family: var(--font-arnold);
-    padding-bottom: 2.8rem;
+    padding-bottom: .4rem;
     position: relative;
 }
 
@@ -2498,6 +2506,20 @@ footer input:matches([type="password"], [type="search"], [type="email"]):valid +
     fill: var(--LightBlue100);
 }
 
+.license-wrapper {
+    margin: .8rem 1.6rem 0;
+    text-align: justify;
+    width: calc(100% - 3.2rem);
+}
+
+.license {
+    color: var(--White56);
+    font-size: 1.3rem;
+    line-height: 1.8rem;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+}
+
 /* Adaptiv_ochka */
 
 @media (min-width: 1340px) {
@@ -2617,7 +2639,12 @@ footer input:matches([type="password"], [type="search"], [type="email"]):valid +
     }
 
     .burger-menu-link {
-        margin-left: 0;
+        display: block;
+        height: 4.8rem;
+        margin-right: auto;
+        margin-bottom: 0;
+        margin-left: auto;
+        width: 5.2rem;
     }
 
     .icon-burger {
@@ -2633,6 +2660,7 @@ footer input:matches([type="password"], [type="search"], [type="email"]):valid +
     }
 
     .header-rubrics-cont-wrapper {
+        margin-left: 0;
         position: absolute;
         left: 50%;
         transform: translateX(-50%);
@@ -3017,6 +3045,16 @@ footer input:matches([type="password"], [type="search"], [type="email"]):valid +
     }
     .footer-bg-triangle-right {
         display: none;
+    }
+
+    .license-wrapper {
+        grid-column: 1/2;
+        grid-row: 5/6;
+    }
+
+    .license {
+        font-size: .8rem;
+        line-height: 1rem;
     }
 }
 

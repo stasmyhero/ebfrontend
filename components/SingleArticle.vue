@@ -38,7 +38,7 @@
     </div>
     <div class="article-item-text-wrapper" v-html="post.post_content" />
     <div v-if="post.author" class="article-author">
-      <nuxt-link :to="'/search/?s=' + encodeURIComponent( JSON.stringify(['@'+ post.author.replace(' ','_')]))">
+      <nuxt-link :to="'/search/?s=' + encodeURIComponent( JSON.stringify(['@'+ post.author.replace(' ','_')]))" class="link-underline">
         {{ post.author }}
       </nuxt-link>
     </div>
