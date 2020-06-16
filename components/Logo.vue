@@ -6,26 +6,6 @@
         viewBox="0 0 57.34 454.81"
         style="width: 60px; height: 456px;"
       >
-        <defs>
-          <style>
-            .elbrus-triangle {
-            fill: #8cc8ed;
-            }
-
-            path,
-            polygon {
-            transition: fill 0.25s ease;
-            }
-
-            .logo-link > svg .logo-letter {
-            fill: #000;
-            }
-
-            .logo-link:hover > svg .logo-letter {
-            fill: #8cc8ed;
-            }
-          </style>
-        </defs>
         <g id="logotype">
           <path
             id="letter-e-1"
@@ -93,3 +73,21 @@
     </nuxt-link>
   </div>
 </template>
+<style scoped>
+.elbrus-triangle {
+  fill: #8cc8ed;
+  }
+
+  path,
+  polygon {
+  transition: fill 0.25s ease;
+  }
+
+  .logo-link > svg .logo-letter {
+  fill: #000;
+  }
+
+  .logo-link:hover > svg .logo-letter {
+  fill: #8cc8ed;
+  }
+</style>
