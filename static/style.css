@@ -127,25 +127,24 @@
 
 @font-face {
     font-family: 'Arnold';
-    src: url('/fonts/arnoldtestv03-webfont.eot');
-    src: url('/fonts/arnoldtestv03-webfont.eot?#iefix') format('embedded-opentype'),
-         url('/fonts/arnoldtestv03-webfont.woff2') format('woff2'),
-         url('/fonts/arnoldtestv03-webfont.woff') format('woff'),
-         url('/fonts/arnoldtestv03-webfont.ttf') format('truetype');
+    src: url('/fonts/Arnold_v0.3-Regular.otf');
+    src: url('/fonts/Arnold_v0.3-Regular.otf') format('embedded-opentype'),
+         url('/fonts/Arnold_v0.3-Regular.woff2') format('woff2'),
+         url('/fonts/Arnold_v0.3-Regular.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'Arnold';
-    src: url('/fonts/arnolditalictestv03-webfont.eot');
-    src: url('/fonts/arnolditalictestv03-webfont.eot?#iefix') format('embedded-opentype'),
-         url('/fonts/arnolditalictestv03-webfont.woff2') format('woff2'),
-         url('/fonts/arnolditalictestv03-webfont.woff') format('woff'),
-         url('/fonts/arnolditalictestv03-webfont.ttf') format('truetype');
-    font-weight: normal;
-    font-style: italic;
+  font-family: 'Arnold';
+  src: url('/fonts/Arnold_v0.3-Italic.otf');
+  src: url('/fonts/Arnold_v0.3-Italic.otf') format('embedded-opentype'),
+       url('/fonts/Arnold_v0.3-Italic.woff2') format('woff2'),
+       url('/fonts/Arnold_v0.3-Italic.woff') format('woff');
+  font-weight: normal;
+  font-style: italic;
 }
+
 
 
 
