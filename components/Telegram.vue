@@ -1,5 +1,5 @@
 <template>
-  <div class="social-item-wrapper telegram-item-wrapper" @mouseenter="playAnim()" @mouseleave="stopAnim()">
+  <div class="social-item-wrapper telegram-item-wrapper">
     <a class="social-item telegram-item" :href="link">
       <div class="telegram-item-bg" />
       <div class="telegram-item-logo" />
@@ -22,7 +22,7 @@ export default {
   },
   data () {
     return {
-      playState: 'paused'
+      playState: 'play'
     }
   },
   methods: {
@@ -66,11 +66,11 @@ export default {
   }
 }
 .rotating {
-  -webkit-animation: rotating 2s linear infinite;
-  -moz-animation: rotating 2s linear infinite;
-  -ms-animation: rotating 2s linear infinite;
-  -o-animation: rotating 2s linear infinite;
-  animation: rotating 2s linear infinite;
+  -webkit-animation: rotating 9s linear infinite;
+  -moz-animation: rotating 9s linear infinite;
+  -ms-animation: rotating 9s linear infinite;
+  -o-animation: rotating 9s linear infinite;
+  animation: rotating 9s linear infinite;
   animation-play-state:paused;
 
 }

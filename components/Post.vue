@@ -40,7 +40,7 @@
         <div class="article-item-header-and-date-wrapper">
           <div class="article-item-header-cont">
             <span class="article-item-header">{{ post.title }}</span>
-            <span class="article-item-subheader">{{ post.subtitle }}</span>
+            <span class="article-item-subheader">{{ post.subheader }}</span>
           </div>
           <div class="publication-date">
             {{ post.date }}
@@ -62,7 +62,10 @@ export default {
       required: true
     }
   },
-  mounted () {
+  data () {
+    return {
+      isLightboxOpened: false
+    }
   }
 }
 </script>

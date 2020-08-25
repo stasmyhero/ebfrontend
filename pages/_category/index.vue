@@ -4,18 +4,22 @@
       <div class="superheader">
         <div class="superheader-inner">
           <nobr class="superheader-inner-nobr">
-            <template v-if="posts">{{ posts[0].category }}</template>
+            <template v-if="posts">
+              {{ posts[0].category }}
+            </template>
           </nobr>
         </div>
       </div>
       <div class="clear-item-cont on-desktop-and-tablet" />
-      <Adv pos="3" class="ad-item-wrapper mainpage-ad-grid-1"/>
-      <Adv pos="4" class="ad-item-wrapper mainpage-ad-grid-2"/>
+      <Adv :pos="3" class="ad-item-wrapper mainpage-ad-grid-1" />
+      <Adv :pos="4" class="ad-item-wrapper mainpage-ad-grid-2" />
       <Post
         v-for="mypost in posts"
         :key="mypost.id"
         :post="mypost"
       />
+    </div>
+    <div class="button-showmore-wrapper">
       <template v-if="isNeedToUpload">
         <template v-if="isLoadedOnce">
           <infinite-loading
@@ -27,40 +31,77 @@
           </infinite-loading>
         </template>
       </template>
+      <template v-if="!isLoadedOnce && isNeedToUpload">
+        <transition name="fade">
+          <LoadMore />
+        </transition>
+      </template>
     </div>
-    <template v-if="!isLoadedOnce && isNeedToUpload">
-      <transition name="fade">
-        <LoadMore />
-      </transition>
-    </template>
   </main>
 </template>
 
 <script>
 import postsLoader from '@/components/mixins/PostsLoader.js'
 import urls from '@/assets/js/url'
+import og from '@/assets/js/og'
 import Post from '@/components/Post'
 import Adv from '@/components/Adv'
 import LoadMore from '@/components/LoadMore'
 
 export default {
-  transition: 'fade',
+  transition: {
+    name: 'fade',
+    beforeLeave (el) {
+      if (this.$store.getters['header/isMobile'] === true) {
+        this.$root.$emit('closeMenuPage')
+        return
+      }
+      switch (this.$route.name) {
+        case 'search': case 'search-s' :
+          this.$store.commit('header/setHeaderClass', 'header-search-page header-search')
+          break
+        case 'index' :
+          this.$store.commit('header/setHeaderClass', 'header-main-page header-index')
+          this.$store.commit('header/isLogo', true)
+          break
+        case 'category' :
+          this.$store.commit('header/setHeaderClass', 'header-inner-page header-category')
+          this.$store.commit('header/isLogo', false)
+          break
+        case 'category-slug': case 'page-slug' :
+          this.$store.commit('header/setHeaderClass', 'header-inner-page header-single')
+          this.$store.commit('header/isLogo', false)
+          this.$root.$emit('closeMenuPage')
+          break
+        default: break
+      }
+    }
+  },
   components: {
     LoadMore,
     Post,
     Adv
   },
-  async asyncData ({ params, $axios }) {
-    const res = await postsLoader.load({
-      paged: 1,
-      perPage: 10,
-      category: params.category,
-      method: `category/${params.category}`
-    }, $axios)
-    return {
-      posts: res.posts,
-      categoryID: res.posts[0].category_id,
-      isNeedToUpload: res.allCount > res.posts.length
+  async asyncData ({ params, $axios, error }) {
+    let data = []
+    try {
+      data = await postsLoader.load({
+        paged: 1,
+        perPage: 10,
+        category: params.category,
+        method: `category/${params.category}`
+      }, $axios, error)
+      // eslint-disable-next-line no-throw-literal
+      if (data === undefined) { throw ({ statusCode: 404, message: 'Страница не найдена' }) }
+      return {
+        posts: data.posts,
+        isNeedToUpload: data.allCount > data.posts.length,
+        categoryID: data.posts[0].category_id,
+        categoryName: data.posts[0].category,
+        categoryDescription: data.categoryDescr
+      }
+    } catch (e) {
+      error(e)
     }
   },
   data () {
@@ -72,6 +113,13 @@ export default {
     }
   },
   mounted () {
+    window.setTimeout(() => {
+      if (this.$store.getters['header/isMobile']) { return }
+      if (window.scrollY < 20) {
+        this.$root.$emit('openMenuScroll')
+      }
+      this.$root.$on('loadPosts', () => { this.isLoadedOnce = true })
+    }, 50)
     this.$root.$on('loadPosts', () => { this.isLoadedOnce = true })
   },
   methods: {
@@ -94,6 +142,22 @@ export default {
           this.isLoading = false
         })
         .catch((error) => { console.log(error) })
+    }
+  },
+  head () {
+    const meta = [
+      { hid: 'og:title', name: 'og:title', content: 'ЭльбрусПресс - ' + this.categoryName },
+      { hid: 'og:description', name: 'og:description', content: 'Рубрика ' + this.categoryDescription },
+      { hid: 'og:url', name: 'og:url', content: urls.baseURL + this.$route.fullPath },
+      { hid: 'twitter-description', name: 'twitter:description', content: this.categoryDescription },
+      { hid: 'twitter-image', name: 'twitter:image', content: '' },
+      { hid: 'og-image', name: 'og:image', content: '' },
+      { hid: 'description', name: 'description', content: this.categoryDescription }
+    ]
+    meta.push(...og)
+    return {
+      title: process.env.baseTitle + this.categoryName,
+      meta
     }
   }
 }

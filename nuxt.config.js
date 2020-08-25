@@ -5,16 +5,17 @@ export default {
   ** Headers of the page
   */
   cache: true,
+  env: {
+    baseTitle: 'ЭльбрусПресс - '
+  },
   filenames: {
-    // app: ({ isDev }) => isDev ? '[name].[hash].js' : '[chunkhash].js',
-    // chunk: ({ isDev }) => isDev ? '[name].[hash].js' : '[chunkhash].js'
   },
   head: {
-    title: 'ЭльбрусПресс',
+    title: 'ЭльбрусПресс - Главная',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'Новостной сайт ЭльбрусПресс'}
+      { hid: 'description', name: 'description', content: 'Новостной сайт ЭльбрусПресс' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon-2.ico' },
@@ -23,7 +24,8 @@ export default {
     ]
   },
   router: {
-    linkActiveClass: 'header-rubric-link-active'
+    linkActiveClass: 'header-rubric-link-active',
+    middleware: 'header'
   },
   /*
   ** Customize the progress-bar color
@@ -46,14 +48,15 @@ export default {
   */
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
-    '@nuxtjs/eslint-module'
   ],
   /*
   ** Nuxt.js modules
   */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/device'
+    // { defaultUserAgent: 'Mozilla/5.0 (Linux; Android 5.1.1; Nexus 6 Build/LYZ28E) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.39 Mobile Safari/537.36' }
   ],
   /*
   ** Axios module configuration

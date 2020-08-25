@@ -5,29 +5,36 @@
       <AttachedPosts :posts="attachedPosts" />
       <Telegram :link="socials.telegram" />
       <Twitter :link="socials.twitter" />
-      <Adv :pos="1" class="ad-item-wrapper mainpage-ad-grid-2" />
+      <Adv :pos="1" class="ad-item-wrapper mainpage-ad-grid-1" />
       <Adv :pos="2" class="ad-item-wrapper mainpage-ad-grid-2" />
       <Post
         v-for="mypost in posts"
         :key="mypost.id"
         :post="mypost"
       />
-      <template v-if="isNeedToUpload">
+    </div>
+    <template v-if="isNeedToUpload">
+      <div class="button-showmore-wrapper">
         <template v-if="isLoadedOnce">
           <infinite-loading
-            spinner="spiral"
             :distance="200"
             @infinite="infiniteHandler"
           >
             <div slot="no-more" />
+            <div slot="spinner">
+              <div class="loading-triangle-wrapper">
+                <div class="loading-triangle loading-triangle-left" />
+                <div class="loading-triangle loading-triangle-right" />
+              </div>
+            </div>
           </infinite-loading>
         </template>
-      </template>
-    </div>
-    <template v-if="!isLoadedOnce && isNeedToUpload">
-      <transition name="fade">
-        <LoadMore />
-      </transition>
+        <template v-if="!isLoadedOnce && isNeedToUpload">
+          <transition name="fade">
+            <LoadMore />
+          </transition>
+        </template>
+      </div>
     </template>
   </main>
 </template>
@@ -43,7 +50,30 @@ import Twitter from '@/components/Twitter.vue'
 import Adv from '@/components/Adv.vue'
 
 export default {
-  transition: 'fade',
+  transition: {
+    name: 'fade',
+    beforeLeave (el) {
+      if (this.$store.getters['header/isMobile'] === true) { return }
+      switch (this.$route.name) {
+        case 'search': case 'search-s' :
+          this.$store.commit('header/setHeaderClass', 'header-search-page header-search')
+          break
+        case 'index' :
+          this.$store.commit('header/setHeaderClass', 'header-main-page header-index')
+          this.$root.$emit('openMenuPage')
+          break
+        case 'category' :
+          this.$store.commit('header/setHeaderClass', 'header-inner-page header-category')
+          this.$store.commit('header/isLogo', false)
+          break
+        case 'category-slug': case 'page-pageslug' :
+          this.$store.commit('header/setHeaderClass', 'header-inner-page header-single')
+          this.$store.commit('header/isLogo', false)
+          this.$root.$emit('closeMenuPage')
+          break
+      }
+    }
+  },
   components: {
     LoadMore,
     Post,
@@ -78,12 +108,19 @@ export default {
       page: 2,
       isLoadedOnce: false,
       isLoading: false,
-      socials: urls.socials
+      socials: urls.socials,
+      isScrolled: false
     }
   },
 
   mounted () {
     this.$root.$on('loadPosts', () => { this.isLoadedOnce = true })
+    window.setTimeout(() => {
+      if (this.$store.getters['header/isMobile']) { return }
+      if (window.scrollY < 20) {
+        this.$root.$emit('openMenuScroll')
+      }
+    }, 50)
   },
   methods: {
     infiniteHandler ($state) {

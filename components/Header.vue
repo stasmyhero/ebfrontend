@@ -1,25 +1,20 @@
 <template>
   <header :class="headerClass">
-    <transition name="fadeFast" mode="out-in">
-      <div v-if="!isShowMenu" key="burger" class="logo-and-nav-cont logo-burger">
-        <a class="logo-short-link" @click.prevent="showMenu">
-          <svg class="logo-short-link-svg">
-            <use xlink:href="/images/sprite.svg#logo-short" />
-          </svg>
-        </a>
-        <a href="#" class="burger-menu-link">
-          <span class="icon-burger">
-            <span class="icon-burger-line" />
-            <span class="icon-burger-line" />
-            <span class="icon-burger-line" />
-          </span>
-        </a>
-      </div>
-      <div v-else key="normal" class="logo-and-nav-cont">
-        <Logo />
-        <Navbar />
-      </div>
-    </transition>
+    <div class="logo-and-nav-cont">
+      <transition name="fadeFast" mode="out-in">
+        <div v-if="isLogo" key="normal">
+          <Logo />
+        </div>
+        <div v-else key="mobile">
+          <nuxt-link to="/" class="logo-short-link">
+            <svg class="logo-short-link-svg">
+              <use xlink:href="/images/sprite.svg#logo-short" />
+            </svg>
+          </nuxt-link>
+        </div>
+      </transition>
+      <Navbar />
+    </div>
     <div
       class="header-social-cont"
     >
@@ -52,8 +47,6 @@
     </div>
   </header>
 </template>
-  </header>
-</template>
 
 <script>
 import urls from '@/assets/js/url.js'
@@ -71,9 +64,8 @@ export default {
   data () {
     return {
       socialURL: urls.socials,
-      isShowLogo: true,
-      isShowAll: true,
-      isShowMenu: true
+      isMenuClose: false
+
     }
   },
   computed: {
@@ -86,40 +78,29 @@ export default {
       set (value) {
         this.headerClass = value
       }
+    },
+    isLogo () {
+      return this.$store.getters['header/isLogo']
     }
-  },
-  created () {
-    // this.$route.meta
-    this.$root.$on('goSearch', (searchString) => {
-      this.$emit('goSearch', 'asd')
-    })
-    this.$root.$on('openSearch', () => { this.menuFadeOut() })
-    this.$root.$on('closeSearch', () => { this.menuFadeIn() })
   },
   mounted () {
-    let animTrigger = 300
-    if (document.querySelector('.clear-item-cont ')) { animTrigger = document.querySelector('.clear-item-cont ').offsetHeight ?? 300 }
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > animTrigger) {
-        this.isShowMenu = false
-      } else if (this.$route.name !== 'category-slug') {
-        this.isShowMenu = true
-      }
-    })
-  },
-  methods: {
-    menuFadeOut () {
-      this.isShowAll = false
-    },
-    menuFadeIn () {
-      this.isShowAll = true
-    },
-    showMenu () {
-      this.isShowMenu = true
-    },
-    hideMenu () {
-      this.isShowMenu = false
-    }
+    // if (this.$store.getters['header/isMobile'] === true) { return }
+    // window.addEventListener('scroll', () => {
+    //   if (this.$store.getters['header/isMobile'] === true) { return }
+    //   if (window.scrollY > 20) {
+    //     if (this.isMenuClose === false) {
+    //       this.$root.$emit('closeMenuScroll')
+    //       this.isMenuClose = true
+    //     }
+    //     if (this.$route.name === 'index') { this.$store.commit('header/isLogo', false) }
+    //   } else if (this.$route.name !== 'category-slug') {
+    //     if (this.isMenuClose === true) {
+    //       this.$root.$emit('openMenuScroll')
+    //       this.isMenuClose = false
+    //     }
+    //     if (this.$route.name === 'index') { this.$store.commit('header/isLogo', true) }
+    //   }
+    // })
   }
 }
 </script>
@@ -133,16 +114,19 @@ export default {
  }
   .logo-and-nav-cont {
       transition:  opacity 0.25s ease;
+      display: flex;
+      flex-direction: row;
   }
 
  .header-search-page .logo-and-nav-cont  {
    opacity: 0;
  }
+
 .header-search-page .header-social-cont  {
    opacity: 0;
  }
 
-  .header-inner-page .logo-cont{
+  .header-search-page .logo-cont{
     opacity: 0 !important;
   }
 
