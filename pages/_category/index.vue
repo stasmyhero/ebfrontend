@@ -5,7 +5,7 @@
         <div class="superheader-inner">
           <nobr class="superheader-inner-nobr">
             <template v-if="posts">
-              {{ posts[0].category }}
+              {{ categoryName }}
             </template>
           </nobr>
         </div>
@@ -17,6 +17,8 @@
         v-for="mypost in posts"
         :key="mypost.id"
         :post="mypost"
+        :category="categoryName"
+        :catID="categoryID - 0"
       />
     </div>
     <div class="button-showmore-wrapper">
@@ -96,9 +98,9 @@ export default {
       return {
         posts: data.posts,
         isNeedToUpload: data.allCount > data.posts.length,
-        categoryID: data.posts[0].category_id,
-        categoryName: data.posts[0].category,
-        categoryDescription: data.categoryDescr
+        categoryDescription: data.categoryDescr,
+        categoryName: data.categoryName,
+        categoryID: data.category_id
       }
     } catch (e) {
       error(e)

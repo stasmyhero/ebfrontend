@@ -68,7 +68,7 @@ export default {
       })
     },
     thumb (newThumb, oldThumb) {
-      gsap.to(this.$refs.thumb, { opacity: 0, duration: 0.15, onComplete: () => { this.initThumb = newThumb; console.log(this.initThumb) } })
+      gsap.to(this.$refs.thumb, { opacity: 0, duration: 0.15, onComplete: () => { this.initThumb = newThumb } })
       gsap.to(this.$refs.thumb, { opacity: 1, duration: 0.2, delay: 0.38 })
     }
   }
