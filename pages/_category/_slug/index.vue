@@ -12,11 +12,10 @@
         <transition name="fade">
           <template v-if="isLoadedOnce">
             <infinite-loading
-              spinner="spiral"
-              :distance="300"
               @infinite="infiniteHandler"
             >
               <div slot="no-more" />
+              <div slot="spinner" />
             </infinite-loading>
           </template>
           <template v-else>
@@ -131,18 +130,20 @@ export default {
         endpoint: `${urls.restURL}/last/${this.page}`,
         headers: urls.restHeaders
       }
-      this.$axios.get(request.endpoint)
-        .then((res) => {
-          if (res.data.posts.length > 0) {
-            this.page += 1
-            this.lastPosts.push(...res.data.posts)
-            $state.loaded()
-          } else {
-            $state.complete()
-          }
-          this.isLoading = false
-        })
-        .catch((error) => { console.log(error) })
+      window.setTimeout(() => {
+        this.$axios.get(request.endpoint)
+          .then((res) => {
+            if (res.data.posts.length > 0) {
+              this.page += 1
+              this.lastPosts.push(...res.data.posts)
+              $state.loaded()
+            } else {
+              $state.complete()
+            }
+            this.isLoading = false
+          })
+          .catch((error) => { console.log(error) })
+      }, 800)
     }
   },
   head () {
