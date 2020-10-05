@@ -39,6 +39,7 @@
         </transition>
       </template>
     </div>
+    <LoadIndicator v-show="isLoading" />
   </main>
 </template>
 
@@ -49,6 +50,7 @@ import og from '@/assets/js/og'
 import Post from '@/components/Post'
 import Adv from '@/components/Adv'
 import LoadMore from '@/components/LoadMore'
+import LoadIndicator from '@/components/LoadIndicator'
 
 export default {
   transition: {
@@ -82,7 +84,8 @@ export default {
   components: {
     LoadMore,
     Post,
-    Adv
+    Adv,
+    LoadIndicator
   },
   async asyncData ({ params, $axios, error }) {
     let data = []

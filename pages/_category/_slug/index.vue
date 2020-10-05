@@ -25,6 +25,7 @@
         </transition>
       </div>
     </template>
+    <LoadIndicator v-show="isLoading" />
   </main>
 </template>
 
@@ -36,6 +37,7 @@ import Single from '@/components/Single'
 import SingleArticle from '@/components/SingleArticle'
 import LastPosts from '@/components/LastPosts.vue'
 import LoadMore from '@/components/LoadMore.vue'
+import LoadIndicator from '@/components/LoadIndicator.vue'
 
 export default {
   transition: {
@@ -72,7 +74,8 @@ export default {
     Single,
     SingleArticle,
     LastPosts,
-    LoadMore
+    LoadMore,
+    LoadIndicator
   },
   async asyncData ({ $axios, params, error }) {
     const request = {
