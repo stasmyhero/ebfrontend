@@ -21,12 +21,7 @@
             @infinite="infiniteHandler"
           >
             <div slot="no-more" />
-            <div slot="spinner">
-              <div class="loading-triangle-wrapper">
-                <div class="loading-triangle loading-triangle-left" />
-                <div class="loading-triangle loading-triangle-right" />
-              </div>
-            </div>
+            <div slot="spinner" />
           </infinite-loading>
         </template>
         <template v-if="!isLoadedOnce && isNeedToUpload">
@@ -34,6 +29,9 @@
             <LoadMore />
           </transition>
         </template>
+      </div>
+      <div v-show="isLoading">
+        <LoadIndicator />
       </div>
     </template>
   </main>
@@ -48,6 +46,7 @@ import AttachedPosts from '@/components/AttachedPosts.vue'
 import Telegram from '@/components/Telegram.vue'
 import Twitter from '@/components/Twitter.vue'
 import Adv from '@/components/Adv.vue'
+import LoadIndicator from '@/components/LoadIndicator.vue'
 
 export default {
   transition: {
@@ -80,7 +79,8 @@ export default {
     AttachedPosts,
     Telegram,
     Twitter,
-    Adv
+    Adv,
+    LoadIndicator
   },
   async asyncData ({ $axios }) {
     const res = await postsLoader.load({
@@ -130,18 +130,20 @@ export default {
         endpoint: `${urls.restURL}/posts/${this.page}`,
         headers: urls.restHeaders
       }
-      this.$axios.get(request.endpoint)
-        .then((res) => {
-          if (res.data.posts.length > 0) {
-            this.page += 1
-            this.posts.push(...res.data.posts)
-            $state.loaded()
-          } else {
-            $state.complete()
-          }
-          this.isLoading = false
-        })
-        .catch((error) => { console.log(error) })
+      window.setTimeout(() => {
+        this.$axios.get(request.endpoint)
+          .then((res) => {
+            if (res.data.posts.length > 0) {
+              this.page += 1
+              this.posts.push(...res.data.posts)
+              $state.loaded()
+            } else {
+              $state.complete()
+            }
+            this.isLoading = false
+          })
+          .catch((error) => { console.log(error) })
+      }, 800)
     }
   }
 }

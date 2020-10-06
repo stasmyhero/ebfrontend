@@ -25,7 +25,7 @@
       <template v-if="isNeedToUpload">
         <template v-if="isLoadedOnce">
           <infinite-loading
-            :distance="300"
+            :distance="200"
             @infinite="infiniteHandler"
           >
             <div slot="no-more" />

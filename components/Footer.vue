@@ -71,7 +71,7 @@
           />
         </svg>
       </div>
-      <div class="license-wrapper">
+      <div class="license-wrapper" style="display:none">
         <div class="license">
           Свидетельство Эл № ФС77-72147 от 29 декабря 2017 г. выдано федеральной службой по надзору в сфере связи, информационных технологий и массовых коммуникаций
         </div>
