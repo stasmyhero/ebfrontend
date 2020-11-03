@@ -1,12 +1,14 @@
 <template>
   <main>
-    <div class="news-body-cont">
-      <div class="news-item-page-header-cont">
-        <h1 class="news-item-page-header">
+    <div class="page-superheader superheader">
+      <div class="superheader-inner">
+        <nobr class="superheader-inner-nobr">
           {{ pageTitle }}
-        </h1>
+        </nobr>
       </div>
-      <div class="news-item-text-wrapper" v-html="pageContent" />
+    </div>
+    <div class="page-body-cont">
+      <div class="page-body-text-wrapper" v-html="pageContent" />
     </div>
   </main>
 </template>

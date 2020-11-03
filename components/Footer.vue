@@ -2,13 +2,6 @@
   <transition name="fade" delay="0.5">
     <footer v-show="isShow">
       <Subscribe />
-      <div class="footer-logo-cont">
-        <a class="logo-link" href="/">
-          <svg class="logo-footer-svg">
-            <use xlink:href="/images/sprite.svg#logo-footer" />
-          </svg>
-        </a>
-      </div>
       <div class="footer-social-cont">
         <span class="footer-social-cont-title">В соцсетях</span>
         <a class="footer-social-link social-link social-link-telegram" :href="socialURL.telegram">
@@ -31,6 +24,21 @@
             <use xlink:href="/images/sprite.svg#icon-twitter" />
           </svg>
         </a>
+      </div>
+      <div class="footer-logo-cont">
+        <a class="logo-link" href="/">
+          <svg class="logo-footer-svg">
+            <use xlink:href="/images/sprite.svg#logo-footer" />
+          </svg>
+        </a>
+      </div>
+      <div class="footer-pages-nav-cont">
+        <div class="footer-pages-nav-link-wrapper">
+          <a class="footer-pages-nav-link link-underline" href="/page/contacts">Контакты редакции</a>
+        </div>
+        <div class="footer-pages-nav-link-wrapper">
+          <a class="footer-pages-nav-link link-underline" href="/page/adv">Реклама</a>
+        </div>
       </div>
       <div class="footer-bottom-cont">
         <div class="copyright">
