@@ -1,5 +1,5 @@
 <template>
-  <div v-if="post.category_id === 1" class="news-item-wrapper new-post">
+  <div v-if="catID === 1" class="news-item-wrapper new-post">
     <nuxt-link :to="'/'+ post.category_link + '/' + post.slug" class="news-item">
       <div v-if="post.thumb" class="news-item-ill-cont">
         <div class="item-ill-gradient-wrapper">
@@ -9,7 +9,7 @@
       </div>
       <div class="news-item-info-wrapper">
         <div class="rubric-title-wrapper">
-          <span class="rubric-title">{{ post.category }}</span>
+          <span class="rubric-title">{{ category }}</span>
         </div>
         <div class="news-item-header-and-date-wrapper">
           <div class="news-item-header-cont">
@@ -23,7 +23,7 @@
       </div>
     </nuxt-link>
   </div>
-  <div v-else-if="post.category_id" class="article-item-wrapper new-post" :class="'rubric-'+ post.category_id">
+  <div v-else-if="post.category_id" class="article-item-wrapper new-post" :class="'rubric-'+ catID">
     <nuxt-link :to="'/'+ post.category_link + '/' + post.slug" class="article-item">
       <template v-if="post.thumb">
         <div class="article-item-ill-cont">
@@ -35,7 +35,7 @@
       </template>
       <div class="article-item-info-wrapper">
         <div class="rubric-title-wrapper">
-          <span class="rubric-title">{{ post.category }}</span>
+          <span class="rubric-title">{{ category }}</span>
         </div>
         <div class="article-item-header-and-date-wrapper">
           <div class="article-item-header-cont">
@@ -60,6 +60,14 @@ export default {
       type: [Object, Boolean],
       default: false,
       required: true
+    },
+    category: {
+      type: String,
+      default: 'Новости'
+    },
+    catID: {
+      type: Number,
+      default: 1
     }
   },
   data () {

@@ -5,7 +5,7 @@
         <div class="superheader-inner">
           <nobr class="superheader-inner-nobr">
             <template v-if="posts">
-              {{ posts[0].category }}
+              {{ categoryName }}
             </template>
           </nobr>
         </div>
@@ -17,17 +17,19 @@
         v-for="mypost in posts"
         :key="mypost.id"
         :post="mypost"
+        :category="categoryName"
+        :cat-i-d="categoryID - 0"
       />
     </div>
     <div class="button-showmore-wrapper">
       <template v-if="isNeedToUpload">
         <template v-if="isLoadedOnce">
           <infinite-loading
-            spinner="spiral"
-            :distance="250"
+            :distance="200"
             @infinite="infiniteHandler"
           >
             <div slot="no-more" />
+            <div slot="spinner" />
           </infinite-loading>
         </template>
       </template>
@@ -37,6 +39,7 @@
         </transition>
       </template>
     </div>
+    <LoadIndicator v-show="isLoading" />
   </main>
 </template>
 
@@ -47,6 +50,7 @@ import og from '@/assets/js/og'
 import Post from '@/components/Post'
 import Adv from '@/components/Adv'
 import LoadMore from '@/components/LoadMore'
+import LoadIndicator from '@/components/LoadIndicator'
 
 export default {
   transition: {
@@ -80,7 +84,8 @@ export default {
   components: {
     LoadMore,
     Post,
-    Adv
+    Adv,
+    LoadIndicator
   },
   async asyncData ({ params, $axios, error }) {
     let data = []
@@ -96,9 +101,9 @@ export default {
       return {
         posts: data.posts,
         isNeedToUpload: data.allCount > data.posts.length,
-        categoryID: data.posts[0].category_id,
-        categoryName: data.posts[0].category,
-        categoryDescription: data.categoryDescr
+        categoryDescription: data.categoryDescr,
+        categoryName: data.categoryName,
+        categoryID: data.category_id
       }
     } catch (e) {
       error(e)
@@ -130,18 +135,20 @@ export default {
         endpoint: `${urls.restURL}/category/${this.$route.params.category}/${this.page}`,
         headers: urls.restHeaders
       }
-      this.$axios.get(request.endpoint)
-        .then((res) => {
-          if (res.data.posts.length > 0) {
-            this.page += 1
-            this.posts.push(...res.data.posts)
-            $state.loaded()
-          } else {
-            $state.complete()
-          }
-          this.isLoading = false
-        })
-        .catch((error) => { console.log(error) })
+      window.setTimeout(() => {
+        this.$axios.get(request.endpoint)
+          .then((res) => {
+            if (res.data.posts.length > 0) {
+              this.page += 1
+              this.posts.push(...res.data.posts)
+              $state.loaded()
+            } else {
+              $state.complete()
+            }
+            this.isLoading = false
+          })
+          .catch((error) => { console.log(error) })
+      }, 800)
     }
   },
   head () {

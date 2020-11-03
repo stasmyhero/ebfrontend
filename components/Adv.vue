@@ -1,13 +1,9 @@
 
 <template>
-  <div>
-    <div v-if="isLoaded" class="ad-item">
-      <a class="ad-item-link" :href="url">
-        <img class="ad-item-img" :src="img">
-      </a>
-      <nuxt-link to="/page/adv" class="link-to-ad-prices link-underline">
-        Разместить рекламу
-      </nuxt-link>
+  <div v-if="isLoaded">
+    <div class="ad-item">
+      <a class="ad-item-link" :href="url"><img class="ad-item-img" :src="img"></a>
+      <nuxt-link to="pages/adv" class="link-to-ad-prices link-underline" href="#">Разместить рекламу</nuxt-link>
     </div>
   </div>
 </template>
@@ -31,7 +27,7 @@ export default {
         this.img = res.data[(Math.random() * res.data.length) >> 0].img
         this.url = res.data[(Math.random() * res.data.length) >> 0].url
         this.isLoaded = true
-      }
+      } else { this.isLoaded = false }
     } catch (error) {
       console.log(error)
     }

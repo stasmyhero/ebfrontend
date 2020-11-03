@@ -15,26 +15,22 @@
         />
       </template>
     </div>
-    <template v-if="isNeedToUpload">
-      <infinite-loading
-        :distance="200"
-        @infinite="infiniteHandler"
-      >
-        <div slot="no-more" />
-        <div slot="spinner">
-          <div class="loading-triangle-wrapper">
-            <div class="loading-triangle loading-triangle-left" />
-            <div class="loading-triangle loading-triangle-right" />
-          </div>
-        </div>
-      </infinite-loading>
-    </template>
+    <infinite-loading
+      v-if="isNeedToUpload"
+      :distance="200"
+      @infinite="infiniteHandler"
+    >
+      <div slot="no-more" />
+      <div slot="spinner" />
+    </infinite-loading>
+    <LoadIndicator v-show="isLoading" />
   </main>
 </template>
 
 <script>
 import urls from '@/assets/js/url'
 import Post from '@/components/Post'
+import LoadIndicator from '@/components/LoadIndicator'
 
 export default {
   name: 'SearchPage',
@@ -65,7 +61,8 @@ export default {
     }
   },
   components: {
-    Post
+    Post,
+    LoadIndicator
   },
   data () {
     return {
@@ -88,6 +85,7 @@ export default {
         this.$root.$emit('parseURL', this.$route.query.s)
       }
     }
+    document.querySelector('.search-input').focus()
   },
   methods: {
     infiniteHandler ($state) {
