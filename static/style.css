@@ -866,7 +866,7 @@ hr {
     transition: transform .1s ease-in-out, background-color .1s linear;
 }
 .social-link:hover {
-    transform: scale(1.1);
+    transform: scale(1.175);
 }
 
 .header-social-cont {
@@ -2702,6 +2702,10 @@ footer input:matches([type="password"], [type="search"], [type="email"]):valid +
         grid-column: 1/6;
         padding-left: calc(var(--widthxheight1340) + 2rem);
     }
+
+    .footer-bg-triangle-left, .footer-bg-triangle-right {
+        height: 84vh;
+    }
 }
 
 
@@ -2843,13 +2847,15 @@ footer input:matches([type="password"], [type="search"], [type="email"]):valid +
     .mainpage-grid {
         grid-template-columns: 100%;
         padding: 8rem 1.6rem 0;
-        grid-template-rows: repeat(auto-fill, 100vw);
+        grid-template-rows: repeat(auto-fill, 80vw);
+        grid-row-gap: 2.4rem;
     }
 
     .category-grid {
         grid-template-columns: 100%;
         padding: 8rem 1.6rem 0;
-        grid-template-rows: 6rem repeat(auto-fill, 100vw);
+        grid-template-rows: 6rem repeat(auto-fill, 80vw);
+        grid-row-gap: 2.4rem;
         overflow: hidden;
         width: 100%;
         max-width: 100vw;
@@ -2859,7 +2865,7 @@ footer input:matches([type="password"], [type="search"], [type="email"]):valid +
         font-size: 10rem;
         grid-column: 1/2;
         letter-spacing: -.06em;
-        line-height: 13rem;
+        line-height: 10rem;
         margin-left: -2.8rem;
         width: 132vw;
     }
@@ -2867,7 +2873,8 @@ footer input:matches([type="password"], [type="search"], [type="email"]):valid +
     .last-news-grid {
         grid-template-columns: 100%;
         padding: 0 1.6rem 0;
-        grid-template-rows: 5.6rem repeat(auto-fill, 100vw);
+        grid-template-rows: 5.6rem repeat(auto-fill, 80vw);
+        grid-row-gap: 2.4rem;
     }
 
     .last-news-header {
@@ -2879,12 +2886,12 @@ footer input:matches([type="password"], [type="search"], [type="email"]):valid +
 
     .news-item-wrapper,
     .social-item-wrapper,
-    .article-item-wrapper { min-height: 100vw; }
+    .article-item-wrapper { min-height: 80vw; }
 
     .article-item-wrapper { grid-column: 1/2; }
 
     .news-item-ill-cont + .news-item-info-wrapper,
-    .article-item-ill-cont + .article-item-info-wrapper { bottom: 28vw; }
+    .article-item-ill-cont + .article-item-info-wrapper { bottom: 8vw; }
 
     .item-ill-gradient-wrapper { max-height: 100vw; }
 
@@ -3248,6 +3255,7 @@ footer input:matches([type="password"], [type="search"], [type="email"]):valid +
 
     .category-grid>.superheader {
         font-size: 8rem;
+        line-height: 11rem;
     }
 }
 
