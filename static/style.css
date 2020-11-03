@@ -2980,7 +2980,11 @@ footer input:matches([type="password"], [type="search"], [type="email"]):valid +
     }
 
     .telegram-item-wrapper,
-    .twitter-item-wrapper { grid-column: 1/2; }
+    .mainpage-ad-grid-1~.telegram-item-wrapper,
+    .twitter-item-wrapper,
+    .mainpage-ad-grid-1~.twitter-item-wrapper,
+    .mainpage-ad-grid-2~.twitter-item-wrapper,
+    .mainpage-ad-grid-1~.mainpage-ad-grid-2~.twitter-item-wrapper { grid-column: 1/2; }
 
     .telegram-item-bg {
         height: 90%;
