@@ -2348,6 +2348,22 @@ main {
     margin-bottom: 5.6rem;
 }
 
+.page-body-cont h3 {
+    line-height: 4.8rem;
+}
+
+.link-mail-adv {
+    border-bottom-color: var(--LightBlue32);
+    border-bottom-width: 3px;
+    color: var(--LightBlue100);
+    transition: border-color .15s ease-in-out, color .15s ease-in-out;
+}
+.link-mail-adv:hover {
+    border-bottom-color: var(--Orange32);
+    color: var(--Orange100);
+}
+
+
 
 
 /* Page Contacts */
@@ -3127,6 +3143,10 @@ footer input:matches([type="password"], [type="search"], [type="email"]):valid +
 
     .contacts-cont h2 {
         grid-column: 1/2;
+    }
+
+    .contacts-cont h3 {
+        line-height: 4rem;
     }
 
     .contacts-wrapper {
