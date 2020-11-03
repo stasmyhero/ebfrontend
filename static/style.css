@@ -1449,11 +1449,23 @@ main {
 }
 
 .telegram-item-wrapper {
+    grid-column: 1/2;
+    grid-row: 5/6;
+}
+.mainpage-ad-grid-1~.telegram-item-wrapper {
     grid-column: 2/3;
     grid-row: 6/7;
 }
 
 .twitter-item-wrapper {
+    grid-column: 3/4;
+    grid-row: 7/8;
+}
+.mainpage-ad-grid-1~.twitter-item-wrapper,
+.mainpage-ad-grid-2~.twitter-item-wrapper {
+    grid-row: 8/9;
+}
+.mainpage-ad-grid-1~.mainpage-ad-grid-2~.twitter-item-wrapper {
     grid-column: 4/5;
     grid-row: 9/10;
 }
