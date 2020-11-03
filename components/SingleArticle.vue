@@ -17,9 +17,7 @@
       </div>
       <div class="article-item-page-meta-cont">
         <div class="publication-date">
-          <nobr class="publication-time">
-            {{ post.time }}
-          </nobr>, {{ post.day }}&nbsp;{{ post.month }}&nbsp;{{ post.year }}
+          <nobr class="publication-time">{{ post.time }}</nobr>, {{ post.day }}&nbsp;{{ post.month }}&nbsp;{{ post.year }}
         </div>
         <template v-if="post.views">
           <div class="article-item-page-views-counter">

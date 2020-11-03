@@ -8,9 +8,7 @@
       </div>
       <div class="news-item-page-meta-cont">
         <div class="publication-date">
-          <nobr class="publication-time">
-            {{ post.time }}
-          </nobr>, {{ post.day }}&nbsp;{{ post.month }}&nbsp;{{ post.year }}
+          <nobr class="publication-time">{{ post.time }}</nobr>, {{ post.day }}&nbsp;{{ post.month }}&nbsp;{{ post.year }}
         </div>
         <template v-if="post.author">
           <div class="news-item-author-source-cont">
