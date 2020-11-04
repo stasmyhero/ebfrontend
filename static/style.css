@@ -1445,7 +1445,7 @@ main {
 }
 
 .attached-news-item-info-link:hover~.attached-news-item-bg-container>.attached-news-item-gradient-cont {
-    transform: scale(1.8);
+    transform: scale(2);
 }
 
 .telegram-item-wrapper {
