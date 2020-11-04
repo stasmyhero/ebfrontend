@@ -30,7 +30,7 @@ export default {
   /*
   ** Customize the progress-bar color
   */
-  loading: { color: '#fff' },
+  loading: { color: 'var(--Orange100)' },
   /*
   ** Global CSS
   */
@@ -68,10 +68,8 @@ export default {
   ** Build configuration
   */
   build: {
-    /*
-    ** You can extend webpack config here
-    */
-    extend (config, ctx) {
-    }
+    transpile: [
+      'gsap'
+    ]
   }
 }

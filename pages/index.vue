@@ -21,6 +21,7 @@
             @infinite="infiniteHandler"
           >
             <div slot="no-more" />
+            <div slot="spinner" />
           </infinite-loading>
         </template>
         <template v-if="!isLoadedOnce && isNeedToUpload">

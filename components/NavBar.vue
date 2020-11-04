@@ -28,7 +28,12 @@
 
 <script>
 import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import urls from '@/assets/js/url'
+
+if (process.client) {
+  gsap.registerPlugin(ScrollTrigger)
+}
 
 export default {
   name: 'Navbar',
@@ -77,22 +82,22 @@ export default {
     }
 
     if (this.$store.getters['header/isMobile'] === true) { return }
-    window.addEventListener('scroll', () => {
-      if (this.$store.getters['header/isMobile'] === true) { return }
-      if (window.scrollY > 20) {
-        if (this.isOnScroll === true) {
-          this.closeMenuScroll()
-          this.isOnScroll = false
-        }
-        if (this.$route.name === 'index') { this.$store.commit('header/isLogo', false) }
-      } else if (this.$route.name !== 'category-slug') {
-        if (this.isOnScroll === false) {
-          this.openMenuScroll()
-          this.isOnScroll = true
-        }
-        if (this.$route.name === 'index') { this.$store.commit('header/isLogo', true) }
-      }
-    })
+    // window.addEventListener('scroll', () => {
+    //   if (this.$store.getters['header/isMobile'] === true) { return }
+    //   if (window.scrollY > 20) {
+    //     if (this.isOnScroll === true) {
+    //       this.closeMenuScroll()
+    //       this.isOnScroll = false
+    //     }
+    //     if (this.$route.name === 'index') { this.$store.commit('header/isLogo', false) }
+    //   } else if (this.$route.name !== 'category-slug') {
+    //     if (this.isOnScroll === false) {
+    //       this.openMenuScroll()
+    //       this.isOnScroll = true
+    //     }
+    //     if (this.$route.name === 'index') { this.$store.commit('header/isLogo', true) }
+    //   }
+    // })
   },
   methods: {
     setActive (index) {
