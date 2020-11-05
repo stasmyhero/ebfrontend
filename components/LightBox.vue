@@ -67,12 +67,12 @@ export default {
       this.currentImg = this.images[this.currentIndex]
     },
     open () {
-      document.body.style.overflow = 'hidden'
+      document.body.style.overflowY = 'hidden'
       this.isShow = true
     },
     close () {
       this.isShow = false
-      document.body.style.overflow = 'scroll'
+      document.body.style.overflowY = 'scroll'
       this.$root.$emit('closeLightBox')
     }
   }

@@ -58,6 +58,11 @@ export default {
     } catch (e) {
       error(e)
     }
+  },
+  head () {
+    return {
+      title: process.env.baseTitle + this.pageTitle
+    }
   }
 }
 </script>

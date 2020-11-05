@@ -109,4 +109,7 @@ export default {
   animation-play-state: running !important;
 }
 
+.twitter-item-wrapper {
+  overflow: hidden;
+}
 </style>

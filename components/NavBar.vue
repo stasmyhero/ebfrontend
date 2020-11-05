@@ -82,22 +82,51 @@ export default {
     }
 
     if (this.$store.getters['header/isMobile'] === true) { return }
-    // window.addEventListener('scroll', () => {
-    //   if (this.$store.getters['header/isMobile'] === true) { return }
-    //   if (window.scrollY > 20) {
-    //     if (this.isOnScroll === true) {
-    //       this.closeMenuScroll()
-    //       this.isOnScroll = false
+    window.addEventListener('scroll', () => {
+      if (this.$store.getters['header/isMobile'] === true) { return }
+      if (window.scrollY > 20) {
+        if (this.isOnScroll === true) {
+          this.closeMenuScroll()
+          this.isOnScroll = false
+        }
+        if (this.$route.name === 'index') { this.$store.commit('header/isLogo', false) }
+      } else if (this.$route.name !== 'category-slug') {
+        if (this.isOnScroll === false) {
+          this.openMenuScroll()
+          this.isOnScroll = true
+        }
+        if (this.$route.name === 'index') { this.$store.commit('header/isLogo', true) }
+      }
+    })
+    // gsap.to('.header-rubric-link',
+    //   {
+    //     autoAlpha: 0,
+    //     duration: 0.3,
+    //     stagger: {
+    //       each: 0.05
+    //     },
+    //     onComplete: () => {
+    //       this.isAnimate = false
+    //       this.isMenuOpen = true
+    //       // this.burgerButtonCloseState = true
+    //       this.isMenuOpen = true
+    //       this.$store.commit('header/isBurger', true)
+    //     },
+    //     delay: 0.3,
+    //     scrollTrigger: {
+    //       trigger: 'body',
+    //       start: '20px top',
+    //       end: '20px top',
+    //       markers: true,
+    //       toggleActions: 'play none reverse none',
+    //       onEnter: () => {
+
+    //       },
+    //       onEnterBack: () => {
+    //         this.$store.commit('header/isBurger', false)
+    //       }
     //     }
-    //     if (this.$route.name === 'index') { this.$store.commit('header/isLogo', false) }
-    //   } else if (this.$route.name !== 'category-slug') {
-    //     if (this.isOnScroll === false) {
-    //       this.openMenuScroll()
-    //       this.isOnScroll = true
-    //     }
-    //     if (this.$route.name === 'index') { this.$store.commit('header/isLogo', true) }
-    //   }
-    // })
+    //   })
   },
   methods: {
     setActive (index) {
@@ -246,14 +275,14 @@ export default {
   .fadeNav-enter-active, .fadeFast-leave-active {
     transition: opacity .25s;
   }
-  .fadeNav-enter, .fadeFast-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  .fadeNav-enter, .fadeFast-leave-to {
     opacity: 0;
   }
 
    .fadeFast-enter-active, .fadeFast-leave-active {
     transition: opacity .25s;
   }
-  .fadeFast-enter, .fadeFast-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  .fadeFast-enter, .fadeFast-leave-to {
     opacity: 0;
   }
 

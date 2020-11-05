@@ -9,8 +9,19 @@
     <template v-if="!isSubscribeSuccess">
       <form class="footer-email-subscribe-form" @submit.prevent="subsrcibe">
         <div class="input-wrapper">
-          <input v-model="email" type="email" class="subscribe-form-input" required>
-          <label class="floating-label" data-placeholder="Ваш имейл" />
+          <input
+            v-model="email"
+            type="email"
+            class="subscribe-form-input"
+            required
+            @focus="onInputFocus()"
+            @blur="onInputBlur()"
+          >
+          <label
+            class="floating-label"
+            :class="{ 'floating-label__focused': isEmailInputFocused }"
+            data-placeholder="Ваш имейл"
+          />
         </div>
         <input type="submit" class="subscribe-form-submit" value="Подписаться">
       </form>
@@ -35,7 +46,6 @@
   </div>
 </template>
 <script>
-
 import urls from '@/assets/js/url'
 
 export default {
@@ -47,10 +57,19 @@ export default {
       isSubscribeSuccess: false,
       isUnSubscribeSuccess: false,
       apiKey: '9af4d8381781baccb0f915e554f8798d',
-      isAlreadySubscribed: false
+      isAlreadySubscribed: false,
+      isEmailInputFocused: false
     }
   },
   methods: {
+    onInputFocus () {
+      this.isEmailInputFocused = true
+    },
+    onInputBlur () {
+      if (this.email.trim() === '') {
+        this.isEmailInputFocused = false
+      }
+    },
     async subsrcibe () {
       const data = {
         api_key: this.apiKey,
@@ -80,3 +99,18 @@ export default {
   }
 }
 </script>
+
+<style>
+  .floating-label::after {
+    content: attr(data-placeholder);
+    font-family: var(--font-arnold);
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transition: all .15s ease-in-out;
+  }
+
+  .floating-label__focused::after {
+    transform: translate(-5%, -190%) scale(.9, .9) !important;
+  }
+</style>

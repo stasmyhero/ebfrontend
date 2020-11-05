@@ -337,7 +337,7 @@ input:matches([type="password"], [type="search"], [type="email"], [type="text"])
     pointer-events: none;
 }
 
-input:matches([type="password"], [type="search"], [type="email"], [type="text"]) + label[data-placeholder]:after {
+/* input:matches([type="password"], [type="search"], [type="email"], [type="text"]) + label[data-placeholder]:after {
     content: attr(data-placeholder);
     display: block;
     font-family: var(--font-arnold);
@@ -354,12 +354,12 @@ input:matches([type="password"], [type="search"], [type="email"], [type="text"])
     -webkit-transform: translate(-5%, -190%) scale(.9, .9);
             transform: translate(-5%, -190%) scale(.9, .9);
 }
-/*input:matches([type="password"], [type="search"], [type="email"], [type="text"]):focus + label[data-placeholder]:after,
+input:matches([type="password"], [type="search"], [type="email"], [type="text"]):focus + label[data-placeholder]:after,
 input:matches([type="password"], [type="search"], [type="email"], [type="text"]):valid + label[data-placeholder]:after,
-input:matches([type="password"], [type="search"], [type="email"], [type="text"]):invalid + label[data-placeholder]:after*/ {
+input:matches([type="password"], [type="search"], [type="email"], [type="text"]):invalid + label[data-placeholder]:after {
     -webkit-transform: translate(-5%, -190%) scale(.9, .9);
             transform: translate(-5%, -190%) scale(.9, .9);
-}
+} */
 input:matches([type="password"], [type="search"], [type="email"], [type="text"]):focus + label[data-placeholder]:after,
 input:matches([type="password"], [type="search"], [type="email"], [type="text"]):valid + label[data-placeholder]:after {
     color: var(--LightBlue100);
