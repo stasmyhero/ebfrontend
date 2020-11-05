@@ -114,7 +114,9 @@ export default {
   },
 
   mounted () {
-    this.$root.$on('loadPosts', () => { this.isLoadedOnce = true })
+    this.$root.$on('loadPosts', () => {
+      this.isLoadedOnce = true
+    })
     window.setTimeout(() => {
       if (this.$store.getters['header/isMobile']) { return }
       if (window.scrollY < 20) {

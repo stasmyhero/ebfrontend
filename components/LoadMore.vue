@@ -1,7 +1,7 @@
 <template>
-  <button v-show="isShow" class="big-button button-showmore" @hideButton="hide()" @click.prevent="loadPosts()">
-    Показать ещё
-  </button>
+    <button v-show="isShow" class="big-button button-showmore" @hideButton="hide()" @click.prevent="loadPosts()">
+      Показать ещё
+    </button>
 </template>
 
 <script>
@@ -35,10 +35,15 @@ export default {
   },
   methods: {
     loadPosts () {
+      document.querySelector('footer').classList.add('footer__onload')
+
       this.$root.$emit('loadPosts')
     },
     hide () {
       this.isShow = false
+      window.setTimeout(() => {
+        document.querySelector('footer').classList.add('footer__onload')
+      }, 250)
     }
   }
 }
