@@ -3296,24 +3296,29 @@ opacity: 0;
 .loading-triangle {
   line-height: auto !important;
     border-radius: 0 !important;
-  background-size: cover !important;;
+  background-size: cover !important;
   position: absolute !important;
-  width: 4.7rem !important;;
-  height: 3.2rem !important;;
-  opacity: 0.7 !important;;
+  width: 4.7rem !important;
+  height: 3.2rem !important;
+  opacity: 0.7 !important;
   margin:auto !important;
-  display: block !important;;
+  display: block !important;
   background-image: url("data:image/svg+xml,%3Csvg width='47' height='32' viewBox='0 0 47 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M23.5 1.55418e-07L47 32L0 32L23.5 1.55418e-07Z' fill='%2383CBFE'/%3E%3C/svg%3E%0A");
 }
 
 .loading-triangle-wrapper {
-  margin: 0 auto !important;
-  max-width: 10rem !important;
-  width: auto !important;
+  position: relative;
+  width: 100% !important;
+  height: 3.2rem;
   overflow: hidden !important;
   border-radius: 0 !important;
 }
 
+.loading-triangle-inner {
+  position: absolute;
+  left: calc(50% - 20px);
+  transform: translateX(-50%);
+}
 
 @keyframes loadingLeft{
   from,

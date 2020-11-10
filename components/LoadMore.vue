@@ -36,7 +36,6 @@ export default {
   methods: {
     loadPosts () {
       document.querySelector('footer').classList.add('footer__onload')
-
       this.$root.$emit('loadPosts')
     },
     hide () {

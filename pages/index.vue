@@ -2,11 +2,11 @@
   <main>
     <div class="mainpage-grid">
       <div class="clear-item-cont on-desktop-and-tablet" />
-      <AttachedPosts :posts="attachedPosts" />
-      <Telegram :link="socials.telegram" />
-      <Twitter :link="socials.twitter" />
-      <Adv :pos="1" class="ad-item-wrapper mainpage-ad-grid-1" />
-      <Adv :pos="2" class="ad-item-wrapper mainpage-ad-grid-2" />
+      <attached-posts :posts="attachedPosts" />
+      <telegram :link="socials.telegram" />
+      <twitter :link="socials.twitter" />
+      <adv :pos="1" class="ad-item-wrapper mainpage-ad-grid-1" />
+      <adv :pos="2" class="ad-item-wrapper mainpage-ad-grid-2" />
       <Post
         v-for="mypost in posts"
         :key="mypost.id"
@@ -26,12 +26,12 @@
         </template>
         <template v-if="!isLoadedOnce && isNeedToUpload">
           <transition name="fade">
-            <LoadMore />
+            <load-more />
           </transition>
         </template>
       </div>
       <div v-show="isLoading">
-        <LoadIndicator />
+        <load-indicator />
       </div>
     </template>
   </main>
@@ -146,7 +146,7 @@ export default {
             this.isLoading = false
           })
           .catch((error) => { console.log(error) })
-      }, 800)
+      }, 80000)
     }
   }
 }

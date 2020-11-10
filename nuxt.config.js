@@ -1,9 +1,6 @@
 
 export default {
   mode: 'universal',
-  /*
-  ** Headers of the page
-  */
   cache: true,
   env: {
     baseTitle: 'ЭльбрусПресс - '
@@ -16,12 +13,13 @@ export default {
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: 'Новостной сайт ЭльбрусПресс' },
-      { rel: 'apple-touch-icon', sizes: '180x180', href: 'icons/apple-touch-icon.png' },
-      { rel: 'icon', type: 'image/png', size: '32x32', href: 'icons/favicon-32x32.png' },
-      { rel: 'icon', type: 'image/png', size: '16x16', href: 'icons/favicon-16x16.png' }
+
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: 'icons/favicon.ico' },
+      { rel: 'apple-touch-icon', sizes: '180x180', href: 'icons/apple-touch-icon.png' },
+      { rel: 'icon', type: 'image/png', size: '32x32', href: 'icons/favicon-32x32.png' },
+      { rel: 'icon', type: 'image/png', size: '16x16', href: 'icons/favicon-16x16.png' },
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,700;1,400&display=swap' },
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&display=swap' }
     ]
