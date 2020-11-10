@@ -146,7 +146,7 @@ export default {
             this.isLoading = false
           })
           .catch((error) => { console.log(error) })
-      }, 80000)
+      }, 800)
     }
   }
 }

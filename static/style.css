@@ -2427,7 +2427,7 @@ footer {
 }
 
 .footer__onload {
-  transform: translateY(20vh);
+  transform: translateY(20.5vh);
 
 }
 
