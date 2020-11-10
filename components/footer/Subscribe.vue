@@ -105,7 +105,7 @@ export default {
     content: attr(data-placeholder);
     font-family: var(--font-arnold);
     position: absolute;
-    top: 50%;
+    top: 32%;
     left: 0;
     transition: all .15s ease-in-out;
   }

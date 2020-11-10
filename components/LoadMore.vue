@@ -1,7 +1,7 @@
 <template>
-    <button v-show="isShow" class="big-button button-showmore" @hideButton="hide()" @click.prevent="loadPosts()">
-      Показать ещё
-    </button>
+  <button v-show="isShow" class="big-button button-showmore" @hideButton="hide()" @click.prevent="loadPosts()">
+    Показать ещё
+  </button>
 </template>
 
 <script>

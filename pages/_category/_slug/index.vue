@@ -138,6 +138,7 @@ export default {
               this.lastPosts.push(...res.data.posts)
               $state.loaded()
             } else {
+              document.querySelector('footer').classList.remove('footer__onload')
               $state.complete()
             }
             this.isLoading = false
